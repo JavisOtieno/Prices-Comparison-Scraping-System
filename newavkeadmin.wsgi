@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.insert(0, "/var/www/myflaskapp")
+sys.path.insert(0, "/var/www/newavkeadmin")
 
 from app import app as application
 
@@ -13,4 +13,3 @@ from app import app as application
 #    run_server()
 #else:
 #    application.run()
-
