@@ -7,6 +7,10 @@ import os
 from .models import Product  # Import Product model
 from .models import Order
 from .models import Category
+from .models import User
+from .models import Payment
+from .models import Customer
+
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/products'
@@ -23,7 +27,7 @@ from .models import Category
 
 @app.route('/')
 def index():
-    return render_template("public/home.html")
+    return render_template('index.html')
 
 
 
@@ -55,35 +59,28 @@ def predict():
 
 @app.route('/products')
 def showProducts():
-    data = Product.query.all()
-    productString = ""
-    for product in data:
-         #formatted_price = locale.format_string("%d", product.price, grouping=True)
-         formatted_price = "{:,}".format(int(product.price))
-         productString=productString+str(product.name)+" "+str(formatted_price)+" "+str(product.description)+" "+str(product.created_at)+"<br/>"
-    return productString
+    products = Product.query.all()
+    return render_template('products.html', 
+    products=products)
+
+@app.route('/payments')
+def showPayments():
+    payments = Payment.query.all()
+    return render_template('payments.html', 
+    payments=payments)
+
+@app.route('/customers')
+def showCustomers():
+    customers = Customer.query.all()
+    return render_template('customers.html', 
+    customers=customers)
 
 
-
-@app.route('/categories')
-def showCategories():
-    data = Category.query.all()
-    categoryString = ""
-    for category in data:
-         #formatted_price = locale.format_string("%d", product.price, grouping=True)
-        #  formatted_price = "{:,}".format(int(product.price))
-         categoryString=categoryString+str(category.name)+" "+"<br/>"
-    return categoryString
 
 @app.route('/categories')
 def categoriesRender():
-    data = Category.query.all()
-    categoryString = ""
-    for category in data:
-         #formatted_price = locale.format_string("%d", product.price, grouping=True)
-        #  formatted_price = "{:,}".format(int(product.price))
-         categoryString=categoryString+str(category.name)+" "+"<br/>"
-    return render_template('admin/categories.html', categories=categoryString)
+    categories = Category.query.all()
+    return render_template('admin/categories.html', categories=categories)
 
 @app.route('/dashboard')
 def dashboard():
@@ -97,13 +94,13 @@ def dashboard():
 
 @app.route('/orders')
 def orders():
-    data = Order.query.all()
-    orderString = ""
-    for order in data:
-         #formatted_price = locale.format_string("%d", product.price, grouping=True)
-         formatted_total = "{:,}".format(int(order.total))
-         orderString=orderString+str(order.user_id)+" "+str(formatted_total)+" "+str(order.notes)+" "+str(order.created_at)+"<br/>"
-    return render_template('orders.html', categories=orderString)
+    orders = Order.query.all()
+    return render_template('orders.html', orders=orders)
+
+@app.route('/users')
+def users():
+    users = User.query.all()
+    return render_template('users.html', users=users)
 
 @app.route('/logout')
 def logout():

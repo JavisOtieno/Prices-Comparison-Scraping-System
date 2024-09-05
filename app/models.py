@@ -22,7 +22,11 @@ class Product(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    profit = db.Column(db.Integer, nullable=False)
+    cost = db.Column(db.Integer, nullable=False)
+    image = db.Column(db.Text, nullable=False)
+    status = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
@@ -34,9 +38,40 @@ class Order(db.Model):
     customer_id = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
     notes = db.Column(db.Text, nullable=False)
+    status = db.Column(db.Text, nullable=False)
     cart_id = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, nullable=False)
+    websitevisits = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+class Customer(db.Model):
+    __tablename__ = 'customers'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    phone = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+class Payment(db.Model):
+    __tablename__ = 'payments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Text, nullable=False)
+    total = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+
 
 class Category(db.Model):
     __tablename__ = 'categories'
