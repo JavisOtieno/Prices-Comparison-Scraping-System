@@ -112,6 +112,46 @@ def deleteProduct(id):
     return redirect(url_for('indexproducts'))
 
 
+
+@app.route('/create', methods=['GET', 'POST'])
+# def create():
+#     form = StudentForm()
+#     if form.validate_on_submit():
+#         # Save to database (replace this with your logic)
+#         flash('Category created successfully!', 'success')
+#         return redirect(url_for('indexcategories'))
+#     return render_template('category/create.html', form=form)
+def create():
+    if request.method == 'POST':
+        name = request.form['name']
+        category = Category(name=name)
+        db.session.add(category)
+        db.session.commit()
+        return redirect(url_for('indexcategories'))
+    return render_template('category/create.html')
+
+# Update record
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    category = Category.query.get(id)
+    if request.method == 'POST':
+        category.name = request.form['name']
+        db.session.commit()
+        return redirect(url_for('indexcategories'))
+    return render_template('category/edit.html', category=category)
+
+@app.route('/categories')
+def indexcategories():
+    categories = Category.query.all()
+    return render_template('category/index.html', categories=categories)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    category = Category.query.get(id)
+    db.session.delete(category)
+    db.session.commit()
+    return redirect(url_for('indexcategories'))
+
 # @app.route('/products')
 # def showProducts():
 #     products = Product.query.all()
