@@ -8,13 +8,13 @@ from flask_sqlalchemy import SQLAlchemy
 current_path = os.getcwd()  # Or use __file__ if checking within a specific file
 # Check if '/var/' is in the path
 # Removed var check in current path as getcwd producing / as the result
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
 
 
-@app.route('/viewdbstatus')
-def viewdbstatus():
-    return app.config['SQLALCHEMY_DATABASE_URI']+" -- Path:"+current_path
+# @app.route('/viewdbstatus')
+# def viewdbstatus():
+#     return app.config['SQLALCHEMY_DATABASE_URI']+" -- Path:"+current_path
 
 
 db = SQLAlchemy(app)
@@ -38,7 +38,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Float, nullable=False)
     customer_id = db.Column(db.Float, nullable=False)
-    total = db.Column(db.Float, nullable=False)
+    value = db.Column(db.Float, nullable=False)
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
     cart_id = db.Column(db.Float, nullable=False)
@@ -49,7 +49,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
-    username = db.Column(db.Text, nullable=False)
+    websitename = db.Column(db.Text, nullable=False)
     websitevisits = db.Column(db.Integer, nullable=False)
     phone = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
