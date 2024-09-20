@@ -61,11 +61,60 @@ def predict():
 
     return render_template('public/result.html', prediction_text=f'Predicted class: {output}')
 
+@app.route('/createproduct', methods=['GET', 'POST'])
+def createproduct():
+    if request.method == 'POST':
+        name = request.form['name']
+        price = request.form['price']
+        commission = request.form['commission']
+        cost = request.form['cost']
+        image = request.form['image']
+        status = request.form['status']
+        description = request.form['description']
+        product = Product(name=name, price=price,
+                          commission=commission,image=image,
+                          cost=cost,
+                          status=status,description=description)
+        db.session.add(product)
+        db.session.commit()
+        return redirect(url_for('indexproducts'))
+    return render_template('product/create.html')
+
+# Update record
+@app.route('/editproduct/<int:id>', methods=['GET', 'POST'])
+def editproduct(id):
+    product = Product.query.get(id)
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.price = request.form['price']
+        product.commission = request.form['commission']
+        product.cost = request.form['cost']
+        product.image = request.form['image']
+        product.status = request.form['status']
+        product.description = request.form['description']
+        db.session.commit()
+        return redirect(url_for('indexproducts'))
+    return render_template('product/edit.html', product=product)
+
 @app.route('/products')
-def showProducts():
+def indexproducts():
     products = Product.query.all()
-    return render_template('products.html', 
-    products=products)
+    return render_template('product/index.html', products=products)
+
+# Delete record
+@app.route('/deleteproduct/<int:id>')
+def deleteProduct(id):
+    product = Product.query.get(id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('indexproducts'))
+
+
+# @app.route('/products')
+# def showProducts():
+#     products = Product.query.all()
+#     return render_template('products.html', 
+#     products=products)
 
 @app.route('/payments')
 def showPayments():
