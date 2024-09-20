@@ -39,6 +39,7 @@ class Product(db.Model):
     cost = db.Column(db.Integer, nullable=False)
     image = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
+    highlights = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
