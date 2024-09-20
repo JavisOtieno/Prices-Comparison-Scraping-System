@@ -2,14 +2,24 @@ from app import app
 import os
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from flask import request
+import socket
 
+# Get the current machine's hostname
+hostname = socket.gethostname()
+print("hostname",hostname,hostname == 'DESKTOP-6FGNSTO')
+
+if hostname == 'DESKTOP-6FGNSTO' or hostname == 'your-local-machine-name':
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
 
 
 current_path = os.getcwd()  # Or use __file__ if checking within a specific file
 # Check if '/var/' is in the path
 # Removed var check in current path as getcwd producing / as the result
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
 
 
 # @app.route('/viewdbstatus')
