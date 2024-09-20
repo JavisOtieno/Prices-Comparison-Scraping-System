@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 current_path = os.getcwd()  # Or use __file__ if checking within a specific file
 # Check if '/var/' is in the path
 # Removed var check in current path as getcwd producing / as the result
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/avke'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Billion%4023@localhost/avkenew'
 
 
 # @app.route('/viewdbstatus')
