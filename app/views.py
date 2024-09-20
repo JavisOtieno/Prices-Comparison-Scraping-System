@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template,request,redirect,url_for
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
 import os
@@ -10,8 +10,12 @@ from .models import Category
 from .models import User
 from .models import Payment
 from .models import Customer
+from .models import db
 
-
+current_path = os.getcwd() 
+@app.route('/viewdbstatus')
+def viewdbstatus():
+    return app.config['SQLALCHEMY_DATABASE_URI']+" -- Path:"+current_path
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/products'
 # db = SQLAlchemy(app)
