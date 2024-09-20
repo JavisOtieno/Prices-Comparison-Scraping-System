@@ -70,10 +70,11 @@ def createproduct():
         cost = request.form['cost']
         image = request.form['image']
         status = request.form['status']
+        highlights = request.form['highlights']
         description = request.form['description']
         product = Product(name=name, price=price,
                           commission=commission,image=image,
-                          cost=cost,
+                          cost=cost,highlights=highlights,
                           status=status,description=description)
         db.session.add(product)
         db.session.commit()
@@ -91,6 +92,7 @@ def editproduct(id):
         product.cost = request.form['cost']
         product.image = request.form['image']
         product.status = request.form['status']
+        product.highlights = request.form['highlights']
         product.description = request.form['description']
         db.session.commit()
         return redirect(url_for('indexproducts'))
