@@ -80,14 +80,16 @@ class User(db.Model, UserMixin):
     websitevisits = db.Column(db.Integer, nullable=False)
     phone = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
+    password = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
-    def __init__(self, name, websitename, websitevisits, phone, email):
+    def __init__(self, name, websitename, websitevisits,password, phone, email):
         self.name = name
         self.websitename = websitename
         self.websitevisits = websitevisits
         self.phone = phone
+        self.password = password
         self.email = email
 
 class Customer(db.Model):

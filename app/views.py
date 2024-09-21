@@ -11,6 +11,7 @@ from .models import User
 from .models import Payment
 from .models import Customer
 from .models import db
+import bcrypt
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -50,10 +51,11 @@ def login():
 
 
         if user:
-        # and user[email] == password:
-            # user = User(email)
-            login_user(user)
-            return redirect(url_for('index'))
+            if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            # and user[email] == password:
+                # user = User(email)
+                login_user(user)
+                return redirect(url_for('index'))
         # return 'Invalid credentials'
         return redirect(url_for('login'))
     return render_template('login.html')
