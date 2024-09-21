@@ -53,7 +53,7 @@ def login():
         # and user[email] == password:
             # user = User(email)
             login_user(user)
-            return redirect(url_for('protected'))
+            return redirect(url_for('index'))
         # return 'Invalid credentials'
         return redirect(url_for('login'))
     return render_template('login.html')
@@ -75,7 +75,8 @@ def protected():
 #     app.run(debug=True)
 
 
-current_path = os.getcwd() 
+current_path = os.getcwd()
+@login_required 
 @app.route('/viewdbstatus')
 def viewdbstatus():
     return app.config['SQLALCHEMY_DATABASE_URI']+" -- Path:"+current_path
@@ -93,6 +94,7 @@ def viewdbstatus():
 #     updated_at = db.Column(db.TIMESTAMP, nullable=True, default=None)
 
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
@@ -107,6 +109,7 @@ def index():
 
 
 @app.route('/predict', methods=['POST'])
+@login_required
 def predict():
     model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'model.pkl')
     with open(model_path, 'rb') as f:
@@ -126,6 +129,7 @@ def predict():
 
 
 @app.route('/createorder', methods=['GET', 'POST'])
+@login_required
 def createorder():
     if request.method == 'POST':
         user_id =request.form['user_id']
@@ -144,6 +148,7 @@ def createorder():
 
 # Update record
 @app.route('/editorder/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editorder(id):
     order = Order.query.get(id)
     if request.method == 'POST':
@@ -158,12 +163,14 @@ def editorder(id):
     return render_template('order/edit.html', order=order)
 
 @app.route('/orders')
+@login_required
 def indexorders():
     orders = Order.query.all()
     return render_template('order/index.html', orders=orders)
 
 # Delete record
 @app.route('/deleteorder/<int:id>')
+@login_required
 def deleteOrder(id):
     order = Order.query.get(id)
     db.session.delete(order)
@@ -172,6 +179,7 @@ def deleteOrder(id):
 
 
 @app.route('/createproduct', methods=['GET', 'POST'])
+@login_required
 def createproduct():
     if request.method == 'POST':
         name = request.form['name']
@@ -193,6 +201,7 @@ def createproduct():
 
 # Update record
 @app.route('/editproduct/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editproduct(id):
     product = Product.query.get(id)
     if request.method == 'POST':
@@ -209,12 +218,14 @@ def editproduct(id):
     return render_template('product/edit.html', product=product)
 
 @app.route('/products')
+@login_required
 def indexproducts():
     products = Product.query.all()
     return render_template('product/index.html', products=products)
 
 # Delete record
 @app.route('/deleteproduct/<int:id>')
+@login_required
 def deleteProduct(id):
     product = Product.query.get(id)
     db.session.delete(product)
@@ -231,6 +242,7 @@ def deleteProduct(id):
 #         flash('Category created successfully!', 'success')
 #         return redirect(url_for('indexcategories'))
 #     return render_template('category/create.html', form=form)
+@login_required
 def create():
     if request.method == 'POST':
         name = request.form['name']
@@ -242,6 +254,7 @@ def create():
 
 # Update record
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit(id):
     category = Category.query.get(id)
     if request.method == 'POST':
@@ -251,11 +264,13 @@ def edit(id):
     return render_template('category/edit.html', category=category)
 
 @app.route('/categories')
+@login_required
 def indexcategories():
     categories = Category.query.all()
     return render_template('category/index.html', categories=categories)
 
 @app.route('/delete/<int:id>')
+@login_required
 def delete(id):
     category = Category.query.get(id)
     db.session.delete(category)
@@ -263,6 +278,7 @@ def delete(id):
     return redirect(url_for('indexcategories'))
 
 @app.route('/createpayment', methods=['GET', 'POST'])
+@login_required
 def createpayment():
     if request.method == 'POST':
         total = request.form['total']
@@ -275,6 +291,7 @@ def createpayment():
 
 # Update record
 @app.route('/editpayment/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editpayment(id):
     payment = Payment.query.get(id)
     if request.method == 'POST':
@@ -287,11 +304,13 @@ def editpayment(id):
 
 
 @app.route('/payments')
+@login_required
 def indexpayments():
     payments = Payment.query.all()
     return render_template('payment/index.html', payments=payments)
 
 @app.route('/deletepayment/<int:id>')
+@login_required
 def deletepayment(id):
     payment = Payment.query.get(id)
     db.session.delete(payment)
@@ -305,12 +324,14 @@ def deletepayment(id):
 #     products=products)
 
 @app.route('/payments')
+@login_required
 def showPayments():
     payments = Payment.query.all()
     return render_template('payments.html', 
     payments=payments)
 
 @app.route('/customers')
+@login_required
 def showCustomers():
     customers = Customer.query.all()
     return render_template('customers.html', 
@@ -319,11 +340,13 @@ def showCustomers():
 
 
 @app.route('/categories')
+@login_required
 def categoriesRender():
     categories = Category.query.all()
     return render_template('admin/categories.html', categories=categories)
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     data = Category.query.all()
     categoryString = ""
@@ -334,11 +357,13 @@ def dashboard():
     return render_template('index.html', categories=categoryString)
 
 @app.route('/orders')
+@login_required
 def orders():
     orders = Order.query.all()
     return render_template('orders.html', orders=orders)
 
 @app.route('/users')
+@login_required
 def users():
     users = User.query.all()
     return render_template('users.html', users=users)
@@ -358,5 +383,6 @@ def users():
 
 
 @app.route('/about')
+@login_required
 def about():
     return "<h1>About</h1>"
