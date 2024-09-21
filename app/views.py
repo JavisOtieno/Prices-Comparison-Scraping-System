@@ -63,7 +63,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return 'Logged out!'
+    return redirect(url_for('login'))
 
 # Protected route - requires login
 @app.route('/protected')
