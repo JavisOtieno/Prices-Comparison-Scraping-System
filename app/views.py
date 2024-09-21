@@ -61,6 +61,53 @@ def predict():
 
     return render_template('public/result.html', prediction_text=f'Predicted class: {output}')
 
+
+@app.route('/createorder', methods=['GET', 'POST'])
+def createorder():
+    if request.method == 'POST':
+        user_id =request.form['user_id']
+        customer_id = request.form['customer_id']
+        value = request.form['value']
+        notes = request.form['notes']
+        status = request.form['status']
+        cart_id = request.form['cart_id']
+        order = Order(user_id=user_id, customer_id=customer_id,
+                          value=value,notes=notes,
+                          cart_id=cart_id,status=status)
+        db.session.add(order)
+        db.session.commit()
+        return redirect(url_for('indexorders'))
+    return render_template('order/create.html')
+
+# Update record
+@app.route('/editorder/<int:id>', methods=['GET', 'POST'])
+def editorder(id):
+    order = Order.query.get(id)
+    if request.method == 'POST':
+        order.user_id =request.form['user_id']
+        order.customer_id = request.form['customer_id']
+        order.value = request.form['value']
+        order.notes = request.form['notes']
+        order.status = request.form['status']
+        order.cart_id = request.form['cart_id']
+        db.session.commit()
+        return redirect(url_for('indexorders'))
+    return render_template('order/edit.html', order=order)
+
+@app.route('/orders')
+def indexorders():
+    orders = Order.query.all()
+    return render_template('order/index.html', orders=orders)
+
+# Delete record
+@app.route('/deleteorder/<int:id>')
+def deleteOrder(id):
+    order = Order.query.get(id)
+    db.session.delete(order)
+    db.session.commit()
+    return redirect(url_for('indexorders'))
+
+
 @app.route('/createproduct', methods=['GET', 'POST'])
 def createproduct():
     if request.method == 'POST':
@@ -151,6 +198,40 @@ def delete(id):
     db.session.delete(category)
     db.session.commit()
     return redirect(url_for('indexcategories'))
+
+@app.route('/createpayment', methods=['GET', 'POST'])
+def createpayment():
+    if request.method == 'POST':
+        total = request.form['total']
+        user_id = request.form['user_id']
+        payment = Payment(total=total,user_id=user_id)
+        db.session.add(payment)
+        db.session.commit()
+        return redirect(url_for('indexpayments'))
+    return render_template('payment/create.html')
+
+# Update record
+@app.route('/editpayment/<int:id>', methods=['GET', 'POST'])
+def editpayment(id):
+    payment = Payment.query.get(id)
+    if request.method == 'POST':
+        payment.total = request.form['total']
+        payment.user_id = request.form['user_id']
+        db.session.commit()
+        return redirect(url_for('indexpayments'))
+    return render_template('payment/edit.html', payment=payment)
+
+@app.route('/payments')
+def indexpayments():
+    payments = Payment.query.all()
+    return render_template('payment/index.html', payments=payments)
+
+@app.route('/deletepayment/<int:id>')
+def deletepayment(id):
+    payment = Payment.query.get(id)
+    db.session.delete(payment)
+    db.session.commit()
+    return redirect(url_for('indexpayments'))
 
 # @app.route('/products')
 # def showProducts():

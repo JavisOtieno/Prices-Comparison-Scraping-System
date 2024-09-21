@@ -47,12 +47,12 @@ class Product(db.Model):
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Float, nullable=False)
-    customer_id = db.Column(db.Float, nullable=False)
-    value = db.Column(db.Float, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    customer_id = db.Column(db.Integer, nullable=False)
+    value = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
-    cart_id = db.Column(db.Float, nullable=False)
+    cart_id = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
