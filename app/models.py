@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
 import socket
+from flask_login import UserMixin
 
 # Get the current machine's hostname
 hostname = socket.gethostname()
@@ -56,7 +57,22 @@ class Order(db.Model):
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
-class User(db.Model):
+# class User(UserMixin):
+#     def __init__(self, id):
+#         self.id = id
+
+# class User(db.Model):
+#     __tablename__ = 'users'
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.Text, nullable=False)
+#     websitename = db.Column(db.Text, nullable=False)
+#     websitevisits = db.Column(db.Integer, nullable=False)
+#     phone = db.Column(db.Text, nullable=False)
+#     email = db.Column(db.Text, nullable=False)
+#     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+#     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
@@ -66,6 +82,13 @@ class User(db.Model):
     email = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+
+    def __init__(self, name, websitename, websitevisits, phone, email):
+        self.name = name
+        self.websitename = websitename
+        self.websitevisits = websitevisits
+        self.phone = phone
+        self.email = email
 
 class Customer(db.Model):
     __tablename__ = 'customers'

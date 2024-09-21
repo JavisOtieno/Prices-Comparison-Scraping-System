@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template,request,redirect,url_for
+from flask import render_template,request,redirect,url_for, session
 # from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
@@ -11,6 +11,69 @@ from .models import User
 from .models import Payment
 from .models import Customer
 from .models import db
+
+from flask import Flask, render_template, redirect, url_for, request
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+
+# import secrets
+
+# secret_key = secrets.token_hex(16)  # Generates a 32-character hexadecimal string
+# print('secret ',secret_key)
+# app = Flask(__name__)
+app.secret_key = 'f735e47866cceca5cc3113cab5d2b58b'
+
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'  # Route to redirect if login is required
+
+
+
+# Dummy user database
+users = {'test_user': 'password123'}
+
+# Define how to load a user from session
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Login route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # users = {'test_user@gmail.com': 'password123'}
+        email = request.form['email']
+        password = request.form['password']
+        # return(email," - ",password)
+        user = User.query.filter_by(email=email).first()
+
+
+        if user:
+        # and user[email] == password:
+            # user = User(email)
+            login_user(user)
+            return redirect(url_for('protected'))
+        # return 'Invalid credentials'
+        return redirect(url_for('login'))
+    return render_template('login.html')
+
+# Logout route
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return 'Logged out!'
+
+# Protected route - requires login
+@app.route('/protected')
+@login_required
+def protected():
+    return f'Hello, {current_user.id}! You are logged in.'
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
 
 current_path = os.getcwd() 
 @app.route('/viewdbstatus')
@@ -221,6 +284,8 @@ def editpayment(id):
         return redirect(url_for('indexpayments'))
     return render_template('payment/edit.html', payment=payment)
 
+
+
 @app.route('/payments')
 def indexpayments():
     payments = Payment.query.all()
@@ -278,14 +343,14 @@ def users():
     users = User.query.all()
     return render_template('users.html', users=users)
 
-@app.route('/logout')
-def logout():
-    #implement logout
-    return redirect(url_for('login'))
+# @app.route('/logout')
+# def logout():
+#     #implement logout
+#     return redirect(url_for('login'))
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
 
 
 
