@@ -38,6 +38,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # Add the upload folder to your Flask configuration
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/uploads')
+
 
 # Check if the file extension is allowed
 def allowed_file(filename):
@@ -272,6 +274,7 @@ def createproduct():
         if image and allowed_file(image.filename):
             # Secure the filename and save the file
             filename = secure_filename(image.filename)
+            
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             # Save product details and image filename to the database
