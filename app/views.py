@@ -266,8 +266,8 @@ def createproduct():
             flash('No selected file')
             return redirect(request.url)
                 # Ensure the upload directory exists
-        if not os.path.exists(app.config['UPLOAD_FOLDER']):
-            os.makedirs(app.config['UPLOAD_FOLDER'])
+        # if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        #     os.makedirs(app.config['UPLOAD_FOLDER'])
 
         if image and allowed_file(image.filename):
             # Secure the filename and save the file
