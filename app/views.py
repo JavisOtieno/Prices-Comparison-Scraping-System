@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template,request,redirect,url_for, session,flash
+from flask import render_template,request,redirect,url_for,session,flash,make_response
 # from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
@@ -15,9 +15,15 @@ import bcrypt
 from sqlalchemy import func
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import pdfkit
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+
+# Configure path to wkhtmltopdf
+path_to_wkhtmltopdf = '/usr/local/bin/wkhtmltopdf'  # Adjust for your system
+# path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # import secrets
 
@@ -235,6 +241,8 @@ def indexorders():
     orders = Order.query.all()
     return render_template('order/index.html', orders=orders)
 
+
+
 # Delete record
 @app.route('/deleteorder/<int:id>')
 @login_required
@@ -243,6 +251,26 @@ def deleteOrder(id):
     db.session.delete(order)
     db.session.commit()
     return redirect(url_for('indexorders'))
+
+@app.route('/pdf/<int:customer_id>')
+def generate_pdf(customer_id):
+    # Fetch customer data from your model
+    customer = Customer.query.get(customer_id)
+    
+    if not customer:
+        return "Customer not found", 404
+
+    # Render the HTML template with customer data
+    rendered_html = render_template('customer_pdf.html', customer=customer)
+
+    # Generate PDF from the rendered HTML
+    pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config)
+
+    # Return the PDF as a downloadable response
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'attachment; filename=customer_{customer.id}.pdf'
+    return response
 
 
 @app.route('/createproduct', methods=['GET', 'POST'])
