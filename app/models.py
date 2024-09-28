@@ -54,6 +54,7 @@ class Order(db.Model):
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
     cart_id = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 

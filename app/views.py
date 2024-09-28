@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template,request,redirect,url_for, session
+from flask import render_template,request,redirect,url_for, session,flash
 # from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
@@ -12,6 +12,9 @@ from .models import Payment
 from .models import Customer
 from .models import db
 import bcrypt
+from sqlalchemy import func
+from datetime import datetime
+from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -28,6 +31,17 @@ app.secret_key = 'f735e47866cceca5cc3113cab5d2b58b'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'  # Route to redirect if login is required
+
+# Define the folder where you want to save uploaded images
+UPLOAD_FOLDER = 'static/uploads/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Add the upload folder to your Flask configuration
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Check if the file extension is allowed
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 
@@ -98,7 +112,48 @@ def viewdbstatus():
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    order_count = Order.query.count()
+    user_count = User.query.count()
+    customer_count = Customer.query.count()
+    product_count = Product.query.count()
+
+    now = datetime.now()
+    current_year = now.year
+    current_month = now.month
+
+    # Query the total number of orders or total sales for the current month
+    # Example 1: Count total orders for the current month
+    orders_this_month = Order.query.filter(
+        func.extract('year', Order.created_at) == current_year,
+        func.extract('month', Order.created_at) == current_month
+    ).count()
+
+        # Example 1: Count total orders for the current month
+    products_this_month = Product.query.filter(
+        func.extract('year', Product.created_at) == current_year,
+        func.extract('month', Product.created_at) == current_month
+    ).count()
+
+        # Example 1: Count total orders for the current month
+    customers_this_month = Customer.query.filter(
+        func.extract('year', Customer.created_at) == current_year,
+        func.extract('month', Customer.created_at) == current_month
+    ).count()
+
+        # Example 1: Count total orders for the current month
+    users_this_month = User.query.filter(
+        func.extract('year', User.created_at) == current_year,
+        func.extract('month', User.created_at) == current_month
+    ).count()
+
+    orders = Order.query.all()
+
+    return render_template('index.html', order_count=order_count,user_count=user_count,
+                           customer_count=customer_count,product_count=product_count,
+                           products_this_month=products_this_month,
+                           orders_this_month=orders_this_month,
+                           customers_this_month=customers_this_month,
+                           users_this_month=users_this_month, orders=orders)
 
 
 
@@ -198,6 +253,38 @@ def createproduct():
                           status=status,description=description)
         db.session.add(product)
         db.session.commit()
+
+
+                # Handle the uploaded image
+        if 'image' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+
+        image = request.files['image']
+
+        if image.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+                # Ensure the upload directory exists
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
+
+        if image and allowed_file(image.filename):
+            # Secure the filename and save the file
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            # Save product details and image filename to the database
+            # Example: new_product = Product(name=name, price=price, image=filename, ...)
+            
+            # Perform further actions, like saving product to the database
+
+            flash('Product created successfully!')
+            # return redirect(url_for('products'))
+
+        flash('Invalid file format')
+
+
         return redirect(url_for('indexproducts'))
     return render_template('product/create.html')
 

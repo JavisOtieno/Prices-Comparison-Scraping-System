@@ -30,7 +30,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Total Users</h6>
-                                                        <h2 class="mb-0 number-font">44,278</h2>
+                                                        <h2 class="mb-0 number-font">{{user_count}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -40,8 +40,8 @@
                                                     </div>
                                                 </div>
                                                 <span class="text-muted fs-12"><span class="text-secondary"><i
-                                                            class="fe fe-arrow-up-circle  text-secondary"></i> 5%</span>
-                                                    Last week</span>
+                                                            class="fe fe-arrow-up-circle  text-secondary"></i> {{users_this_month}}</span>
+                                                    This Month</span>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Total Orders</h6>
-                                                        <h2 class="mb-0 number-font">67,987</h2>
+                                                        <h2 class="mb-0 number-font">{{order_count}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -61,8 +61,8 @@
                                                     </div>
                                                 </div>
                                                 <span class="text-muted fs-12"><span class="text-pink"><i
-                                                            class="fe fe-arrow-down-circle text-pink"></i> 0.75%</span>
-                                                    Last 6 days</span>
+                                                            class="fe fe-arrow-up-circle text-pink"></i> {{orders_this_month}}</span>
+                                                    This Month</span>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Total Products</h6>
-                                                        <h2 class="mb-0 number-font">$76,965</h2>
+                                                        <h2 class="mb-0 number-font">{{product_count}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -82,8 +82,8 @@
                                                     </div>
                                                 </div>
                                                 <span class="text-muted fs-12"><span class="text-green"><i
-                                                            class="fe fe-arrow-up-circle text-green"></i> 0.9%</span>
-                                                    Last 9 days</span>
+                                                            class="fe fe-arrow-up-circle text-green"></i> {{products_this_month}}</span>
+                                                    This Month</span>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Total Customers</h6>
-                                                        <h2 class="mb-0 number-font">$59,765</h2>
+                                                        <h2 class="mb-0 number-font">{{customer_count}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -103,8 +103,8 @@
                                                     </div>
                                                 </div>
                                                 <span class="text-muted fs-12"><span class="text-warning"><i
-                                                            class="fe fe-arrow-up-circle text-warning"></i> 0.6%</span>
-                                                    Last year</span>
+                                                            class="fe fe-arrow-up-circle text-warning"></i> {{customers_this_month}}</span>
+                                                    This Month</span>
                                             </div>
                                         </div>
                                     </div>
@@ -156,10 +156,10 @@
                                                                         <thead class="border-top">
                                                                             <tr>
                                                                                 <th class="bg-transparent border-bottom-0"
-                                                                                    style="width: 5%;">Tracking Id</th>
+                                                                                    style="width: 5%;">Id</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    Product</th>
+                                                                                    User</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
                                                                                     Customer</th>
@@ -171,7 +171,7 @@
                                                                                     Amount</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    Payment Mode</th>
+                                                                                    Quantity</th>
                                                                                 <th class="bg-transparent border-bottom-0"
                                                                                     style="width: 10%;">Status</th>
                                                                                 <th class="bg-transparent border-bottom-0"
@@ -243,6 +243,79 @@
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
+                                                                            {% for order in orders %}
+                                                    <tr>
+                                                    <td>{{ order.user_id }}</td>
+                                                    <td>{{ order.customer_id }}</td>
+                                                    <td>{{ order.value }}</td>
+                                                    <td>{{ order.created_at }}</td>
+                                                    <th><a class="btn btn-info" href="/editorder/{{ order.id }}">Edit</a></th>
+                                                    <td><a class="btn btn-danger" href="/deleteorder/{{ order.id }}" onclick="return confirm('Are you sure?')">Delete</a></td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <td class="text-center">
+                                                        <div class="mt-0 mt-sm-2 d-block">
+                                                            <h6
+                                                                class="mb-0 fs-14 fw-semibold">
+                                                                {{ order.id }}</h6>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <span class="avatar bradius"
+                                                                style="background-image: url({{ url_for('static', filename='assets/images/orders/12.jpg') }})"></span>
+                                                            <div
+                                                                class="ms-3 mt-0 mt-sm-2 d-block">
+                                                                <h6
+                                                                    class="mb-0 fs-14 fw-semibold">
+                                                                    {{ order.user_id }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div
+                                                                class="mt-0 mt-sm-3 d-block">
+                                                                <h6
+                                                                    class="mb-0 fs-14 fw-semibold">
+                                                                    {{ order.customer_id }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="mt-sm-2 d-block">{{ order.created_at }}</span></td>
+                                                    <td><span
+                                                            class="fw-semibold mt-sm-2 d-block">{{ order.value }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div
+                                                                class="mt-0 mt-sm-3 d-block">
+                                                                <h6
+                                                                    class="mb-0 fs-14 fw-semibold">
+                                                                    {{order.quantity}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="mt-sm-1 d-block">
+                                                            <span
+                                                                class="badge bg-danger-transparent rounded-pill text-danger p-2 px-3">{{ order.status }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="g-2">
+                                                            <a class="btn text-primary btn-sm"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-original-title="Edit"><span
+                                                                    class="fe fe-edit fs-14"></span></a>
+                                                            <a class="btn text-danger btn-sm"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-original-title="Delete"><span
+                                                                    class="fe fe-trash-2 fs-14"></span></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
                                                                             <tr class="border-bottom">
                                                                                 <td class="text-center">
                                                                                     <div class="mt-0 mt-sm-2 d-block">

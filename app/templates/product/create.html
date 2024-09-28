@@ -31,7 +31,7 @@
                   <!--<p>Use <code class="highlighter-rouge">.table-striped</code>to add zebra-striping to any table row within the <code class="highlighter-rouge">.tbody</code>.</p>-->
                   
                       
-                          <form action="/createproduct" method="POST">
+                          <form action="/createproduct" method="POST"  enctype="multipart/form-data">
                               <!-- @csrf
                               @method('POST') -->
                               <div class="">
@@ -75,6 +75,10 @@
                             <div class="form-group">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea type="text" class="form-control" name="description" id="description" placeholder="Description" autocomplete="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" name="image" id="image" placeholder="Upload Image" accept="image/*">
                             </div>
                           
                                   
