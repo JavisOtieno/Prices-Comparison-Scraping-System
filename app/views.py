@@ -249,12 +249,7 @@ def createproduct():
         status = request.form['status']
         highlights = request.form['highlights']
         description = request.form['description']
-        product = Product(name=name, price=price,
-                          commission=commission,image=image,
-                          cost=cost,highlights=highlights,
-                          status=status,description=description)
-        db.session.add(product)
-        db.session.commit()
+        
 
 
                 # Handle the uploaded image
@@ -276,6 +271,21 @@ def createproduct():
             filename = secure_filename(image.filename)
             
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            file_path = os.path.join(upload_folder, filename)
+            # file.save(file_path)
+
+            image_url = url_for('static', filename=f'uploads/{filename}')
+
+            product = Product(name=name, price=price,
+                            commission=commission,image=image_url,
+                            cost=cost,highlights=highlights,
+                            status=status,description=description)
+            db.session.add(product)
+            db.session.commit()
+
+            # Save the image URL to the database
+            # new_product = Product(image_url=image_url)
 
             # Save product details and image filename to the database
             # Example: new_product = Product(name=name, price=price, image=filename, ...)
