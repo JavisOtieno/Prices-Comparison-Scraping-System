@@ -49,7 +49,8 @@ class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
-    customer_id = db.Column(db.Integer, nullable=False)
+    customer_id = db.Column(db.Integer)
+    # customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     value = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
@@ -57,6 +58,8 @@ class Order(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+        # Set up relationship
+    # customer = db.relationship('Customer', backref='orders')
 
 # class User(UserMixin):
 #     def __init__(self, id):

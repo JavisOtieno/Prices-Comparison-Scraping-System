@@ -192,13 +192,21 @@ def predict():
 def createorder():
     if request.method == 'POST':
         user_id =request.form['user_id']
-        customer_id = request.form['customer_id']
+        customer_name = request.form['customer_name']
+        customer_phone = request.form['customer_phone']
+        customer_delivery_location = request.form['customer_delivery_location']
+        customer = Customer(name=customer_name, phone=customer_phone,
+                          email='',)
+        db.session.add(customer)
+        db.session.commit()
+        customer_id = customer.id
         value = request.form['value']
         notes = request.form['notes']
         status = request.form['status']
         cart_id = request.form['cart_id']
+        quantity = 1
         order = Order(user_id=user_id, customer_id=customer_id,
-                          value=value,notes=notes,
+                          value=value,notes=notes, quantity=quantity,
                           cart_id=cart_id,status=status)
         db.session.add(order)
         db.session.commit()
