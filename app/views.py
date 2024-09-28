@@ -21,7 +21,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
 # Configure path to wkhtmltopdf
-path_to_wkhtmltopdf = '/usr/local/bin/wkhtmltopdf'  # Adjust for your system
+path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
 # path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
