@@ -272,7 +272,7 @@ def createproduct():
             
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            file_path = os.path.join(upload_folder, filename)
+            # file_path = os.path.join(upload_folder, filename)
             # file.save(file_path)
 
             image_url = url_for('static', filename=f'uploads/{filename}')
