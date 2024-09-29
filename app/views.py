@@ -40,6 +40,8 @@ if hostname == 'DESKTOP-6FGNSTO' or hostname == 'your-local-machine-name':
 else:
     path_to_wkhtmltopdf = production_path_to_wkhtmltopdf
 
+pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+
 # Get environment
 # environment = os.getenv('ENVIRONMENT', 'development')  # default to 'development' if not set
 
