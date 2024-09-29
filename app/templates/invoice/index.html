@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Invoice</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --body-font: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 2;
+            color: #41403E;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .my-5 {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .py-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .border-top {
+            border-top: 1px solid #dee2e6;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .py-3 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .fw-bold {
+            font-weight: 700;
+        }
+
+        .d-md-flex {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mt-5 {
+            margin-top: 3rem;
+        }
+
+        .mt-md-0 {
+            margin-top: 0;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .bg-primary-subtle {
+            background-color: #e2e6ea;
+        }
+
+        .text-primary {
+            color: #0070E4;
+        }
+
+        .list-unstyled {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .fw-semibold {
+            font-weight: 600;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .text-black-50 {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .border {
+            border: 1px solid #dee2e6;
+        }
+
+        .border-top {
+            border-top: 1px solid #dee2e6;
+        }
+
+        .text-md-end {
+            text-align: end;
+        }
+
+        /* Added styles for footer */
+        #footer-bottom .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <section id="invoice">
+        <div class="container">
+            <!-- <div class="text-center">
+                <img src="images/logo_dark.png" alt="">
+                 
+            </div> -->
+            <div class="text-center border-top border-bottom my-5 py-3">
+                <h2 class="display-5 fw-bold">Test Name Sales Invoice </h2>
+                <p class="m-0">Invoice No: 12345</p>
+                <p class="m-0">Invoice Date: 20 May, 2024</p>
+            </div>
+
+            <div class="d-md-flex justify-content-between">
+                <div>
+                    <p class="text-primary">Invoice To</p>
+                    <h4>{{customer.name}}</h4>
+                    <ul class="list-unstyled">
+                        <li>{{customer.phone}}</li>
+                        <!-- <li>{{customer.email}}</li> -->
+                        <li>123 Main Street</li>
+                    </ul>
+                </div>
+                <!-- <div class="mt-5 mt-md-0">
+                    <p class="text-primary">Invoice From</p>
+                    <h4>William Peter</h4>
+                    <ul class="list-unstyled">
+                        <li>ABC Company</li>
+                        <li>info@abccompany.com</li>
+                        <li>456 Main Street</li>
+                    </ul>
+                </div> -->
+            </div>
+
+            <table class="table border my-5">
+                <thead>
+                    <tr class="bg-primary-subtle">
+                        <th scope="col">No.</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Brand Designing</td>
+                        <td>$350.00</td>
+                        <td>2</td>
+                        <td>$700.00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Website Development</td>
+                        <td>$250.00</td>
+                        <td>1</td>
+                        <td>$250.00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Blog Writing</td>
+                        <td>$100.00</td>
+                        <td>4</td>
+                        <td>$400.00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Logo Designing</td>
+                        <td>$350.00</td>
+                        <td>2</td>
+                        <td>$700.00</td>
+                    </tr>
+                    <!-- <tr>
+                        <th scope="row">5</th>
+                        <td>Wordpress Theme Development</td>
+                        <td>$250.00</td>
+                        <td>2</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Website Advertisement</td>
+                        <td>$100.00</td>
+                        <td>4</td>
+                        <td>$400.00</td>
+                    </tr> -->
+                    <!-- <tr>
+                        <th></th>
+                        <td></td>
+                        <td></td>
+                        <td class="">Sub-Total</td>
+                        <td>$2,350.00</td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td></td>
+                        <td></td>
+                        <td class="">TAX 20%</td>
+                        <td>$470.00</td>
+                    </tr> -->
+                    <tr>
+                        <th></th>
+                        <td></td>
+                        <td></td>
+                        <td class="text-primary fw-bold">Grand-Total</td>
+                        <td class="text-primary fw-bold">$1,880.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-md-flex justify-content-between my-5">
+                <div>
+                    <h5 class="fw-bold my-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><iconify-icon class="social-icon text-primary fs-5 me-2" icon="mdi:location"
+                                style="vertical-align:text-bottom"></iconify-icon> {{customer.phone}}</li>
+                        <li><iconify-icon class="social-icon text-primary fs-5 me-2" icon="solar:phone-bold"
+                                style="vertical-align:text-bottom"></iconify-icon> {{customer.email}}</li>
+                        <!-- <li><iconify-icon class="social-icon text-primary fs-5 me-2" icon="ic:baseline-email"
+                                style="vertical-align:text-bottom"></iconify-icon> {{customer.email}}</li> -->
+                    </ul>
+                </div>
+                <!-- <div>
+                    <h5 class="fw-bold my-4">Payment Info</h5>
+                    <ul class="list-unstyled">
+                        <li><span class="fw-semibold">Account No: </span> 102 3345 56938</li>
+                        <li><span class="fw-semibold">Account Name: </span> William Peter</li>
+                        <li><span class="fw-semibold">Branch Name: </span> XYZ </li>
+
+                    </ul>
+                </div> -->
+            </div>
+
+            <!-- <div class="text-center my-5">
+                <p class="text-muted"><span class="fw-semibold">NOTICE: </span> A finance charge of 1.5% will be made on
+                    unpaid balances after 30 days.</p>
+            </div> -->
+
+            <div id="footer-bottom">
+                <div class="container border-top">
+                    <div class="row mt-3">
+                        <!-- <div class="col-md-6 copyright">
+                            <p>© 2024 Invoice. <a href="#" target="_blank"
+                                    class="text-decoration-none text-black-50">Terms & Conditions</a> </p>
+                        </div> -->
+                        <!-- <div class="col-md-6 text-md-end">
+                            <p>Free HTML Template by: <a href="https://templatesjungle.com/" target="_blank"
+                                    class="text-decoration-none text-black-50">
+                                    TemplatesJungle</a> </p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+</body>
+
+</html>

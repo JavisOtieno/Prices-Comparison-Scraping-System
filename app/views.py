@@ -21,8 +21,8 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
 # Configure path to wkhtmltopdf
-path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
-# path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+# path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
+path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # import secrets
@@ -252,6 +252,46 @@ def deleteOrder(id):
     db.session.commit()
     return redirect(url_for('indexorders'))
 
+@app.route('/invoice/<int:customer_id>')
+def view_invoice(customer_id):
+    # Fetch customer data from your model
+    customer = Customer.query.get(customer_id)
+    
+    if not customer:
+        return "Customer not found", 404
+
+    # Render the HTML template with customer data
+    return render_template('invoice/index.html', customer=customer)
+
+@app.route('/pdf/view/<int:customer_id>')
+def view_pdf(customer_id):
+    # Fetch customer data from your model
+    customer = Customer.query.get(customer_id)
+    
+    if not customer:
+        return "Customer not found", 404
+
+    # Render the HTML template with customer data
+    rendered_html = render_template('invoice/index.html', customer=customer)
+
+    # Generate PDF from the rendered HTML
+    # pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config)
+
+    pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config, options={
+        'enable-local-file-access': '',
+    'no-stop-slow-scripts': '',
+        'zoom': '1.3',
+        'dpi': 300,
+        'no-outline': None,
+        'print-media-type': ''
+    })
+
+    # Return the PDF to be displayed in the browser
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    return response
+
+
 @app.route('/pdf/<int:customer_id>')
 def generate_pdf(customer_id):
     # Fetch customer data from your model
@@ -261,7 +301,7 @@ def generate_pdf(customer_id):
         return "Customer not found", 404
 
     # Render the HTML template with customer data
-    rendered_html = render_template('customer_pdf.html', customer=customer)
+    rendered_html = render_template('invoice/index.html', customer=customer)
 
     # Generate PDF from the rendered HTML
     pdf = pdfkit.from_string(rendered_html, False, configuration=pdfkit_config)
