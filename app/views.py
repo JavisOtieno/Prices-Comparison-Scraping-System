@@ -19,6 +19,7 @@ import pdfkit
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+import socket
 
 # Configure path to wkhtmltopdf
 # path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
@@ -29,15 +30,25 @@ path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
 local_path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
 production_path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'
 
-# Get environment
-environment = os.getenv('ENVIRONMENT', 'development')  # default to 'development' if not set
+hostname = socket.gethostname()
+print("hostname",hostname,hostname == 'DESKTOP-6FGNSTO')
 
-if environment == 'development':
+
+# Assuming your development environment is 'localhost' or starts with something specific
+if hostname == 'DESKTOP-6FGNSTO' or hostname == 'your-local-machine-name':
     path_to_wkhtmltopdf = local_path_to_wkhtmltopdf
 else:
     path_to_wkhtmltopdf = production_path_to_wkhtmltopdf
 
-pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+# Get environment
+# environment = os.getenv('ENVIRONMENT', 'development')  # default to 'development' if not set
+
+# if environment == 'development':
+#     path_to_wkhtmltopdf = local_path_to_wkhtmltopdf
+# else:
+#     path_to_wkhtmltopdf = production_path_to_wkhtmltopdf
+
+# pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # import secrets
 
