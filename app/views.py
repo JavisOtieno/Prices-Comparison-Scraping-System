@@ -23,6 +23,20 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 # Configure path to wkhtmltopdf
 # path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
 path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+
+
+# Define paths for wkhtmltopdf
+local_path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+production_path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'
+
+# Get environment
+environment = os.getenv('ENVIRONMENT', 'development')  # default to 'development' if not set
+
+if environment == 'development':
+    path_to_wkhtmltopdf = local_path_to_wkhtmltopdf
+else:
+    path_to_wkhtmltopdf = production_path_to_wkhtmltopdf
+
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
 
 # import secrets
