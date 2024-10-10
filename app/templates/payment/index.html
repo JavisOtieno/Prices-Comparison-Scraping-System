@@ -44,7 +44,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="wd-15p border-bottom-0">Payment Id</th>
-                                                        <th class="wd-15p border-bottom-0">User Id</th>
+                                                        <th class="wd-15p border-bottom-0">User Name</th>
                                                         <th class="wd-15p border-bottom-0">Total</th>
                                                         <th class="wd-25p border-bottom-0">Created At</th>
                                                         <th class="wd-25p border-bottom-0">Edit</th>
@@ -57,7 +57,7 @@
                                                     {% for payment in payments %}
                                                     <tr>
                                                     <td>{{ payment.id }}</td>
-                                                    <td>{{ payment.user_id }}</td>
+                                                    <td>{{ payment.user.name }}</td>
                                                     <td>{{ payment.total }}</td>
                                                     <td>{{ payment.created_at }}</td>
                                                     <th><a class="btn btn-info" href="/editpayment/{{ payment.id }}">Edit</a></th>

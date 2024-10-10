@@ -236,11 +236,10 @@ def createorder():
         value = request.form['value']
         notes = request.form['notes']
         status = request.form['status']
-        cart_id = request.form['cart_id']
+        # cart_id = request.form['cart_id']
         quantity = 1
         order = Order(user_id=user_id, customer_id=customer_id,
-                          value=value,notes=notes, quantity=quantity,
-                          cart_id=cart_id,status=status)
+                          value=value,notes=notes, quantity=quantity,status=status)
         db.session.add(order)
         db.session.commit()
         return redirect(url_for('indexorders'))
@@ -257,7 +256,7 @@ def editorder(id):
         order.value = request.form['value']
         order.notes = request.form['notes']
         order.status = request.form['status']
-        order.cart_id = request.form['cart_id']
+        # order.cart_id = request.form['cart_id']
         db.session.commit()
         return redirect(url_for('indexorders'))
     return render_template('order/edit.html', order=order)
@@ -561,11 +560,12 @@ def dashboard():
          categoryString=categoryString+str(category.name)+" "+"<br/>"
     return render_template('index.html', categories=categoryString)
 
-@app.route('/orders')
-@login_required
-def orders():
-    orders = Order.query.all()
-    return render_template('orders.html', orders=orders)
+# @app.route('/orders')
+# @login_required
+# def orders():
+#     orders = Order.query.all()
+#     return "test"
+#     return render_template('orders.html', orders=orders)
 
 @app.route('/users')
 @login_required

@@ -48,13 +48,14 @@ class Product(db.Model):
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    customer_id = db.Column(db.Integer)
+    # user_id = db.Column(db.Integer, nullable=False)
+    # customer_id = db.Column(db.Integer)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     # customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     value = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
-    cart_id = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
@@ -85,6 +86,8 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
+    order = db.relationship('Order', backref='user', uselist=False)
+    payment = db.relationship('Payment', backref='user', uselist=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
@@ -102,14 +105,16 @@ class Customer(db.Model):
     name = db.Column(db.Text, nullable=False)
     phone = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
+    order = db.relationship('Order', backref='customer', uselist=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
 class Payment(db.Model):
     __tablename__ = 'payments'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Text, nullable=False)
+    # user_id = db.Column(db.Text, nullable=False)
     total = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
