@@ -260,7 +260,8 @@ def editorder(id):
         # order.cart_id = request.form['cart_id']
         db.session.commit()
         return redirect(url_for('indexorders'))
-    return render_template('order/edit.html', order=order)
+    users = User.query.all()
+    return render_template('order/edit.html', order=order,users=users)
 
 @app.route('/orders')
 @login_required
@@ -497,7 +498,8 @@ def createpayment():
         db.session.add(payment)
         db.session.commit()
         return redirect(url_for('indexpayments'))
-    return render_template('payment/create.html')
+    users = User.query.all()
+    return render_template('payment/create.html',users=users)
 
 # Update record
 @app.route('/editpayment/<int:id>', methods=['GET', 'POST'])
@@ -509,7 +511,8 @@ def editpayment(id):
         payment.user_id = request.form['user_id']
         db.session.commit()
         return redirect(url_for('indexpayments'))
-    return render_template('payment/edit.html', payment=payment)
+    users = User.query.all()
+    return render_template('payment/edit.html', payment=payment,users=users)
 
 
 

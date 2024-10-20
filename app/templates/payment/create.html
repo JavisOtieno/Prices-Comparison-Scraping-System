@@ -37,15 +37,40 @@
                               <div class="">
       
                                   
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="name" class="form-label">User Id</label>
                                     <input type="text" class="form-control" name="user_id" id="user_id" placeholder="User Id" autocomplete="user_id" >
-                                </div>                            
+                                </div>  -->
+                                <div class="form-group"></div>
+                                    <label class="form-label"> User</label>
+                                    <select name="user_id" id="user_id" class="form-control select2-show-search form-select" data-placeholder="Choose one">
+                                            <option label="Choose one"></option>
+                                           
+                                            
+                                            {% for user in users %}
+                                    <option value="{{user.id}}" {{ "selected" if user.websitename =="javytech" else "" }}>{{user.name+' - '+user.websitename+'.av.ke'}}</option>
+                                    {% endfor %}
+                                        </select>
+                                </div>                           
       
                                   <div class="form-group">
                                       <label for="name" class="form-label">Total</label>
                                       <input type="text" class="form-control" name="total" id="total" placeholder="Total" autocomplete="total" >
                                   </div>
+                                  <div class="form-group"></div>
+                                    <label for="status" class="form-label">Status</label>
+                                    <!-- <input type="text" class="form-control" 
+                                    name="status" id="status" placeholder="Status" 
+                                    autocomplete="status" > -->
+                                    <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
+                                    
+                                        <option value="processing">Processing</option>
+                                        <option value="complete">Complete</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        
+                                        
+                                    </select>
+                                </div>
                                   
                               </div>
                               <button class="btn btn-primary col-12 mt-4 mb-0">Save</button>
