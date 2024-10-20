@@ -423,7 +423,8 @@ def editproduct(id):
         product.description = request.form['description']
         db.session.commit()
         return redirect(url_for('indexproducts'))
-    return render_template('product/edit.html', product=product)
+    categories = Category.query.all()
+    return render_template('product/edit.html', product=product,categories=categories)
 
 @app.route('/products')
 @login_required

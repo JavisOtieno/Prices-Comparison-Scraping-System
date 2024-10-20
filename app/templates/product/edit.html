@@ -66,11 +66,25 @@
                               
                               <div class="form-group">
                                 <label for="status" class="form-label">Status</label>
-                                <input type="text" class="form-control" name="status" id="status" placeholder="Status" autocomplete="status" value="{{ product.status }}">
+                                <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
+                                    
+                                    
+                                    <option value="available" {{ "selected" if product.id =="available" else "" }}>Available</option>
+                                    <option value="unavailable" {{ "selected" if product.id =="unavailable" else "" }}>Unavailable - Out of Stock</option>
+                                    
+                                </select>
+                                <!-- <input type="text" class="form-control" name="status" id="status" placeholder="Status" autocomplete="status" value="{{ product.status }}"> -->
                             </div>
                             <div class="form-group">
                                 <label for="category_id" class="form-label">Category</label>
-                                <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category Id" autocomplete="category" value="{{ product.category_id }}">
+                                <select name="category_id" class="form-control form-select" data-bs-placeholder="Select Category">
+                                    
+                                    {% for category in categories %}
+                                    <option  value="{{category.id}}" {{ "selected" if category.id == product.id else "" }}
+                                    >{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category Id" autocomplete="category" value="{{ product.category_id }}"> -->
                             </div>
                             <div class="form-group">
                                 <label for="highlights" class="form-label">Highlights</label>
