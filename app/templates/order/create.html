@@ -49,7 +49,7 @@
                                     <select name="user_id" id="user_id" class="form-control select2-show-search form-select" data-placeholder="Choose one">
                                             <option label="Choose one"></option>
                                            
-                                            <option value="WI">Wisconsin</option>
+                                            
                                             {% for user in users %}
                                     <option value="{{user.id}}" {{ "selected" if user.websitename =="javytech" else "" }}>{{user.name+' - '+user.websitename+'.av.ke'}}</option>
                                     {% endfor %}
@@ -82,9 +82,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="status" class="form-label">Status</label>
-                                    <input type="text" class="form-control" 
+                                    <!-- <input type="text" class="form-control" 
                                     name="status" id="status" placeholder="Status" 
-                                    autocomplete="status" >
+                                    autocomplete="status" > -->
                                     <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
                                     
                                     
