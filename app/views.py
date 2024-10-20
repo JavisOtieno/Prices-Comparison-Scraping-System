@@ -403,7 +403,8 @@ def createproduct():
 
 
         return redirect(url_for('indexproducts'))
-    return render_template('product/create.html')
+    categories = Category.query.all()
+    return render_template('product/create.html',categories=categories)
 
 # Update record
 @app.route('/editproduct/<int:id>', methods=['GET', 'POST'])
