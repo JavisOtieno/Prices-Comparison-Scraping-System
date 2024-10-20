@@ -58,10 +58,13 @@
                                   autocomplete="cart_id" value="{{ order.cart_id }}" >
                               </div> -->
                               <div class="form-group">
-                                  <label for="status" class="form-label">Status</label>
-                                  <input type="text" class="form-control" 
+                                  <!-- <label for="status" class="form-label">Status</label> -->
+                                  <!-- <input type="text" class="form-control" 
                                   name="status" id="status" placeholder="Status" 
-                                  autocomplete="status" value="{{ order.status }}">
+                                  autocomplete="status" value="{{ order.status }}"> -->
+                                  <option value="complete"  {{ "selected" if order.status =="complete" else "" }}>Complete</option>
+                                        <option value="cancelled" {{ "selected" if order.status =="cancelled" else "" }}>Cancelled</option>
+                                        <option value="processing" {{ "selected" if order.status =="processing" else "" }}>Processing</option>
                               </div>
 
                               <div class="form-group">

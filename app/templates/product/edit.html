@@ -69,8 +69,8 @@
                                 <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
                                     
                                     
-                                    <option value="available" {{ "selected" if product.id =="available" else "" }}>Available</option>
-                                    <option value="unavailable" {{ "selected" if product.id =="unavailable" else "" }}>Unavailable - Out of Stock</option>
+                                    <option value="available" {{ "selected" if product.status =="available" else "" }}>Available</option>
+                                    <option value="unavailable" {{ "selected" if product.status =="unavailable" else "" }}>Unavailable - Out of Stock</option>
                                     
                                 </select>
                                 <!-- <input type="text" class="form-control" name="status" id="status" placeholder="Status" autocomplete="status" value="{{ product.status }}"> -->

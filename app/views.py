@@ -243,7 +243,8 @@ def createorder():
         db.session.add(order)
         db.session.commit()
         return redirect(url_for('indexorders'))
-    return render_template('order/create.html')
+    users = User.query.all()
+    return render_template('order/create.html',users=users)
 
 # Update record
 @app.route('/editorder/<int:id>', methods=['GET', 'POST'])
