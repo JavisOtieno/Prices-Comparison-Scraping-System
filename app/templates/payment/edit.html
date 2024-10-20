@@ -63,10 +63,12 @@
                                       <input type="text" class="form-control" name="total" id="total" placeholder="Total" autocomplete="total"  value="{{ payment.total }}" >
                                   </div>
                                   <div class="form-group">
-                                    
+                                    <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
+
                                     <option value="complete"  {{ "selected" if payment.status =="complete" else "" }}>Complete</option>
                                           <option value="cancelled" {{ "selected" if payment.status =="cancelled" else "" }}>Cancelled</option>
                                           <option value="processing" {{ "selected" if payment.status =="processing" else "" }}>Processing</option>
+                                          </select>
                                 </div>
                                   
                               </div>

@@ -73,9 +73,12 @@
                                   <!-- <input type="text" class="form-control" 
                                   name="status" id="status" placeholder="Status" 
                                   autocomplete="status" value="{{ order.status }}"> -->
+                                  <select name="status" class="form-control form-select" data-bs-placeholder="Select Category">
+
                                   <option value="complete"  {{ "selected" if order.status =="complete" else "" }}>Complete</option>
                                         <option value="cancelled" {{ "selected" if order.status =="cancelled" else "" }}>Cancelled</option>
                                         <option value="processing" {{ "selected" if order.status =="processing" else "" }}>Processing</option>
+                                        </select>
                               </div>
 
                               <div class="form-group">
