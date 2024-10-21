@@ -53,7 +53,7 @@
                                            
                                             
                                             {% for user in users %}
-                                    <option value="{{user.id}}" {{ "selected" if user.id ==order.user_id else "" }}>{{user.name+' - '+user.websitename+'.av.ke'}}</option>
+                                    <option value="{{user.id}}" {{ "selected" if user.id ==payment.user_id else "" }}>{{user.name+' - '+user.websitename+'.av.ke'}}</option>
                                     {% endfor %}
                                         </select>
                                 </div>                        

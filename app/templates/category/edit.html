@@ -44,8 +44,36 @@
       
                                   <div class="form-group">
                                       <label for="name" class="form-label">Name</label>
-                                      <input type="text" class="form-control" name="name" id="name" placeholder="Name" autocomplete="name" value="{{ category.id }}">
+                                      <input type="text" class="form-control" name="name" id="name" placeholder="Name" autocomplete="name" value="{{ category.name }}">
                                   </div>
+
+                                  <div class="form-group">
+                                    <label class="form-label">Parent Category</label>
+                                    <select name="parent_category_id" id="parent_category_id" class="form-control select2-show-search form-select" data-placeholder="Choose one">
+                                            <option label="Choose one"></option>
+                                            <option label="None" value="0">None</option>
+                                        
+                                            {% for categoryitem in categories %}
+                                    <option value="{{categoryitem.id}}" {{ "selected" if categoryitem.id ==category.parent_category_id else "" }}>{{categoryitem.name}}</option>
+                                    {% endfor %}
+                                        </select>
+                                </div>                           
+      
+                                 
+                                  <div class="form-group">
+                                    <label for="status" class="form-label">Type</label>
+                                    <!-- <input type="text" class="form-control" 
+                                    name="status" id="status" placeholder="Status" 
+                                    autocomplete="status" > -->
+                                    <select name="type" class="form-control form-select" data-bs-placeholder="Select Category">
+                                    
+                                        <option value="main" {{ "selected" if category.type =="main" else "" }}>Main</option>
+                                        <option value="mid" {{ "selected" if category.type =="mid" else "" }}>Mid</option>
+                                        <option value="child" {{ "selected" if category.type =="child" else "" }}>Child</option>
+                                        
+                                        
+                                    </select>
+                                </div
                                   
                               </div>
                               <button class="btn btn-primary col-12 mt-4 mb-0">Save</button>

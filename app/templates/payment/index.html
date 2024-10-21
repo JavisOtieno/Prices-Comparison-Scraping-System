@@ -46,6 +46,7 @@
                                                         <th class="wd-15p border-bottom-0">Payment Id</th>
                                                         <th class="wd-15p border-bottom-0">User Name</th>
                                                         <th class="wd-15p border-bottom-0">Total</th>
+                                                        <th class="wd-15p border-bottom-0">Status</th>
                                                         <th class="wd-25p border-bottom-0">Created At</th>
                                                         <th class="wd-25p border-bottom-0">Edit</th>
                                                         <th class="wd-25p border-bottom-0">Delete</th>
@@ -59,6 +60,7 @@
                                                     <td>{{ payment.id }}</td>
                                                     <td>{{ payment.user.name }}</td>
                                                     <td>{{ payment.total }}</td>
+                                                    <td>{{ payment.status }}</td>
                                                     <td>{{ payment.created_at }}</td>
                                                     <th><a class="btn btn-info" href="/editpayment/{{ payment.id }}">Edit</a></th>
                                                     <td><a class="btn btn-danger" href="/deletepayment/{{ payment.id }}" onclick="return confirm('Are you sure?')">Delete</a></td>

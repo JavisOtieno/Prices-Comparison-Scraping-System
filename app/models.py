@@ -118,6 +118,7 @@ class Payment(db.Model):
     # user_id = db.Column(db.Text, nullable=False)
     total = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
+    status = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
@@ -127,6 +128,8 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
+    type = db.Column(db.Text, nullable=False)
+    parent_category_id = db.Column(db.Integer, unique=True)
     product = db.relationship('Product', backref='category', uselist=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)

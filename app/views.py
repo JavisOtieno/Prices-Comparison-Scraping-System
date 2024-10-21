@@ -457,11 +457,14 @@ def deleteProduct(id):
 def create():
     if request.method == 'POST':
         name = request.form['name']
-        category = Category(name=name)
+        parent_category_id = request.form['parent_category_id']
+        type = request.form['type']
+        category = Category(name=name,parent_category_id=parent_category_id,type=type)
         db.session.add(category)
         db.session.commit()
         return redirect(url_for('indexcategories'))
-    return render_template('category/create.html')
+    categories = Category.query.all()
+    return render_template('category/create.html',categories=categories)
 
 # Update record
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -470,9 +473,12 @@ def edit(id):
     category = Category.query.get(id)
     if request.method == 'POST':
         category.name = request.form['name']
+        category.type = request.form['type']
+        category.parent_category_id = request.form['parent_category_id']
         db.session.commit()
         return redirect(url_for('indexcategories'))
-    return render_template('category/edit.html', category=category)
+    categories = Category.query.all()
+    return render_template('category/edit.html', category=category,categories=categories)
 
 @app.route('/categories')
 @login_required
@@ -494,7 +500,8 @@ def createpayment():
     if request.method == 'POST':
         total = request.form['total']
         user_id = request.form['user_id']
-        payment = Payment(total=total,user_id=user_id)
+        status = request.form['status']
+        payment = Payment(total=total,user_id=user_id,status=status)
         db.session.add(payment)
         db.session.commit()
         return redirect(url_for('indexpayments'))
@@ -509,6 +516,7 @@ def editpayment(id):
     if request.method == 'POST':
         payment.total = request.form['total']
         payment.user_id = request.form['user_id']
+        payment.status = request.form['status']
         db.session.commit()
         return redirect(url_for('indexpayments'))
     users = User.query.all()
