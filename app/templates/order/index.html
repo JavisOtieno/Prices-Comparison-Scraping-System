@@ -47,6 +47,7 @@
                                                         <th class="wd-15p border-bottom-0">Order Details</th>
                                                         <th class="wd-15p border-bottom-0">Customer Name</th>
                                                         <th class="wd-25p border-bottom-0">Value</th>
+                                                        <th class="wd-25p border-bottom-0">Date</th>
                                                         <th class="wd-25p border-bottom-0">Edit</th>
                                                         <th class="wd-25p border-bottom-0">Delete</th>
 
@@ -61,7 +62,7 @@
                                                     <td>{{ order.customer.name }}</td>
                                                     <td>{{ order.value }}</td>
                                                     <td>{{ order.created_at }}</td>
-                                                    <th><a class="btn btn-info" href="/editorder/{{ order.id }}">Edit</a></th>
+                                                    <td><a class="btn btn-info" href="/editorder/{{ order.id }}">Edit</a></td>
                                                     <td><a class="btn btn-danger" href="/deleteorder/{{ order.id }}" onclick="return confirm('Are you sure?')">Delete</a></td>
                                                 </tr>
                                                 {% endfor %}
