@@ -11,12 +11,90 @@ $(function(e) {
 
 
     //______Basic Data Table
-    $('#responsive-datatable').DataTable({
+    // $('#responsive-datatable').DataTable({
+    //     language: {
+    //         searchPlaceholder: 'Search...',
+    //         scrollX: "100%",
+    //         sSearch: '',
+    //     }
+    // });
+
+       //______Basic Data Table
+       var table2=$('#responsive-datatable').DataTable({
+        "order": [0, 'desc'],
+        'ordering': true,
         language: {
             searchPlaceholder: 'Search...',
             scrollX: "100%",
             sSearch: '',
+        
+        },
+        buttons: [
+            {
+                extend: 'copy',
+                title: 'FAVEExport',
+                exportOptions: {
+                    columns: function(idx, data, node) {
+                        // Prevent export of columns with certain IDs
+                        var columnId = $(node).attr('id');
+                        return columnId !== 'map-column' && columnId !== 'view-column' &&columnId !== 'edit-column' && columnId !== 'delete-column';
+                    },
+                    format: {
+                        body: function (data, row, column, node) {
+                            return data.replace(/\n/g, '\r\n'); // Replace \n with \r\n for clipboard copy
+                        }
+                    }
+                }
+            }
+            , 
+        {
+            extend: 'excelHtml5',
+            title: 'FAVEExport',
+            exportOptions: {
+                columns: function(idx, data, node) {
+                    // Prevent export of columns with certain IDs
+                    var columnId = $(node).attr('id');
+                    return columnId !== 'map-column' && columnId !== 'view-column' && columnId !== 'edit-column' && columnId !== 'delete-column';
+                },
+                format: {
+                    body: function (data, row, column, node) {
+                        return data.replace(/\n/g, '\r\n'); // Replace \n with \r\n for Excel
+                    }
+                }
+            }
         }
+        
+        , 
+        {
+            extend: 'pdf',
+            title: 'FAVEExport',
+            exportOptions: {
+                columns: function(idx, data, node) {
+                    // Prevent export of columns with certain IDs
+                    var columnId = $(node).attr('id');
+                    return columnId !== 'map-column' && columnId !== 'view-column' &&columnId !== 'edit-column' && columnId !== 'delete-column';
+                },
+                format: {
+                    body: function (data, row, column, node) {
+                        return data.replace(/\n/g, '\n'); // Preserve newlines for PDF
+                    }
+                }
+            },
+            
+        },
+        
+        ,         {
+            extend: 'colvis',
+            title: 'FAVEExport',
+            // columns: function(idx, data, node) {
+            //         // Prevent export of columns with certain IDs
+            //         var columnId = $(node).attr('id');
+            //         return columnId !== 'edit-column' && columnId !== 'delete-column';
+            //     }
+            
+        }
+    ],
+        
     });
 
     //______File-Export Data Table
