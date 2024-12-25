@@ -10,14 +10,14 @@ $(function(e) {
     });
 
 
-    $('#responsive-datatable').DataTable({
-        "order": [0, 'desc'],
-        language: {
-            searchPlaceholder: 'Search...',
-            scrollX: "100%",
-            sSearch: '',
-        }
-    });
+    // $('#responsive-datatable').DataTable({
+    //     "order": [0, 'desc'],
+    //     language: {
+    //         searchPlaceholder: 'Search...',
+    //         scrollX: "100%",
+    //         sSearch: '',
+    //     }
+    // });
 
        //______Basic Data Table
        var table2=$('#responsive-datatable').DataTable({
