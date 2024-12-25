@@ -241,7 +241,7 @@ def createorder():
         quantity = 1
         order = Order(user_id=user_id, customer_id=customer_id,
                       order_details=order_details,
-                          value=value,notes=notes, quantity=quantity,status=status)
+                        value=value,notes=notes, quantity=quantity,status=status)
         db.session.add(order)
         db.session.commit()
         return redirect(url_for('indexorders'))
