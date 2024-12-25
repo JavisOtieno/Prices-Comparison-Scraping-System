@@ -40,6 +40,7 @@
                                             <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
                                                 <thead>
                                                     <tr>
+                                                        <th class="wd-15p border-bottom-0">Id</th>
                                                         <th class="wd-15p border-bottom-0">Name</th>
                                                         <th class="wd-15p border-bottom-0">Price</th>
                                                         <th class="wd-20p border-bottom-0">Cost</th>
@@ -56,6 +57,7 @@
                                                     
                                                         {% for product in products %}
                                                         <tr>
+                                                        <td>{{ product.id }}</td>
                                                         <td>{{ product.name }}</td>
                                                         <td>{{ product.price }}</td>
                                                         <td>{{ product.cost }}</td>

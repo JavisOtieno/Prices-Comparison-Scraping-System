@@ -43,6 +43,7 @@
                                             <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
                                                 <thead>
                                                     <tr>
+                                                        <th class="wd-15p border-bottom-0">ID</th>
                                                         <th class="wd-15p border-bottom-0">User Name</th>
                                                         <th class="wd-15p border-bottom-0">Order Details</th>
                                                         <th class="wd-15p border-bottom-0">Customer Name</th>
@@ -57,6 +58,7 @@
                                                     
                                                     {% for order in orders %}
                                                     <tr>
+                                                    <td>{{ order.id }}</td>
                                                     <td>{{ order.user.name }}</td>
                                                     <td>{{ order.order_details }}</td>
                                                     <td>{{ order.customer.name }}</td>
