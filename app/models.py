@@ -57,6 +57,7 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     # customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     value = db.Column(db.Integer, nullable=False)
+    order_details = db.Column(db.Text, nullable=False)
     notes = db.Column(db.Text, nullable=False)
     status = db.Column(db.Text, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)

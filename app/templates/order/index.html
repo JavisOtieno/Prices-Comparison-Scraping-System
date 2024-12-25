@@ -44,6 +44,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="wd-15p border-bottom-0">User Name</th>
+                                                        <th class="wd-15p border-bottom-0">Order Details</th>
                                                         <th class="wd-15p border-bottom-0">Customer Name</th>
                                                         <th class="wd-25p border-bottom-0">Value</th>
                                                         <th class="wd-25p border-bottom-0">Edit</th>
@@ -56,6 +57,7 @@
                                                     {% for order in orders %}
                                                     <tr>
                                                     <td>{{ order.user.name }}</td>
+                                                    <td>{{ order.order_details }}</td>
                                                     <td>{{ order.customer.name }}</td>
                                                     <td>{{ order.value }}</td>
                                                     <td>{{ order.created_at }}</td>
