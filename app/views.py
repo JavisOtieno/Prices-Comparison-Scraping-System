@@ -234,11 +234,13 @@ def createorder():
         db.session.commit()
         customer_id = customer.id
         value = request.form['value']
+        order_details = request.form['order_details']
         notes = request.form['notes']
         status = request.form['status']
         # cart_id = request.form['cart_id']
         quantity = 1
         order = Order(user_id=user_id, customer_id=customer_id,
+                      order_details=order_details,
                           value=value,notes=notes, quantity=quantity,status=status)
         db.session.add(order)
         db.session.commit()
@@ -254,6 +256,7 @@ def editorder(id):
     if request.method == 'POST':
         order.user_id =request.form['user_id']
         order.customer_id = request.form['customer_id']
+        order.order_details = request.form['order_details']
         order.value = request.form['value']
         order.notes = request.form['notes']
         order.status = request.form['status']
