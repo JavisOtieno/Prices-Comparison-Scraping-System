@@ -181,7 +181,7 @@ def index():
         func.extract('month', User.created_at) == current_month
     ).count()
 
-    orders = Order.query.all()
+    orders = Order.query.order_by(Order.created_at.desc()).limit(10).all()
 
     return render_template('index.html', order_count=order_count,user_count=user_count,
                            customer_count=customer_count,product_count=product_count,
