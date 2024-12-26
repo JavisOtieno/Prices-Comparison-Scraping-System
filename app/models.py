@@ -44,6 +44,8 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=False)
     # category_id = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=True)
+    sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=True)
+    sub_sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=True)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)

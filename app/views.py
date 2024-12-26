@@ -354,6 +354,8 @@ def createproduct():
         cost = request.form['cost']
         image = request.form['image']
         category_id = request.form['category_id']
+        sub_category_id = request.form['sub_category_id']
+        sub_sub_category_id = request.form['sub_category_id']
         status = request.form['status']
         highlights = request.form['highlights']
         description = request.form['description']
@@ -387,7 +389,8 @@ def createproduct():
 
             product = Product(name=name, price=price,
                             commission=commission,image=image_url,
-                            category_id=category_id,
+                            category_id=category_id,sub_category_id=sub_category_id,
+                            sub_sub_category_id=sub_sub_category_id,
                             cost=cost,highlights=highlights,
                             status=status,description=description)
             db.session.add(product)
@@ -421,6 +424,8 @@ def editproduct(id):
         product.price = request.form['price']
         product.commission = request.form['commission']
         product.category_id = request.form['category_id']
+        product.sub_category_id = request.form['sub_category_id']
+        product.sub_sub_category_id = request.form['sub_sub_category_id']
         product.cost = request.form['cost']
         product.image = request.form['image']
         product.status = request.form['status']

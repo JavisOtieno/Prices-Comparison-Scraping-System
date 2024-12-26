@@ -85,6 +85,26 @@
                                 <!-- <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category" autocomplete="category"> -->
                             </div>
                             <div class="form-group">
+                                <label for="status" class="form-label">Sub Category</label>
+                                <select name="sub_category_id" class="form-control form-select" data-bs-placeholder="Select Sub Category">
+                                    
+                                    {% for category in categories %}
+                                    <option value="{{category.id}}">{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category" autocomplete="category"> -->
+                            </div>
+                            <div class="form-group">
+                                <label for="status" class="form-label">Sub Category of Sub Category</label>
+                                <select name="sub_sub_category_id" class="form-control form-select" data-bs-placeholder="Select Sub Category of Sub Category">
+                                    
+                                    {% for category in categories %}
+                                    <option value="{{category.id}}">{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category" autocomplete="category"> -->
+                            </div>
+                            <div class="form-group">
                                 <label for="highlights" class="form-label">Highlights</label>
                                 <textarea type="text" class="form-control" name="highlights" id="highlights" placeholder="Highlights" autocomplete="highlights"></textarea>
                             </div>
