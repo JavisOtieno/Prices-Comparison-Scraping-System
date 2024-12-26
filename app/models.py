@@ -44,13 +44,13 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=False)
     # category_id = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
-    sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
-    sub_sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
+    # sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
+    # sub_sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
 
         # Relationships
-    category = db.relationship('Category', foreign_keys=[category_id], backref='products_as_category')
-    sub_category = db.relationship('Category', foreign_keys=[sub_category_id], backref='products_as_sub_category')
-    sub_sub_category = db.relationship('Category', foreign_keys=[sub_sub_category_id], backref='products_as_sub_sub_category')
+    # category = db.relationship('Category', foreign_keys=[category_id], backref='products_as_category')
+    # sub_category = db.relationship('Category', foreign_keys=[sub_category_id], backref='products_as_sub_category')
+    # sub_sub_category = db.relationship('Category', foreign_keys=[sub_sub_category_id], backref='products_as_sub_sub_category')
 
     
     
