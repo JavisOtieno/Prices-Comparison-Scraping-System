@@ -44,8 +44,8 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=False)
     # category_id = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
-    # sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
-    # sub_sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
+    sub_category_id = db.Column(db.Integer )
+    sub_sub_category_id = db.Column(db.Integer)
 
         # Relationships
     # category = db.relationship('Category', foreign_keys=[category_id], backref='products_as_category')
