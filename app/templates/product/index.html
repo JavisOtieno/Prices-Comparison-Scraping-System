@@ -64,10 +64,9 @@
                                                         <td>{{ product.price }}</td>
                                                         <td>{{ product.cost }}</td>
                                                         <td>{{ product.commission }}</td>
-                                                        <td>{{ product.category.name if product.category else 'N/A' }}</td>
-                                                        <td>{{ product.sub_category.name if product.sub_category else 'N/A' }}</td>
-                                                        <td>{{ product.sub_sub_category.name if product.sub_sub_category else 'N/A' }}</td>
-                                                    
+                                                        <td>{{ product.category.name if product.category else 'N/A'}}</td>
+                                                        <td>{{ product.sub_category_id if product.sub_category_id else 'N/A' }}</td>
+                                                        <td>{{ product.sub_sub_category_id if product.sub_sub_category_id else 'N/A' }}</td>
                                                     
                                                         <td><span class="avatar bradius"
                                                             style="background-image: url({{product.image}})"></span></td>
