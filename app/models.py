@@ -44,15 +44,13 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=False)
     # category_id = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
-    sub_category_id = db.Column(db.Integer )
-    sub_sub_category_id = db.Column(db.Integer)
+    sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
+    sub_sub_category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), unique=False)
 
-        # Relationships
-    # category = db.relationship('Category', foreign_keys=[category_id], backref='products_as_category')
-    # sub_category = db.relationship('Category', foreign_keys=[sub_category_id], backref='products_as_sub_category')
-    # sub_sub_category = db.relationship('Category', foreign_keys=[sub_sub_category_id], backref='products_as_sub_sub_category')
-
-    
+    # Relationships
+    category = db.relationship('Category', foreign_keys=[category_id], backref='products_main')
+    sub_category = db.relationship('Category', foreign_keys=[sub_category_id], backref='products_sub')
+    sub_sub_category = db.relationship('Category', foreign_keys=[sub_sub_category_id], backref='products_sub_sub')
     
     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
@@ -141,7 +139,9 @@ class Category(db.Model):
     name = db.Column(db.Text, nullable=False)
     type = db.Column(db.Text, nullable=False)
     parent_category_id = db.Column(db.Integer, unique=True)
-    product = db.relationship('Product', backref='category', uselist=False)
+    # product = db.relationship('Product', backref='category', uselist=False)
+        # Relationship to establish parent-child hierarchy
+    parent = db.relationship('Category', remote_side=[id], backref='children')
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
