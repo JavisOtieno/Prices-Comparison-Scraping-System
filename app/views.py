@@ -355,7 +355,7 @@ def createproduct():
         image = request.form['image']
         category_id = request.form['category_id']
         sub_category_id = request.form['sub_category_id']
-        sub_sub_category_id = request.form['sub_category_id']
+        sub_sub_category_id = request.form['sub_sub_category_id']
         status = request.form['status']
         highlights = request.form['highlights']
         description = request.form['description']
