@@ -88,6 +88,14 @@ users = {'test_user': 'password123'}
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route('/raise_error')
+def raise_error():
+    try:
+        # Simulate an error
+        raise Exception("Something went wrong in the view!")
+    except Exception as e:
+        return render_template('error.html', error_message=str(e)), 500
+
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
