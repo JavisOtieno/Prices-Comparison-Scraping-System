@@ -105,7 +105,7 @@ def test_scrape():
     if price_element:
         price_text = price_element.get_text(strip=True)
         # Remove the currency symbol and formatting to keep only the numeric value
-        price_value = price_text.replace('KShs', '').replace(',', '').strip()
+        price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
         return(f"Price Value: {price_value}")
     else:
         return("Price not found.")
