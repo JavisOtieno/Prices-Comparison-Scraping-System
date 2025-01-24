@@ -17,6 +17,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import pdfkit
 from bs4 import BeautifulSoup
+import requests
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
