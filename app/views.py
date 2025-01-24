@@ -90,7 +90,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 @app.route('/testscrape')
-def raise_error():
+def test_scrape():
     # URL of the product page
     url = 'https://starmac.co.ke/product/havit-m9030-ultra-smartwatch/'
     # Fetch the HTML content of the page
