@@ -16,6 +16,7 @@ from sqlalchemy import func
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import pdfkit
+from bs4 import BeautifulSoup
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -87,6 +88,26 @@ users = {'test_user': 'password123'}
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.route('/testscrape')
+def raise_error():
+    # URL of the product page
+    url = 'https://starmac.co.ke/product/havit-m9030-ultra-smartwatch/'
+    # Fetch the HTML content of the page
+    response = requests.get(url)
+    html_content = response.content
+    # Parse the HTML with Beautiful Soup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    # Find the price element
+    price_element = soup.find('p', class_='price')
+    # Extract the numeric value
+    if price_element:
+        price_text = price_element.get_text(strip=True)
+        # Remove the currency symbol and formatting to keep only the numeric value
+        price_value = price_text.replace('KShs', '').replace(',', '').strip()
+        return(f"Price Value: {price_value}")
+    else:
+        return("Price not found.")
 
 @app.route('/raise_error')
 def raise_error():
