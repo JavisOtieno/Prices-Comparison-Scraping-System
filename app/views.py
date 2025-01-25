@@ -120,28 +120,15 @@ def extract_product_links():
     soup = BeautifulSoup(html_content, 'html.parser')
 
     # Find all product divs and extract href links
-    # product_links = []
-    # for product_div in soup.find_all('div', class_='product-grid-item'):
-    #     # Locate the <a> tag within the div
-    #     link_tag = product_div.find('a', class_='product-image-link')
-    #     if link_tag and 'href' in link_tag.attrs:
-    #         product_links.append(link_tag['href'])
+    product_links = []
+    for product_div in soup.find_all('div', class_='product-grid-item'):
+        # Locate the <a> tag within the div
+        link_tag = product_div.find('a', class_='product-image-link')
+        if link_tag and 'href' in link_tag.attrs:
+            product_links.append(link_tag['href']).append('\n')
 
-    # # Return the array of links as a string
-    # return "\n".join(product_links)
-    # Find all the relevant product divs
-    product_divs = soup.find_all('div', class_='wd-product')
-
-    # Extract the href links from the anchor tags within each product div
-    hrefs = []
-    for div in product_divs:
-        link = div.find('a', class_='product-image-link')
-        if link and link['href']:
-            hrefs.append(link['href'])
-
-    # Print all extracted hrefs with a line break
-    for href in hrefs:
-        print(href + "\n")
+    # Return the array of links as a string
+    return "\n".join(product_links)
 
 @app.route('/raise_error')
 def raise_error():
