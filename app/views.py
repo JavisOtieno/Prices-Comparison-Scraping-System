@@ -125,7 +125,7 @@ def extract_product_links():
         # Locate the <a> tag within the div
         link_tag = product_div.find('a', class_='product-image-link')
         if link_tag and 'href' in link_tag.attrs:
-            product_links.append(link_tag['href']).append('</br>')
+            product_links.append(link_tag['href']).append('\n')
 
     # Return the array of links as a string
     return "\n".join(product_links)
