@@ -116,6 +116,7 @@ def extract_product_links():
     all_product_links = []
 
     while (page_number < 5):
+    # while True:
         # Construct the URL for the current page
         url = f'https://starmac.co.ke/shop/page/{page_number}'
         response = requests.get(url)
@@ -142,7 +143,30 @@ def extract_product_links():
         page_number += 1
 
     # Return all the product links as a string
-    return "\n".join(all_product_links)
+    # Create an array to store the prices
+    product_prices = []
+
+    # Loop through the product links to fetch prices
+    for link in all_product_links[:5]:
+        response = requests.get(link)
+        html_content = response.content
+        # Parse the HTML with Beautiful Soup
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Find the price element
+        price_element = soup.find('p', class_='price')
+
+        # Extract the numeric value
+        if price_element:
+            price_text = price_element.get_text(strip=True)
+            # Remove the currency symbol and formatting to keep only the numeric value
+            price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
+            product_prices.append({'link': link, 'price': price_value})
+        else:
+            product_prices.append({'link': link, 'price': 'Price not found'})
+
+    # Return the product prices as a string
+    return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
 
 # Call the function
 # product_links = extract_product_links()
