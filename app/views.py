@@ -112,24 +112,41 @@ def test_scrape():
     
 @app.route('/scrapelisturls')
 def extract_product_links():
-    # Fetch the HTML content of the page
-    url = 'https://starmac.co.ke/shop/'
-    response = requests.get(url)
-    html_content = response.content
-    # Parse the HTML with Beautiful Soup
-    soup = BeautifulSoup(html_content, 'html.parser')
+    page_number = 1
+    all_product_links = []
 
-    # Find all product divs and extract href links
-    product_links = []
-    for product_div in soup.find_all('div', class_='product-grid-item'):
-        # Locate the <a> tag within the div
-        link_tag = product_div.find('a', class_='product-image-link')
-        if link_tag and 'href' in link_tag.attrs:
-            # product_links.append(link_tag['href'])
-            product_links.append(link_tag['href'] + "<br/>")
+    while True:
+        # Construct the URL for the current page
+        url = f'https://starmac.co.ke/shop/page/{page_number}'
+        response = requests.get(url)
+        html_content = response.content
+        # Parse the HTML with Beautiful Soup
+        soup = BeautifulSoup(html_content, 'html.parser')
 
-    # Return the array of links as a string
-    return "\n".join(product_links)
+        # Find all product divs
+        product_links = []
+        for product_div in soup.find_all('div', class_='product-grid-item'):
+            # Locate the <a> tag within the div
+            link_tag = product_div.find('a', class_='product-image-link')
+            if link_tag and 'href' in link_tag.attrs:
+                product_links.append(link_tag['href'] + "<br/>")
+
+        # If no product links are found, break the loop
+        if not product_links:
+            break
+        
+        # Add the links from the current page to the total list
+        all_product_links.extend(product_links)
+
+        # Increment page number for the next iteration
+        page_number += 1
+
+    # Return all the product links as a string
+    return "\n".join(all_product_links)
+
+# Call the function
+# product_links = extract_product_links()
+# print(product_links)
 
 @app.route('/raise_error')
 def raise_error():
