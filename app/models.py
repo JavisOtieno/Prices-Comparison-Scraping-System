@@ -144,6 +144,14 @@ class Category(db.Model):
     product = db.relationship('Product', backref='category', uselist=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+    
+class Productlink(db.Model):
+    __tablename__ = 'productlinks'
+    id = db.Column(db.Integer, primary_key=True)
+    link = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Integer)
+    created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 
     def __repr__(self):
         return f'<Product {self.title}>'
