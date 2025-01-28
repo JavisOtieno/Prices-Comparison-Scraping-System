@@ -92,7 +92,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 @app.route('/productlinks')
-@login_required
 def indexproductlinks():
     productlinks = Productlink.query.all()
     # Format the data for response
