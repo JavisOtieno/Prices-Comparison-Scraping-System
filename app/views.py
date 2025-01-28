@@ -147,9 +147,13 @@ def extract_product_links():
 
     # Loop through the product links to fetch prices
     for link in all_product_links[:5]:
-        response2 = requests.get(link)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response2 = requests.get(link, headers=headers)
+        # response2 = requests.get(link)
         html_content_2 = response2.content
-        return link
+        return html_content_2
         # Parse the HTML with Beautiful Soup
         soup2 = BeautifulSoup(html_content_2, 'html.parser')
 
