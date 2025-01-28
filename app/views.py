@@ -116,8 +116,7 @@ def extract_product_links():
     all_product_links = []
 
     while (page_number < 5):
-    # while True:
-        # Construct the URL for the current page
+    # while True:        # Construct the URL for the current page
         url = f'https://starmac.co.ke/shop/page/{page_number}'
         response = requests.get(url)
         html_content = response.content
@@ -148,13 +147,13 @@ def extract_product_links():
 
     # Loop through the product links to fetch prices
     for link in all_product_links[:5]:
-        response = requests.get(link)
-        html_content = response.content
+        response2 = requests.get(link)
+        html_content_2 = response2.content
         # Parse the HTML with Beautiful Soup
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup2 = BeautifulSoup(html_content_2, 'html.parser')
 
         # Find the price element
-        price_element = soup.find('p', class_='price')
+        price_element = soup2.find('p', class_='price')
 
         # Extract the numeric value
         if price_element:
