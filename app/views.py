@@ -149,6 +149,7 @@ def extract_product_links():
     for link in all_product_links[:5]:
         response2 = requests.get(link)
         html_content_2 = response2.content
+        return html_content_2
         # Parse the HTML with Beautiful Soup
         soup2 = BeautifulSoup(html_content_2, 'html.parser')
 
