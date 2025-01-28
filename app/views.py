@@ -93,7 +93,7 @@ def load_user(user_id):
 @app.route('/testscrape')
 def test_scrape():
     # URL of the product page
-    url = 'https://starmac.co.ke/product/havit-m9030-ultra-smartwatch/'
+    url = 'https://starmac.co.ke/product/jbl-bar-1300x/'
     # Fetch the HTML content of the page
     response = requests.get(url)
     html_content = response.content
