@@ -10,6 +10,7 @@ from .models import Category
 from .models import User
 from .models import Payment
 from .models import Customer
+from .models import Productlink
 from .models import db
 import bcrypt
 from sqlalchemy import func
@@ -102,6 +103,16 @@ def test_scrape():
     # Find the price element
     price_element = soup.find('p', class_='price')
     # Extract the numeric value
+    
+    #test create link
+    productlink = Productlink(link='https://starmac.co.ke/product/jbl-bar-1300x/',
+                              price='150000',
+                          )
+    db.session.add(productlink)
+    db.session.commit()
+    
+    
+    
     if price_element:
         price_text = price_element.get_text(strip=True)
         # Remove the currency symbol and formatting to keep only the numeric value
@@ -109,6 +120,7 @@ def test_scrape():
         return(f"Price Value: {price_value}")
     else:
         return("Price not found.")
+    
     
 @app.route('/scrapelisturls')
 def extract_product_links():
