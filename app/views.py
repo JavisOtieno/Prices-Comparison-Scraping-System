@@ -116,11 +116,11 @@ def test_scrape():
     # Extract the numeric value
     
     #test create link
-    productlink = Productlink(link='https://starmac.co.ke/product/jbl-bar-1300x/',
-                              price='150000',
-                          )
-    db.session.add(productlink)
-    db.session.commit()
+    # productlink = Productlink(link='https://starmac.co.ke/product/jbl-bar-1300x/',
+    #                           price='150000',
+    #                       )
+    # db.session.add(productlink)
+    # db.session.commit()
     
     
     
