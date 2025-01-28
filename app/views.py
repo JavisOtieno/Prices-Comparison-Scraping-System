@@ -115,7 +115,7 @@ def extract_product_links():
     page_number = 1
     all_product_links = []
 
-    while True:
+    while (page_number < 5):
         # Construct the URL for the current page
         url = f'https://starmac.co.ke/shop/page/{page_number}'
         response = requests.get(url)
