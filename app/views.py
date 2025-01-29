@@ -157,7 +157,7 @@ def extract_product_links():
                 productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
                     # Create a new Productlink entry
-                    new_productlink = Productlink(link=link,price=0)
+                    new_productlink = Productlink(link=newlink,price=0)
                     db.session.add(new_productlink)
                     db.session.commit()
 
