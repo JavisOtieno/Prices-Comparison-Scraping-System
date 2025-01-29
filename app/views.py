@@ -205,7 +205,9 @@ def extract_product_links():
             if price_element:
                 price_text = price_element.get_text(strip=True)
                 # Remove the currency symbol and formatting to keep only the numeric value
-                price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
+                price_value = price_text.replace('KShs',
+                '').replace(',', '').replace('.00',
+                '').replace('KSh','').strip()
                 product_prices.append({'link': link, 'price': price_value})
                 try:
                     price_value = float(price_value)
