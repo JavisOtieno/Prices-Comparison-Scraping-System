@@ -190,6 +190,11 @@ def extract_product_links():
             html_content_2 = response2.content
             productlink = Productlink.query.filter_by(link=link).first()
             # return html_content_2
+            if not productlink:
+                productlink = Productlink(link=link,price=0)
+                db.session.add(productlink)
+                db.session.commit()
+
             # Parse the HTML with Beautiful Soup
             soup2 = BeautifulSoup(html_content_2, 'html.parser')
 
