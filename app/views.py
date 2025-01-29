@@ -133,79 +133,82 @@ def test_scrape():
         return("Price not found.")
     
     
-@app.route('/scrapelisturls')
+@app.route('/scrapelisturls', methods=['GET', 'POST'])
 def extract_product_links():
-    page_number = 1
-    all_product_links = []
+    if request.method == 'POST':
+        page_number = 1
+        base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
+        all_product_links = []
 
-    while (page_number < 5):
-    # while True:        # Construct the URL for the current page
-        url = f'https://starmac.co.ke/shop/page/{page_number}'
-        response = requests.get(url)
-        html_content = response.content
-        # Parse the HTML with Beautiful Soup
-        soup = BeautifulSoup(html_content, 'html.parser')
+        while (page_number < 5):
+        # while True:        # Construct the URL for the current page
+            url = f"{base_url}/shop/page/{page_number}"
+            response = requests.get(url)
+            html_content = response.content
+            # Parse the HTML with Beautiful Soup
+            soup = BeautifulSoup(html_content, 'html.parser')
 
-        # Find all product divs
-        product_links = []
-        for product_div in soup.find_all('div', class_='product-grid-item'):
-            # Locate the <a> tag within the div
-            link_tag = product_div.find('a', class_='product-image-link')
-            if link_tag and 'href' in link_tag.attrs:
-                newlink = link_tag['href']
-                product_links.append(newlink)
-                productlink = Productlink.query.filter_by(link=newlink).first()
-                if not productlink:
-                    # Create a new Productlink entry
-                    new_productlink = Productlink(link=newlink,price=0)
-                    db.session.add(new_productlink)
-                    db.session.commit()
+            # Find all product divs
+            product_links = []
+            for product_div in soup.find_all('div', class_='product-grid-item'):
+                # Locate the <a> tag within the div
+                link_tag = product_div.find('a', class_='product-image-link')
+                if link_tag and 'href' in link_tag.attrs:
+                    newlink = link_tag['href']
+                    product_links.append(newlink)
+                    productlink = Productlink.query.filter_by(link=newlink).first()
+                    if not productlink:
+                        # Create a new Productlink entry
+                        new_productlink = Productlink(link=newlink,price=0)
+                        db.session.add(new_productlink)
+                        db.session.commit()
 
 
-        # If no product links are found, break the loop
-        if not product_links:
-            break
-        
-        # Add the links from the current page to the total list
-        all_product_links.extend(product_links)
+            # If no product links are found, break the loop
+            if not product_links:
+                break
+            
+            # Add the links from the current page to the total list
+            all_product_links.extend(product_links)
 
-        # Increment page number for the next iteration
-        page_number += 1
+            # Increment page number for the next iteration
+            page_number += 1
 
-    # Return all the product links as a string
-    # Create an array to store the prices
-    product_prices = []
+        # Return all the product links as a string
+        # Create an array to store the prices
+        product_prices = []
 
-    # Loop through the product links to fetch prices
-    for link in all_product_links[:5]:
-        # headers = {
-        #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-        # }
-        response2 = requests.get(link)
-        # response2 = requests.get(link)
-        html_content_2 = response2.content
-        productlink = Productlink.query.filter_by(link=link).first()
-        # return html_content_2
-        # Parse the HTML with Beautiful Soup
-        soup2 = BeautifulSoup(html_content_2, 'html.parser')
+        # Loop through the product links to fetch prices
+        for link in all_product_links[:5]:
+            # headers = {
+            #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            # }
+            response2 = requests.get(link)
+            # response2 = requests.get(link)
+            html_content_2 = response2.content
+            productlink = Productlink.query.filter_by(link=link).first()
+            # return html_content_2
+            # Parse the HTML with Beautiful Soup
+            soup2 = BeautifulSoup(html_content_2, 'html.parser')
 
-        # Find the price element
-        price_element = soup2.find('p', class_='price')
+            # Find the price element
+            price_element = soup2.find('p', class_='price')
 
-        # Extract the numeric value
-        if price_element:
-            price_text = price_element.get_text(strip=True)
-            # Remove the currency symbol and formatting to keep only the numeric value
-            price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
-            product_prices.append({'link': link, 'price': price_value})
-            productlink.price = price_value
-            # order.cart_id = request.form['cart_id']
-            db.session.commit()
-        else:
-            product_prices.append({'link': link, 'price': 'Price not found'})
+            # Extract the numeric value
+            if price_element:
+                price_text = price_element.get_text(strip=True)
+                # Remove the currency symbol and formatting to keep only the numeric value
+                price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
+                product_prices.append({'link': link, 'price': price_value})
+                productlink.price = price_value
+                # order.cart_id = request.form['cart_id']
+                db.session.commit()
+            else:
+                product_prices.append({'link': link, 'price': 'Price not found'})
 
-    # Return the product prices as a string
-    return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
+        # Return the product prices as a string
+        return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
+    return render_template('scrape/scrapeurl.html')
 
 # Call the function
 # product_links = extract_product_links()
