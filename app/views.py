@@ -152,7 +152,15 @@ def extract_product_links():
             # Locate the <a> tag within the div
             link_tag = product_div.find('a', class_='product-image-link')
             if link_tag and 'href' in link_tag.attrs:
-                product_links.append(link_tag['href'])
+                newlink = link_tag['href']
+                product_links.append(newlink)
+                productlink = Productlink.query.filter_by(link=newlink).first()
+                if not productlink:
+                    # Create a new Productlink entry
+                    new_productlink = Productlink(link=link,price=0)
+                    db.session.add(new_productlink)
+                    db.session.commit()
+
 
         # If no product links are found, break the loop
         if not product_links:
