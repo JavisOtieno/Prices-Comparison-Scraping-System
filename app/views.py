@@ -146,7 +146,7 @@ def extract_product_links():
             
             response = requests.get(url)
             html_content = response.content
-            return html_content
+            # return html_content
             # Parse the HTML with Beautiful Soup
             soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -202,7 +202,7 @@ def extract_product_links():
                 # Remove the currency symbol and formatting to keep only the numeric value
                 price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
                 product_prices.append({'link': link, 'price': price_value})
-                productlink.price = price_value
+                productlink.price = price_value if isinstance(price_value, (int, float)) else 0
                 # order.cart_id = request.form['cart_id']
                 db.session.commit()
             else:
