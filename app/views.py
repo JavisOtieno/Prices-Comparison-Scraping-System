@@ -207,8 +207,13 @@ def extract_product_links():
                 # Remove the currency symbol and formatting to keep only the numeric value
                 price_value = price_text.replace('KShs', '').replace(',', '').replace('.00', '').strip()
                 product_prices.append({'link': link, 'price': price_value})
-                productlink.price = price_value if isinstance(price_value, (int, float)) else 0
+                price_value = price_value if isinstance(price_value, (int, float)) else 0
                 # order.cart_id = request.form['cart_id']
+                if not productlink:
+                    productlink = Productlink(link=link, price=price_value)
+                    db.session.add(productlink)
+                else:
+                    productlink.price = price_value
                 db.session.commit()
             else:
                 product_prices.append({'link': link, 'price': 'Price not found'})
