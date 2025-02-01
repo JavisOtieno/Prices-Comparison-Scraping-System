@@ -330,7 +330,7 @@ def addproductfromlink():
             # Check if the request was successful (status code 200)
             if response.status_code == 200:
                 # Set the file path where the image will be saved
-                file_name = "sony_hxr_nx800_4k_1_sensor.jpg"
+                file_name = "sony_hxr_nx800_4k_1_sensor_test.jpg"
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)  # Replace "path_to_your_directory" with the actual path
 
                 # Write the image to a file
@@ -344,7 +344,7 @@ def addproductfromlink():
             "name": product_title,
             "price": price_value,
             "commission": price_value * 5 / 100,  # 5% commission
-            "image": "/static/uploads/Apple-iPhone-16-Pro-c.jpg",
+            "image": file_path,
             "category_id": 1,
             "sub_category_id": 11,
             "sub_sub_category_id": 11,
