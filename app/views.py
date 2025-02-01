@@ -19,6 +19,7 @@ from werkzeug.utils import secure_filename
 import pdfkit
 from bs4 import BeautifulSoup
 import requests
+import html
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -154,6 +155,7 @@ def extract_product_links():
             product_links = []
             for product_div in soup.find_all('div', class_='product-grid-item'):
                 # Locate the <a> tag within the div
+                return html.escape(str(product_div))
                 link_tag = product_div.find('a', class_='product-image-link')
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
