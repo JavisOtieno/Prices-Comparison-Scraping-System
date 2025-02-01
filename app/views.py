@@ -366,6 +366,7 @@ def addproductfromlink():
             db.session.add(product)
             
             db.session.commit()
+            return jsonify(product_data)
             
 
 @app.route('/raise_error')
