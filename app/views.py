@@ -161,7 +161,7 @@ def extract_product_links():
                 if not product_name:
                     product_name=''
                 product_price_org = soup.find('span', class_='woocommerce-Price-amount amount')
-                product_price_org = product_price_org.get_text(strip=True)
+                # product_price_org = product_price_org.get_text(strip=True)
                 return product_price_org
                 try:
                     product_price = float(product_price_org)
