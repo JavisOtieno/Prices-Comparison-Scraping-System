@@ -184,7 +184,7 @@ def extract_product_links():
 
             # Increment page number for the next iteration
             page_number += 1
-        return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
+        return "<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in product_links])
 
         # Return all the product links as a string
         # Create an array to store the prices
