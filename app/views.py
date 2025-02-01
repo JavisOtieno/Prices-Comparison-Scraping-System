@@ -177,7 +177,11 @@ def extract_product_links():
                         # Create a new Productlink entry
                         new_productlink = Productlink(name=product_name,link=newlink,price=product_price)
                         db.session.add(new_productlink)
-                        db.session.commit()
+                        # db.session.commit()
+                    else:
+                        productlink.price = product_price
+                    db.session.commit()
+
 
 
             # If no product links are found, break the loop
