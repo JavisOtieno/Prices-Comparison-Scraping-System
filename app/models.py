@@ -148,6 +148,8 @@ class Category(db.Model):
 class Productlink(db.Model):
     __tablename__ = 'productlinks'
     id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=True)
+    name = db.Column(db.Text, nullable=False)
     link = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
