@@ -362,7 +362,7 @@ def addproductfromlink():
                         sub_sub_category_id=sub_sub_category_id,
                         cost=cost,highlights=highlights,
                         status=status,description=description)
-            return jsonify(product_data)
+            # return jsonify(product_data)
             db.session.add(product)
             
             db.session.commit()
