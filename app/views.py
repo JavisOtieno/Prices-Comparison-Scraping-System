@@ -255,7 +255,7 @@ def extract_product_links():
 # print(product_links)
 
 @app.route('/addproductfromlink')
-def raise_error():
+def addproductfromlink():
 
         
         response2 = requests.get("https://starmac.co.ke/product/oneplus-nord-4/")
