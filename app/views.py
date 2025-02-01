@@ -162,6 +162,9 @@ def extract_product_links():
                     product_name=''
                 product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
                 try:
+                    price_value = product_price_org.replace('KShs',
+                    '').replace(',', '').replace('.00',
+                    '').replace('KSh','').strip()
                     product_price = float(product_price_org)
                 except ValueError:
                     product_price = 0
