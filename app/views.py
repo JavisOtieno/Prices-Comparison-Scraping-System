@@ -254,6 +254,77 @@ def extract_product_links():
 # product_links = extract_product_links()
 # print(product_links)
 
+@app.route('/addproductfromlink')
+def raise_error():
+
+        
+        response2 = requests.get("https://starmac.co.ke/product/oneplus-nord-4/")
+        # response2 = requests.get(link)
+        html_content_2 = response2.content
+        # productlink = Productlink.query.filter_by(link=link).first()
+        # return html_content_2
+        # if not productlink:
+        #     productlink = Productlink(link=link,price=0)
+        #     db.session.add(productlink)
+        #     db.session.commit()
+
+        # Parse the HTML with Beautiful Soup
+        soup2 = BeautifulSoup(html_content_2, 'html.parser')
+
+        # Find the price element
+        price_element = soup2.find('p', class_='price')
+
+        # Extract the numeric value
+        if price_element:
+            price_text = price_element.get_text(strip=True)
+            # Remove the currency symbol and formatting to keep only the numeric value
+            price_value = price_text.replace('KShs',
+            '').replace(',', '').replace('.00',
+            '').replace('KSh','').strip()
+            #product_prices.append({'link': link, 'price': price_value})
+            try:
+                price_value = float(price_value)
+            except ValueError:
+                price_value = 0
+            product_title = soup2.select_one('.product_title.entry-title')
+            short_description = soup2.select_one('.woocommerce-product-details__short-description')
+            if not product_title:
+                # print("Product Name:", product_title.text.strip())
+                product_title = ''
+            else: 
+                product_title = product_title.text.strip()
+                
+            if not short_description:
+                # print("Product Name:", product_title.text.strip())
+                short_description = ''
+            else:
+                short_description = short_description.text.strip()
+            # order.cart_id = request.form['cart_id']
+            
+            name = product_title
+            price = price_value
+            commission = price_value*5/100
+            cost = 0
+            image = '/static/uploads/Apple-iPhone-16-Pro-c.jpg'
+            category_id = 1
+            sub_category_id = 11
+            sub_sub_category_id = 11
+            status = 'available'
+            highlights = short_description
+            description = short_description
+            
+            product = Product(name=name, price=price,
+                        commission=commission,image=image,
+                        category_id=category_id,sub_category_id=sub_category_id,
+                        sub_sub_category_id=sub_sub_category_id,
+                        cost=cost,highlights=highlights,
+                        status=status,description=description)
+            return product
+            db.session.add(product)
+            
+            db.session.commit()
+            
+
 @app.route('/raise_error')
 def raise_error():
     try:
