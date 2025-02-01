@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template,request,redirect,url_for,session,flash,make_response
+from flask import render_template,request,redirect,url_for,session,flash,make_response,jsonify
 # from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
@@ -313,13 +313,27 @@ def addproductfromlink():
             highlights = short_description
             description = short_description
             
+            product_data = {
+            "name": product_title,
+            "price": price_value,
+            "commission": price_value * 5 / 100,  # 5% commission
+            "image": "/static/uploads/Apple-iPhone-16-Pro-c.jpg",
+            "category_id": 1,
+            "sub_category_id": 11,
+            "sub_sub_category_id": 11,
+            "cost": 0,
+            "highlights": short_description,
+            "status": "available",
+            "description": short_description
+            }
+            
             product = Product(name=name, price=price,
                         commission=commission,image=image,
                         category_id=category_id,sub_category_id=sub_category_id,
                         sub_sub_category_id=sub_sub_category_id,
                         cost=cost,highlights=highlights,
                         status=status,description=description)
-            return product
+            return jsonify(product_data)
             db.session.add(product)
             
             db.session.commit()
