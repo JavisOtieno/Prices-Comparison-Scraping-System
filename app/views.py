@@ -160,14 +160,15 @@ def extract_product_links():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
-                product_price_org = product_div.select_one(".price .woocommerce-Price-amount").get_text(strip=True)
+                product_price_org = product_div.find('span', class_='woocommerce-Price-amount')
                 try:
+                    product_price_org = product_price_org.get_text(strip=True)
                     product_price = float(product_price_org)
                 except ValueError:
                     product_price = 0
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
-                    product_links.append({'link': newlink, 'price': product_price_org, 
+                    product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': product_name})
                     productlink = Productlink.query.filter_by(link=newlink).first()
                     if not productlink:
