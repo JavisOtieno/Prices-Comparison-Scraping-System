@@ -336,15 +336,17 @@ def addproductfromlink():
                 # Write the image to a file
                 with open(file_path, 'wb') as file:
                     file.write(response.content)
-                print(f"Image saved successfully at {file_path}")
+                image_savedurl = url_for('static', filename=f'uploads/{file_name}')
+                # print(f"Image saved successfully at {file_path}")
+                
             else:
-                print(f"Failed to download image. Status code: {response.status_code}")
+                image_savedurl = ''
             
             product_data = {
             "name": product_title,
             "price": price_value,
             "commission": price_value * 5 / 100,  # 5% commission
-            "image": file_path,
+            "image": image_savedurl,
             "category_id": 1,
             "sub_category_id": 11,
             "sub_sub_category_id": 11,
@@ -355,7 +357,7 @@ def addproductfromlink():
             }
             
             product = Product(name=name, price=price,
-                        commission=commission,image=image,
+                        commission=commission,image=image_savedurl,
                         category_id=category_id,sub_category_id=sub_category_id,
                         sub_sub_category_id=sub_sub_category_id,
                         cost=cost,highlights=highlights,
