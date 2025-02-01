@@ -288,11 +288,17 @@ def addproductfromlink():
                 price_value = 0
             product_title = soup2.select_one('.product_title.entry-title')
             short_description = soup2.select_one('.woocommerce-product-details__short-description')
+            image = soup2.select_one('.woocommerce-product-gallery__image0')
+            image_url = image['data_thumb']
             if not product_title:
                 # print("Product Name:", product_title.text.strip())
                 product_title = ''
             else: 
                 product_title = product_title.text.strip()
+            if not image_url:
+                # print("Product Name:", product_title.text.strip())
+                image_url = ''
+ 
                 
             if not short_description:
                 # print("Product Name:", product_title.text.strip())
@@ -305,13 +311,28 @@ def addproductfromlink():
             price = price_value
             commission = price_value*5/100
             cost = 0
-            image = '/static/uploads/Apple-iPhone-16-Pro-c.jpg'
+            image = image_url
             category_id = 1
             sub_category_id = 11
             sub_sub_category_id = 11
             status = 'available'
             highlights = short_description
             description = short_description
+            
+            response = requests.get(image_url)
+
+            # Check if the request was successful (status code 200)
+            if response.status_code == 200:
+                # Set the file path where the image will be saved
+                file_name = "sony_hxr_nx800_4k_1_sensor.jpg"
+                file_path = os.path.join("path_to_your_directory", file_name)  # Replace "path_to_your_directory" with the actual path
+
+                # Write the image to a file
+                with open(file_path, 'wb') as file:
+                    file.write(response.content)
+                print(f"Image saved successfully at {file_path}")
+            else:
+                print(f"Failed to download image. Status code: {response.status_code}")
             
             product_data = {
             "name": product_title,
