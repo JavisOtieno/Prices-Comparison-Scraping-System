@@ -160,9 +160,7 @@ def extract_product_links():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
-                product_price_org = product_div.select_one(".price .woocommerce-Price-amount")
-                product_price_org = product_price_org.text.strip()
-                # return html.escape(product_name+str(product_price_org))
+                product_price_org = product_div.find('span', class_='woocommerce-Price-amount amount').get_text(strip=True)
                 try:
                     product_price = float(product_price_org)
                 except ValueError:
