@@ -117,7 +117,7 @@ def test_scrape():
     
     #test create link
     # productlink = Productlink(link='https://starmac.co.ke/product/jbl-bar-1300x/',
-    #                           price='150000',
+    #                           price='150000',]
     #                       )
     # db.session.add(productlink)
     # db.session.commit()
@@ -155,13 +155,21 @@ def extract_product_links():
             for product_div in soup.find_all('div', class_='product-grid-item'):
                 # Locate the <a> tag within the div
                 link_tag = product_div.find('a', class_='product-image-link')
+                product_name = product_div.find('h3', class_='wd-entities-title')
+                if not product_name:
+                    product_name=''
+                product_price = soup.find('span', class_='woocommerce-Price-amount').get_text(strip=True)
+                try:
+                    product_price = float(product_price)
+                except ValueError:
+                    product_price = 0
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
                     product_links.append(newlink)
                     productlink = Productlink.query.filter_by(link=newlink).first()
                     if not productlink:
                         # Create a new Productlink entry
-                        new_productlink = Productlink(link=newlink,price=0)
+                        new_productlink = Productlink(name=product_name,link=newlink,price=product_price)
                         db.session.add(new_productlink)
                         db.session.commit()
 
@@ -213,9 +221,13 @@ def extract_product_links():
                     price_value = float(price_value)
                 except ValueError:
                     price_value = 0
+                product_title = soup.select_one('.product_title.entry-title')
+                if not product_title:
+                    # print("Product Name:", product_title.text.strip())
+                    product_title = ''
                 # order.cart_id = request.form['cart_id']
                 if not productlink:
-                    productlink = Productlink(link=link, price=price_value)
+                    productlink = Productlink(name=product_title,link=link, price=price_value)
                     db.session.add(productlink)
                 else:
                     productlink.price = price_value
