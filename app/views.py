@@ -155,17 +155,18 @@ def extract_product_links():
             for product_div in soup.find_all('div', class_='product-grid-item'):
                 # Locate the <a> tag within the div
                 link_tag = product_div.find('a', class_='product-image-link')
-                product_name = product_div.find('h3', class_='wd-entities-title')
+                product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
-                product_price = soup.find('span', class_='woocommerce-Price-amount').get_text(strip=True)
+                product_price_org = soup.find('span', class_='woocommerce-Price-amount').get_text(strip=True)
                 try:
-                    product_price = float(product_price)
+                    product_price = float(product_price_org)
                 except ValueError:
                     product_price = 0
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
-                    product_links.append(newlink)
+                    product_links.append({'link': newlink, 'price': product_price_org, 
+                                          'name': product_name})
                     productlink = Productlink.query.filter_by(link=newlink).first()
                     if not productlink:
                         # Create a new Productlink entry
@@ -183,6 +184,7 @@ def extract_product_links():
 
             # Increment page number for the next iteration
             page_number += 1
+        return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
 
         # Return all the product links as a string
         # Create an array to store the prices
