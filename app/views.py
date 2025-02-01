@@ -331,7 +331,7 @@ def addproductfromlink():
             if response.status_code == 200:
                 # Set the file path where the image will be saved
                 file_name = "sony_hxr_nx800_4k_1_sensor.jpg"
-                file_path = os.path.join("path_to_your_directory", file_name)  # Replace "path_to_your_directory" with the actual path
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)  # Replace "path_to_your_directory" with the actual path
 
                 # Write the image to a file
                 with open(file_path, 'wb') as file:
