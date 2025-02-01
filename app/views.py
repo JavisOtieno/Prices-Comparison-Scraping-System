@@ -290,6 +290,12 @@ def addproductfromlink():
             short_description = soup2.select_one('.woocommerce-product-details__short-description')
             image = soup2.select_one('.woocommerce-product-gallery__image0')
             image_url = image['data_thumb']
+            og_image_tag = soup2.find('meta', property='og:image')
+    
+            # Extract the image URL
+            if og_image_tag:
+                image_url = og_image_tag.get('content')
+
             if not product_title:
                 # print("Product Name:", product_title.text.strip())
                 product_title = ''
