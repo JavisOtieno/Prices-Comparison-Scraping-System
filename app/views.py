@@ -254,11 +254,11 @@ def extract_product_links():
 # product_links = extract_product_links()
 # print(product_links)
 
-@app.route('/addproductfromlink')
-def addproductfromlink():
-
-        
-        response2 = requests.get("https://starmac.co.ke/product/oneplus-nord-4/")
+@app.route('/addproductfromlink/<int:id>')
+def addproductfromlink(id):
+        link = Productlink.query.get(id)
+        # Fetch the HTML content of the page
+        response2 = requests.get(link.link)
         # response2 = requests.get(link)
         html_content_2 = response2.content
         # productlink = Productlink.query.filter_by(link=link).first()
