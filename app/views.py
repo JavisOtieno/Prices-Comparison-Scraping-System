@@ -351,23 +351,26 @@ def addproductfromlink(id):
                 formatted_category_name = category.replace(" ", "_")
                 formatted_category_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', formatted_category_name)
                 categorydetected = Category.query.filter_by(name=formatted_category_name).first()
-                
+                parent_category_id = None
             
                 if categorydetected:
                     
                     if index_of_current_category == 0:
                         main_category_id = categorydetected.id
+                    
                         
                     elif index_of_current_category == 1:
                         sub_category_id = categorydetected.id
+                        
                     else:
                         sub_sub_category_id = categorydetected.id
+                    parent_category_id =categorydetected.id
                     # print(f"Category '{category}' exists. Assigning category ID {category_id} to product {product_id}.")
                 else:
                     # If it doesn't exist, create a new category and assign it
                     # category_id = create_category_and_assign_product(category)
                     name = formatted_category_name
-                    parent_category_id = 1
+                    parent_category_id = parent_category_id
                     title = category_title
                     
                     if index_of_current_category == 0:
@@ -381,6 +384,7 @@ def addproductfromlink(id):
                     categorysaved = Category(name=formatted_category_name,title=category_title,parent_category_id=parent_category_id,type=type)
                     db.session.add(categorysaved)
                     db.session.commit()
+                    parent_category_id = categorysaved.id
                     
                     
                     
