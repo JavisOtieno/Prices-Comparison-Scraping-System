@@ -381,9 +381,8 @@ def addproductfromlink(id):
                         status=status,description=description)
             # return jsonify(product_data)
             db.session.add(product)
-            link.product_id = 4
-            
-            
+            db.session.commit()
+            link.product_id = product.id
             
             db.session.commit()
             return jsonify(product_data)
