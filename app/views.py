@@ -144,7 +144,7 @@ def test_scrape():
 @app.route('/scrapelisturls', methods=['GET', 'POST'])
 def extract_product_links():
     if request.method == 'POST':
-        page_number = int(response = request.form['page_number'])
+        page_number = int(request.form['page_number'])
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
         all_product_links = []
 
