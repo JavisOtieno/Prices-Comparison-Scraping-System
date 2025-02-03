@@ -364,8 +364,10 @@ def addproductfromlink(id):
                     elif index_of_current_category == 1:
                         sub_category_id = categorydetected.id
                         
-                    else:
+                    elif index_of_current_category == 2:
                         sub_sub_category_id = categorydetected.id
+                    else: 
+                        break
                     parent_category_id =categorydetected.id
                     # print(f"Category '{category}' exists. Assigning category ID {category_id} to product {product_id}.")
                 else:
