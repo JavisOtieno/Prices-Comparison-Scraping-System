@@ -148,7 +148,7 @@ def extract_product_links():
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
         all_product_links = []
 
-        while (page_number < page_number+4):
+        while (page_number < int(page_number)+4):
         # while True:        # Construct the URL for the current page
             url = f"{base_url}/shop/page/{page_number}"
             
