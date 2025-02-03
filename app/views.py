@@ -342,7 +342,7 @@ def addproductfromlink(id):
             
             for category in categories:
             # Check if the category exists in the table
-                categorydetected = Category.query.filter_by(name=category.lower()).first()
+                categorydetected = Category.query.filter_by(name=category.strip().lower()).first()
             
                 if categorydetected:
                     category_id = categorydetected.id
