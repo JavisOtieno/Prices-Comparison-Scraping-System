@@ -369,7 +369,16 @@ def addproductfromlink(id):
                     categorysaved = Category(name=name,title=category_title,parent_category_id=parent_category_id,type=type)
                     db.session.add(categorysaved)
                     db.session.commit()
-                    category_id = categorysaved.id
+                    
+                    
+                    if index_of_current_category == 0:
+                        main_category_id = categorysaved.id
+                        
+                    elif index_of_current_category == 1:
+                        sub_category_id = categorysaved.id
+                    else:
+                        sub_sub_category_id = categorysaved.id
+                    
                     # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
                         
             name = product_title
@@ -377,9 +386,9 @@ def addproductfromlink(id):
             commission = price_value*5/100
             cost = 0
             image = image_url
-            # category_id = category_id
-            sub_category_id = 11
-            sub_sub_category_id = 11
+            category_id = category_id
+            sub_category_id = sub_category_id
+            sub_sub_category_id = sub_sub_category_id
             status = 'available'
             highlights = short_description
             description = main_description
