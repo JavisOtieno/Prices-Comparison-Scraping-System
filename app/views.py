@@ -336,13 +336,35 @@ def addproductfromlink(id):
         
                 # main_description = main_description.text.strip()
             # order.cart_id = request.form['cart_id']
+            breadcrumb_nav = soup2.find('nav', class_='wd-breadcrumbs woocommerce-breadcrumb')
+            categories = [a.get_text() for a in breadcrumb_nav.find_all('a')]
+            categories = categories[1:]
             
+            for category in categories:
+            # Check if the category exists in the table
+                categorydetected = Category.query.filter_by(name=category.lower()).first()
+            
+                if categorydetected:
+                    category_id = categorydetected.id
+                    # print(f"Category '{category}' exists. Assigning category ID {category_id} to product {product_id}.")
+                else:
+                    # If it doesn't exist, create a new category and assign it
+                    # category_id = create_category_and_assign_product(category)
+                    name = category.lower()
+                    parent_category_id = 1
+                    type = 'main'
+                    categorysaved = Category(name=name,parent_category_id=parent_category_id,type=type)
+                    db.session.add(categorysaved)
+                    db.session.commit()
+                    category_id = categorysaved.id
+                    # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
+                        
             name = product_title
             price = price_value
             commission = price_value*5/100
             cost = 0
             image = image_url
-            category_id = 1
+            # category_id = category_id
             sub_category_id = 11
             sub_sub_category_id = 11
             status = 'available'
@@ -376,7 +398,7 @@ def addproductfromlink(id):
             "price": price_value,
             "commission": price_value * 5 / 100,  # 5% commission
             "image": image_savedurl,
-            "category_id": 1,
+            "category_id": category_id,
             "sub_category_id": 11,
             "sub_sub_category_id": 11,
             "cost": 0,
