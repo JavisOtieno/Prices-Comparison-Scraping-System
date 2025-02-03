@@ -98,7 +98,13 @@ def indexproductlinks():
     productlinks = Productlink.query.all()
     # Format the data for response
     # Create a plain text response
-    response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    response = "\n".join([
+    f"link: <a href='/addproductfromlink/{pl.id}'>'{pl.link}'</a> - price: '{pl.price}'" 
+    if pl.product_id is None else 
+    f"link: '{pl.link}' - price: '{pl.price}'"
+    for pl in productlinks
+])
 
     # Return as plain text
     return response, 200, {'Content-Type': 'text/plain'}
