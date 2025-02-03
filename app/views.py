@@ -381,9 +381,9 @@ def addproductfromlink(id):
                     
                     # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
                 
-            if not sub_category_id:
+            if not 'sub_category_id' in locals():
                 sub_category_id = None
-            if not 'sub_sub_category_id':
+            if not 'sub_sub_category_id' in locals():
                 sub_sub_category_id = None
                     
             name = product_title
