@@ -288,6 +288,7 @@ def addproductfromlink():
                 price_value = 0
             product_title = soup2.select_one('.product_title.entry-title')
             short_description = soup2.select_one('.woocommerce-product-details__short-description')
+            main_description = soup2.select_one('.wd-single-content')
             # image = soup2.select_one('.woocommerce-product-gallery__image0')
             # image_url = image['data_thumb']
             og_image_tag = soup2.find('meta', property='og:image')
@@ -311,6 +312,20 @@ def addproductfromlink():
                 short_description = ''
             else:
                 short_description = short_description.text.strip()
+                
+            if not main_description:
+                # print("Product Name:", product_title.text.strip())
+                main_description = ''
+            else:
+                    # Remove all <a> tags
+                for a_tag in main_description.find_all("a"):
+                    a_tag.decompose()
+                
+                # Remove all <img> tags
+                for img_tag in main_description.find_all("img"):
+                    img_tag.decompose()
+        
+                # main_description = main_description.text.strip()
             # order.cart_id = request.form['cart_id']
             
             name = product_title
@@ -323,7 +338,7 @@ def addproductfromlink():
             sub_sub_category_id = 11
             status = 'available'
             highlights = short_description
-            description = short_description
+            description = main_description
             
             response = requests.get(image_url)
 
