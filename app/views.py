@@ -319,11 +319,13 @@ def addproductfromlink():
             else:
                     # Remove all <a> tags
                 for a_tag in main_description.find_all("a"):
-                    a_tag.decompose()
+                    a_tag.replace_with(a_tag.text)
                 
                 # Remove all <img> tags
                 for img_tag in main_description.find_all("img"):
                     img_tag.decompose()
+            main_description = str(main_description).replace("Starmac Kenya", "our store")
+            main_description = str(main_description).replace("Starmac", "our store")
         
                 # main_description = main_description.text.strip()
             # order.cart_id = request.form['cart_id']
