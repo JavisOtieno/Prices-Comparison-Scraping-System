@@ -342,6 +342,7 @@ def addproductfromlink(id):
             
             sub_category_id = None
             sub_sub_category_id = None
+            parent_category_id = None
             
             for category in categories:
                 index_of_current_category = categories.index(category)
@@ -351,7 +352,7 @@ def addproductfromlink(id):
                 formatted_category_name = category.replace(" ", "_")
                 formatted_category_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', formatted_category_name)
                 categorydetected = Category.query.filter_by(name=formatted_category_name).first()
-                parent_category_id = None
+                
             
                 if categorydetected:
                     
