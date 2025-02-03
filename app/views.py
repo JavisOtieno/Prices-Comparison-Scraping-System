@@ -341,6 +341,7 @@ def addproductfromlink(id):
             categories = categories[1:]
             
             for category in categories:
+                index_of_current_category = categories.index(category)
             # Check if the category exists in the table
                 category_title = category.strip()
                 category = category_title.lower()
@@ -356,7 +357,7 @@ def addproductfromlink(id):
                     name = category
                     parent_category_id = 1
                     title = category_title
-                    index_of_current_category = categories.index(category)
+                    
                     if index_of_current_category == 0:
                         type = 'main'
                     elif index_of_current_category == 1:
