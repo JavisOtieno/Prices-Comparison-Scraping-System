@@ -380,9 +380,11 @@ def addproductfromlink(id):
                     if index_of_current_category == 0:
                         type = 'main'
                     elif index_of_current_category == 1:
-                        type = 'sub'
-                    else:
+                        type = 'sub'    
+                    elif index_of_current_category == 2:
                         type = 'subsub'
+                    else: 
+                        break
                     
                     
                     categorysaved = Category(name=formatted_category_name,title=category_title,parent_category_id=parent_category_id,type=type)
