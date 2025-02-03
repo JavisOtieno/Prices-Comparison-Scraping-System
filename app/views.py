@@ -340,6 +340,9 @@ def addproductfromlink(id):
             categories = [a.get_text() for a in breadcrumb_nav.find_all('a')]
             categories = categories[1:]
             
+            sub_category_id = None
+            sub_sub_category_id = None
+            
             for category in categories:
                 index_of_current_category = categories.index(category)
             # Check if the category exists in the table
@@ -371,6 +374,8 @@ def addproductfromlink(id):
                     db.session.commit()
                     
                     
+                    
+                    
                     if index_of_current_category == 0:
                         main_category_id = categorysaved.id
                         
@@ -381,10 +386,8 @@ def addproductfromlink(id):
                     
                     # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
                 
-            if not 'sub_category_id' in locals():
-                sub_category_id = None
-            if not 'sub_sub_category_id' in locals():
-                sub_sub_category_id = None
+           
+
                     
             name = product_title
             price = price_value
@@ -426,8 +429,8 @@ def addproductfromlink(id):
             "commission": price_value * 5 / 100,  # 5% commission
             "image": image_savedurl,
             "category_id": category_id,
-            "sub_category_id": 11,
-            "sub_sub_category_id": 11,
+            "sub_category_id": sub_category_id,
+            "sub_sub_category_id": sub_sub_category_id,
             "cost": 0,
             "highlights": short_description,
             "status": "available",
