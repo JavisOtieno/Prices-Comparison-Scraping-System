@@ -4,6 +4,7 @@ from flask import render_template,request,redirect,url_for,session,flash,make_re
 import pickle
 import numpy as np
 import os
+import re
 from .models import Product  # Import Product model
 from .models import Order
 from .models import Category
@@ -347,7 +348,12 @@ def addproductfromlink(id):
             # Check if the request was successful (status code 200)
             if response.status_code == 200:
                 # Set the file path where the image will be saved
-                file_name = "sony_hxr_nx800_4k_1_sensor_test.jpg"
+                formatted_name = product_title.lower()
+                    
+                    # Replace spaces with underscores
+                formatted_name = formatted_name.replace(" ", "_")
+                formatted_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', formatted_name)
+                file_name = formatted_name+".jpg"
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)  # Replace "path_to_your_directory" with the actual path
 
                 # Write the image to a file
