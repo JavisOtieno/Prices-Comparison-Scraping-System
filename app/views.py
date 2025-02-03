@@ -352,7 +352,14 @@ def addproductfromlink(id):
                 
             
                 if categorydetected:
-                    category_id = categorydetected.id
+                    
+                    if index_of_current_category == 0:
+                        main_category_id = categorydetected.id
+                        
+                    elif index_of_current_category == 1:
+                        sub_category_id = categorydetected.id
+                    else:
+                        sub_sub_category_id = categorydetected.id
                     # print(f"Category '{category}' exists. Assigning category ID {category_id} to product {product_id}.")
                 else:
                     # If it doesn't exist, create a new category and assign it
@@ -387,14 +394,13 @@ def addproductfromlink(id):
                     # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
                 
            
-
                     
             name = product_title
             price = price_value
             commission = price_value*5/100
             cost = 0
             image = image_url
-            category_id = category_id
+            category_id = main_category_id
             sub_category_id = sub_category_id
             sub_sub_category_id = sub_sub_category_id
             status = 'available'
