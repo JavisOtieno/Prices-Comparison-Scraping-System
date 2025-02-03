@@ -337,12 +337,12 @@ def addproductfromlink(id):
                 # main_description = main_description.text.strip()
             # order.cart_id = request.form['cart_id']
             breadcrumb_nav = soup2.find('nav', class_='wd-breadcrumbs woocommerce-breadcrumb')
-            categories = [a.get_text() for a in breadcrumb_nav.find_all('a')]
+            categories = [a.get_text().strip().lower() for a in breadcrumb_nav.find_all('a')]
             categories = categories[1:]
             
             for category in categories:
             # Check if the category exists in the table
-                categorydetected = Category.query.filter_by(name=category.strip().lower()).first()
+                categorydetected = Category.query.filter_by(name=category).first()
             
                 if categorydetected:
                     category_id = categorydetected.id
