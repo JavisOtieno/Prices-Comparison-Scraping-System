@@ -311,7 +311,7 @@ def addproductfromlink():
                 # print("Product Name:", product_title.text.strip())
                 short_description = ''
             else:
-                short_description = short_description.text.strip()
+                short_description = short_description
                 
             if not main_description:
                 # print("Product Name:", product_title.text.strip())
