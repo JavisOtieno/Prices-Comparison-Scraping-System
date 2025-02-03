@@ -144,11 +144,11 @@ def test_scrape():
 @app.route('/scrapelisturls', methods=['GET', 'POST'])
 def extract_product_links():
     if request.method == 'POST':
-        page_number = response = request.form['page_number']
+        page_number = int(response = request.form['page_number'])
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
         all_product_links = []
 
-        while (page_number < int(page_number)+4):
+        while (page_number < page_number+4):
         # while True:        # Construct the URL for the current page
             url = f"{base_url}/shop/page/{page_number}"
             
