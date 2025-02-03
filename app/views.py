@@ -380,7 +380,12 @@ def addproductfromlink(id):
                         sub_sub_category_id = categorysaved.id
                     
                     # print(f"Category '{category}' created. Assigning category ID {category_id} to product {product_id}.")
-                        
+                
+            if not sub_category_id:
+                sub_category_id = None
+            if not 'sub_sub_category_id':
+                sub_sub_category_id = None
+                    
             name = product_title
             price = price_value
             commission = price_value*5/100
