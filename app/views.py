@@ -337,12 +337,15 @@ def addproductfromlink(id):
                 # main_description = main_description.text.strip()
             # order.cart_id = request.form['cart_id']
             breadcrumb_nav = soup2.find('nav', class_='wd-breadcrumbs woocommerce-breadcrumb')
-            categories = [a.get_text().strip().lower() for a in breadcrumb_nav.find_all('a')]
+            categories = [a.get_text() for a in breadcrumb_nav.find_all('a')]
             categories = categories[1:]
             
             for category in categories:
             # Check if the category exists in the table
+                category_title = category.strip()
+                category = category_title.lower()
                 categorydetected = Category.query.filter_by(name=category).first()
+                
             
                 if categorydetected:
                     category_id = categorydetected.id
@@ -350,10 +353,19 @@ def addproductfromlink(id):
                 else:
                     # If it doesn't exist, create a new category and assign it
                     # category_id = create_category_and_assign_product(category)
-                    name = category.lower()
+                    name = category
                     parent_category_id = 1
-                    type = 'main'
-                    categorysaved = Category(name=name,parent_category_id=parent_category_id,type=type)
+                    title = category_title
+                    index_of_current_category = categories.index(category)
+                    if index_of_current_category == 0:
+                        type = 'main'
+                    elif index_of_current_category == 1:
+                        type = 'sub'
+                    else:
+                        type = 'subsub'
+                    
+                    
+                    categorysaved = Category(name=name,title=category_title,parent_category_id=parent_category_id,type=type)
                     db.session.add(categorysaved)
                     db.session.commit()
                     category_id = categorysaved.id
@@ -809,7 +821,7 @@ def create():
         name = request.form['name']
         parent_category_id = request.form['parent_category_id']
         type = request.form['type']
-        category = Category(name=name,parent_category_id=parent_category_id,type=type)
+        category = Category(name=name,title=name,parent_category_id=parent_category_id,type=type)
         db.session.add(category)
         db.session.commit()
         return redirect(url_for('indexcategories'))
@@ -824,6 +836,7 @@ def edit(id):
     if request.method == 'POST':
         category.name = request.form['name']
         category.type = request.form['type']
+        
         category.parent_category_id = request.form['parent_category_id']
         db.session.commit()
         return redirect(url_for('indexcategories'))

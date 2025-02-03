@@ -139,6 +139,7 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
+    title = db.Column(db.Text, nullable=True)
     type = db.Column(db.Text, nullable=False)
     parent_category_id = db.Column(db.Integer, unique=True)
     product = db.relationship('Product', backref='category', uselist=False)
