@@ -100,9 +100,9 @@ def indexproductlinks():
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
     response = "\n".join([
-    f"link: <a href='/addproductfromlink/{pl.id}'>ADD PRODUCT</a> link: '{pl.link}' - price: '{pl.price}'" 
+    f"link: <a href='/addproductfromlink/{pl.id}'>ADD PRODUCT</a> link: '{pl.link}' - price: '{pl.price}'<br/>" 
     if pl.product_id is None else 
-    f"link: '{pl.link}' - price: '{pl.price}'"
+    f"link: '{pl.link}' - price: '{pl.price}' <br/>"
     for pl in productlinks
 ])
 
