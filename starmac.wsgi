@@ -1,9 +1,15 @@
 import sys
 import os
 
-sys.path.insert(0, "/var/www/newavkeadmin")
+sys.path.insert(0, "/var/www/starmac")
 
-from app import app as application
+from app import app as thisapp
+from werkzeug.debug import DebuggedApplication
+application = DebuggedApplication(thisapp, True)
+
+#without debugger
+#application = thisapp
+#without debugger
 
 # Enable automatic reloading
 #if os.environ.get('MOD_WSGI_RELOAD_ON_CHANGES') == '1':
