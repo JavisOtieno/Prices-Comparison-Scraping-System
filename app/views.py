@@ -532,6 +532,7 @@ def viewdbstatus():
 @app.route('/')
 @login_required
 def index():
+    productlinkcount = Productlink.query.count()
     order_count = Order.query.count()
     user_count = User.query.count()
     customer_count = Customer.query.count()
@@ -568,7 +569,7 @@ def index():
 
     orders = Order.query.order_by(Order.created_at.desc()).limit(10).all()
 
-    return render_template('index.html', order_count=order_count,user_count=user_count,
+    return render_template('index.html', productlinkcount = productlinkcount,user_count=user_count,
                            customer_count=customer_count,product_count=product_count,
                            products_this_month=products_this_month,
                            orders_this_month=orders_this_month,
@@ -960,19 +961,19 @@ def categoriesRender():
     categories = Category.query.all()
     return render_template('admin/categories.html', categories=categories)
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    data = Category.query.all()
-    productlinkcount = Productlink.query.count()
-    categoryString = ""
-    for category in data:
-         #formatted_price = locale.format_string("%d", product.price, grouping=True)
-        #  formatted_price = "{:,}".format(int(product.price))
-         categoryString=categoryString+str(category.name)+" "+"<br/>"
-    return render_template('index.html', categories=categoryString,productlinkcount=productlinkcount)
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     data = Category.query.all()
+    
+#     categoryString = ""
+#     for category in data:
+#          #formatted_price = locale.format_string("%d", product.price, grouping=True)
+#         #  formatted_price = "{:,}".format(int(product.price))
+#          categoryString=categoryString+str(category.name)+" "+"<br/>"
+#     return render_template('index.html', categories=categoryString,productlinkcount=productlinkcount)
 
-# @app.route('/orders')
+# # @app.route('/orders')
 # @login_required
 # def orders():
 #     orders = Order.query.all()
