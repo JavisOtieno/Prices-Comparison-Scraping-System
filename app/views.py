@@ -964,12 +964,13 @@ def categoriesRender():
 @login_required
 def dashboard():
     data = Category.query.all()
+    productlinkcount = Productlink.query.count()
     categoryString = ""
     for category in data:
          #formatted_price = locale.format_string("%d", product.price, grouping=True)
         #  formatted_price = "{:,}".format(int(product.price))
          categoryString=categoryString+str(category.name)+" "+"<br/>"
-    return render_template('index.html', categories=categoryString)
+    return render_template('index.html', categories=categoryString,productlinkcount=productlinkcount)
 
 # @app.route('/orders')
 # @login_required
