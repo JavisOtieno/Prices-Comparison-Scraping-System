@@ -99,15 +99,7 @@ def indexproductlinks():
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
-    response = "\n".join([
-    f"link: <a href='/addproductfromlink/{pl.id}'>ADD PRODUCT</a> <a target='_blank' href='{pl.link}'>link:</a> '{pl.link}' - price: '{pl.price}'<br/>" 
-    if pl.product_id is None else 
-    f"link: '{pl.link}' - price: '{pl.price}' <br/>"
-    for pl in productlinks
-])
-
-    # Return as plain text
-    return response, 200, {'Content-Type': 'text/html'}
+    return render_template('link/index.html', links=productlinks)
     # return render_template('category/index.html', categories=categories)
 
 @app.route('/testscrape')
