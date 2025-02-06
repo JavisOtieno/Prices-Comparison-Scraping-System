@@ -103,6 +103,7 @@ def indexproductlinks():
     # return render_template('category/index.html', categories=categories)
 
 @app.route('/testscrape')
+@login_required
 def test_scrape():
     # URL of the product page
     url = 'https://starmac.co.ke/product/jbl-bar-1300x/'
@@ -134,6 +135,7 @@ def test_scrape():
     
     
 @app.route('/scrapelisturls', methods=['GET', 'POST'])
+@login_required
 def extract_product_links():
     if request.method == 'POST':
         page_number = int(request.form['page_number'])
@@ -255,6 +257,7 @@ def extract_product_links():
 # print(product_links)
 
 @app.route('/addproductfromlink/<int:id>')
+@login_required
 def addproductfromlink(id):
         link = Productlink.query.get(id)
         # Fetch the HTML content of the page
