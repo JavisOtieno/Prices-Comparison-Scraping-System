@@ -567,14 +567,14 @@ def index():
         func.extract('month', User.created_at) == current_month
     ).count()
 
-    orders = Order.query.order_by(Order.created_at.desc()).limit(10).all()
+    links = Productlink.query.order_by(Productlink.created_at.desc()).limit(10).all()
 
     return render_template('index.html', productlinkcount = productlinkcount,user_count=user_count,
                            customer_count=customer_count,product_count=product_count,
                            products_this_month=products_this_month,
                            orders_this_month=orders_this_month,
                            customers_this_month=customers_this_month,
-                           users_this_month=users_this_month, orders=orders)
+                           users_this_month=users_this_month, links=links)
 
 
 

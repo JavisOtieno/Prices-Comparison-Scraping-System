@@ -30,7 +30,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Total Links</h6>
-                                                        <h2 class="mb-0 number-font">{{user_count}}</h2>
+                                                        <h2 class="mb-0 number-font">{{productlinkcount}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -72,7 +72,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Updated this week</h6>
-                                                        <h2 class="mb-0 number-font">{{product_count}}</h2>
+                                                        <h2 class="mb-0 number-font">{{productlinkcount}}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -93,7 +93,7 @@
                                                 <div class="d-flex">
                                                     <div class="mt-2">
                                                         <h6 class="">Links Tracked</h6>
-                                                        <h2 class="mb-0 number-font">{{customer_count}}</h2>
+                                                        <h2 class="mb-0 number-font">{{productlinkcount}}</h2>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="chart-wrapper mt-1">
@@ -159,23 +159,20 @@
                                                                                     style="width: 5%;">Id</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    User</th>
+                                                                                    Name</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    Customer</th>
+                                                                                    Price</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    Date</th>
+                                                                                    Link</th>
                                                                                 <th
                                                                                     class="bg-transparent border-bottom-0">
-                                                                                    Amount</th>
-                                                                                <th
-                                                                                    class="bg-transparent border-bottom-0">
-                                                                                    Quantity</th>
+                                                                                    Created</th>
+                                                                               
+                                                                                
                                                                                 <th class="bg-transparent border-bottom-0"
-                                                                                    style="width: 10%;">Status</th>
-                                                                                <th class="bg-transparent border-bottom-0"
-                                                                                    style="width: 5%;">Action</th>
+                                                                                    style="width: 5%;">Actions</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -197,48 +194,33 @@
                                                                 {{ order.id }}</h6>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <span class="avatar bradius"
-                                                                style="background-image: url({{ url_for('static', filename='assets/images/orders/12.jpg') }})"></span>
-                                                            <div
-                                                                class="ms-3 mt-0 mt-sm-2 d-block">
-                                                                <h6
-                                                                    class="mb-0 fs-14 fw-semibold">
-                                                                    {{ order.user.name }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                                  
                                                     <td>
                                                         <div class="d-flex">
                                                             <div
                                                                 class="mt-0 mt-sm-3 d-block">
                                                                 <h6
                                                                     class="mb-0 fs-14 fw-semibold">
-                                                                    {{ order.customer.name }}</h6>
+                                                                    {{ link.name }}</h6>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td><span class="mt-sm-2 d-block">{{ order.created_at }}</span></td>
+                                                   
                                                     <td><span
-                                                            class="fw-semibold mt-sm-2 d-block">{{ order.value }}</span>
+                                                            class="fw-semibold mt-sm-2 d-block">{{ link.price }}</span>
                                                     </td>
+                                                    <td><span class="mt-sm-2 d-block">{{ link.link }}</span></td>
                                                     <td>
                                                         <div class="d-flex">
                                                             <div
                                                                 class="mt-0 mt-sm-3 d-block">
                                                                 <h6
                                                                     class="mb-0 fs-14 fw-semibold">
-                                                                    {{order.quantity}}</h6>
+                                                                    {{order.created_at}}</h6>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        <div class="mt-sm-1 d-block">
-                                                            <span
-                                                                class="badge bg-danger-transparent rounded-pill text-danger p-2 px-3">{{ order.status }}</span>
-                                                        </div>
-                                                    </td>
+                                                  
                                                     <td>
                                                         <div class="g-2">
                                                             <a class="btn text-primary btn-sm"
