@@ -564,10 +564,10 @@ def index():
     ).count()
     
     productlink_count_day = Productlink.query.filter(
-    Productlink.created_at >= datetime(datetime.utcnow().year,
-                                        datetime.utcnow().month,
-                                        datetime.utcnow().day)
-    )
+    Productlink.created_at >= datetime(now().year,
+                                        now().month,
+                                        now().day)
+    ).count()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
