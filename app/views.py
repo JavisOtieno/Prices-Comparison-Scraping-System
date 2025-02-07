@@ -551,23 +551,25 @@ def index():
         func.extract('month', Order.created_at) == current_month
     ).count()
     
-    productlink_count_month = Productlink.query.filter(
-    extract('month', Productlink.created_at) == current_month,
-    extract('year', Productlink.created_at) == current_year
+
+    productlink_count_month = Product.query.filter(
+        func.extract('year', Product.created_at) == current_year,
+        func.extract('month', Product.created_at) == current_month
     ).count()
     
     
-    start_of_week = now - timedelta(days=now.weekday())
+    # start_of_week = now - timedelta(days=now.weekday())
 
+    # productlink_count_week = Productlink.query.filter(
+    #     Productlink.created_at >= start_of_week
+    # ).count()
     productlink_count_week = Productlink.query.filter(
-        Productlink.created_at >= start_of_week
+    Productlink.created_at >= func.date_trunc('week', func.now())
     ).count()
     
     productlink_count_day = Productlink.query.filter(
-    Productlink.created_at >= datetime(now().year,
-                                        now().month,
-                                        now().day)
-    ).count()
+    func.date(Productlink.created_at) == func.current_date()
+    ).all()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
