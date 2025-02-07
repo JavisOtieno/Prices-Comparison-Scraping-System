@@ -559,7 +559,7 @@ def index():
     
     start_of_week = now - timedelta(days=now.weekday())
 
-    productlink_count = Productlink.query.filter(
+    productlink_count_week = Productlink.query.filter(
         Productlink.created_at >= start_of_week
     ).count()
     
