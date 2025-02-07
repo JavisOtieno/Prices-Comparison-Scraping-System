@@ -145,7 +145,6 @@ def extract_product_links():
         all_product_links = []
         upper_page_limit = page_number +int(request.form['upper_page_limit'])
         page_number_increments = str(page_number)
-        product_links = []
 
         while (page_number < upper_page_limit):
         # while True:        # Construct the URL for the current page
@@ -158,7 +157,7 @@ def extract_product_links():
             soup = BeautifulSoup(html_content, 'html.parser')
 
             # Find all product divs
-            
+            product_links = []
             for product_div in soup.find_all('div', class_='product-grid-item'):
                 # Locate the <a> tag within the div
                 # return html.escape(str(product_div))
@@ -200,7 +199,7 @@ def extract_product_links():
             # Increment page number for the next iteration
             page_number = page_number + 1
             page_number_increments = page_number_increments+' - '+str(page_number)
-        return str(page_number_increments)+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in product_links])
+        return str(page_number_increments)+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in all_product_links])
 
         # Return all the product links as a string
         # Create an array to store the prices
