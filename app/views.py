@@ -580,7 +580,7 @@ def index():
     productlink_count_week = Product.query.filter(
         Product.created_at >= start_of_week,
         Product.created_at <= end_of_week
-    ).all()
+    ).count()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
