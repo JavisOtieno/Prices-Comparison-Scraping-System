@@ -22,7 +22,7 @@ from bs4 import BeautifulSoup
 import requests
 import html
 from sqlalchemy.sql import extract
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -571,6 +571,16 @@ def index():
     productlink_count_day = Productlink.query.filter(
     func.date(Productlink.created_at) == func.current_date()
     ).count()
+    
+    today = datetime.utcnow()
+    start_of_week = today - timedelta(days=today.weekday())  # Monday
+    end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)  # Sunday end
+
+    # Query products created this week
+    products_this_week = Product.query.filter(
+        Product.created_at >= start_of_week,
+        Product.created_at <= end_of_week
+    ).all()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
