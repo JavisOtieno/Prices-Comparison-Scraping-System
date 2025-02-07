@@ -570,7 +570,7 @@ def index():
     
     productlink_count_day = Productlink.query.filter(
     func.date(Productlink.created_at) == func.current_date()
-    ).all()
+    ).count()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
