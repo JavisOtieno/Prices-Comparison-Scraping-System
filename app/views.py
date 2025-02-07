@@ -144,6 +144,7 @@ def extract_product_links():
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
         all_product_links = []
         upper_page_limit = page_number +int(request.form['upper_page_limit'])
+        page_number_increments = ''
 
         while (page_number < upper_page_limit):
         # while True:        # Construct the URL for the current page
@@ -197,7 +198,8 @@ def extract_product_links():
 
             # Increment page number for the next iteration
             page_number = page_number + 1
-        return "<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in product_links])
+            page_number_increments = page_number_increments+' - '+page_number
+        return page_number_increments+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in product_links])
 
         # Return all the product links as a string
         # Create an array to store the prices
