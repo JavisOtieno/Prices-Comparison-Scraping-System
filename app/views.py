@@ -21,6 +21,8 @@ import pdfkit
 from bs4 import BeautifulSoup
 import requests
 import html
+from sqlalchemy.sql import extract
+from datetime import timedelta
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -548,6 +550,24 @@ def index():
         func.extract('year', Order.created_at) == current_year,
         func.extract('month', Order.created_at) == current_month
     ).count()
+    
+    productlink_count_month = Productlink.query.filter(
+    extract('month', Productlink.created_at) == current_month,
+    extract('year', Productlink.created_at) == current_year
+    ).count()
+    
+    
+    start_of_week = now - timedelta(days=now.weekday())
+
+    productlink_count = Productlink.query.filter(
+        Productlink.created_at >= start_of_week
+    ).count()
+    
+    productlink_count_day = Productlink.query.filter(
+    Productlink.created_at >= datetime(datetime.utcnow().year,
+                                        datetime.utcnow().month,
+                                        datetime.utcnow().day)
+    )
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
@@ -569,7 +589,11 @@ def index():
 
     links = Productlink.query.order_by(Productlink.created_at.desc()).limit(10).all()
 
-    return render_template('index.html', productlinkcount = productlinkcount,user_count=user_count,
+    return render_template('index.html', productlinkcount = productlinkcount,
+                           user_count=user_count, productlink_count_month=productlink_count_month,
+                           productlink_count_week=productlink_count_week,
+                           productlink_count_day=productlink_count_day,
+                           order_count=order_count,
                            customer_count=customer_count,product_count=product_count,
                            products_this_month=products_this_month,
                            orders_this_month=orders_this_month,
