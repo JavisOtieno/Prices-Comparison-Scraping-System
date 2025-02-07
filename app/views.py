@@ -563,10 +563,10 @@ def index():
     # productlink_count_week = Productlink.query.filter(
     #     Productlink.created_at >= start_of_week
     # ).count()
-    productlink_count_week = Product.query.filter(
-        func.extract('year', Product.created_at) == current_year,
-        func.extract('month', Product.created_at) == current_month
-    ).count()
+    # productlink_count_week = Product.query.filter(
+    #     func.extract('year', Product.created_at) == current_year,
+    #     func.extract('month', Product.created_at) == current_month
+    # ).count()
     
     productlink_count_day = Productlink.query.filter(
     func.date(Productlink.created_at) == func.current_date()
@@ -577,7 +577,7 @@ def index():
     end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)  # Sunday end
 
     # Query products created this week
-    products_this_week = Product.query.filter(
+    productlink_count_week = Product.query.filter(
         Product.created_at >= start_of_week,
         Product.created_at <= end_of_week
     ).all()
