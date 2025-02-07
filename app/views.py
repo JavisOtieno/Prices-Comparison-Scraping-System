@@ -543,7 +543,6 @@ def index():
     now = datetime.now()
     current_year = now.year
     current_month = now.month
-    current_week = now.week
 
     # Query the total number of orders or total sales for the current month
     # Example 1: Count total orders for the current month
@@ -566,8 +565,7 @@ def index():
     # ).count()
     productlink_count_week = Product.query.filter(
         func.extract('year', Product.created_at) == current_year,
-        func.extract('month', Product.created_at) == current_month,
-        func.extract('week', Product.created_at) == current_week
+        func.extract('month', Product.created_at) == current_month
     ).count()
     
     productlink_count_day = Productlink.query.filter(
