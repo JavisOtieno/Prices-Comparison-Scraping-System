@@ -148,7 +148,7 @@ def extract_product_links():
 
         while (page_number < upper_page_limit):
         # while True:        # Construct the URL for the current page
-            url = f"{base_url}/shop/page/{page_number}"
+            url = f"{base_url}/page/{page_number}"
             
             response = requests.get(url)
             html_content = response.content
