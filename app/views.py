@@ -583,6 +583,9 @@ def index():
         Productlink.created_at >= start_of_week,
         Productlink.created_at <= end_of_week
     ).count()
+    productlink_count_year = Productlink.query.filter(
+        func.extract('year', Productlink.created_at) == current_year
+    ).count()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
@@ -607,6 +610,7 @@ def index():
     return render_template('index.html', productlinkcount = productlinkcount,
                            user_count=user_count, productlink_count_month=productlink_count_month,
                            productlink_count_week=productlink_count_week,
+                           productlink_count_year=productlink_count_year,
                            productlink_count_day=productlink_count_day,
                            order_count=order_count,
                            customer_count=customer_count,product_count=product_count,
