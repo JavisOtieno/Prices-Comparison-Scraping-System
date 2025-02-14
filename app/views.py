@@ -306,7 +306,7 @@ def extract_product_links():
                         new_productlink = Productlink(name=product_name,link=newlink,price=product_price)
                         db.session.add(new_productlink)
                         product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
-                                          'name': product_name+' - new link'})
+                                          'name': f"{product_name} - new link"})
                         # db.session.commit()
                     else:
                         if productlink.price == product_price:
@@ -314,7 +314,7 @@ def extract_product_links():
                                           'name': product_name})
                         else:
                             product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
-                                          'name': product_name+' - price change'})
+                                          'name': f"{product_name} - price change"})
                             productlink.price = product_price
                             
                         
