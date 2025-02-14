@@ -136,7 +136,7 @@ def test_scrape():
         return("Price not found.")
     
     
-@app.route('/scrapelisturls', methods=['GET', 'POST'])
+@app.route('/scrapelisturlsbefore', methods=['GET', 'POST'])
 @login_required
 def extract_product_links():
     if request.method == 'POST':
@@ -262,7 +262,7 @@ def extract_product_links():
 
 @app.route('/scrapelisturls', methods=['GET', 'POST'])
 @login_required
-def extract_product_links():
+def extract_product_links_more():
     if request.method == 'POST':
         page_number = int(request.form['page_number'])
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
