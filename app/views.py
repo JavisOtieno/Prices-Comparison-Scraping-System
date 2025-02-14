@@ -305,21 +305,20 @@ def extract_product_links_more():
                         # Create a new Productlink entry
                         new_productlink = Productlink(name=product_name,link=newlink,price=product_price)
                         db.session.add(new_productlink)
-                        product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                        product_links.append({'link: <a style="color:green" href="' + newlink + '">' + product_name + '</a>': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name} - new link"})
                         # db.session.commit()
                     else:
                         if productlink.price == product_price:
-                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                            product_links.append({'link: <a href="' + newlink + '">' + product_name + '</a>': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': product_name})
                         else:
-                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                            product_links.append({'link: <a style="color:red"  href="' + newlink + '">' + product_name + '</a>': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name} - price change"})
                             productlink.price = product_price
                             
                         
                         
-                    
                     db.session.commit()
 
 
