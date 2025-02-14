@@ -389,7 +389,7 @@ def extract_product_links_more():
 
         # Return the product prices as a string
         return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
-
+    return render_template('scrape/scrapeurl.html')
 
 @app.route('/addproductfromlink/<int:id>')
 @login_required
