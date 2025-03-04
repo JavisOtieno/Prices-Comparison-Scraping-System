@@ -43,6 +43,7 @@
                                             <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
                                                 <thead>
                                                     <tr>
+                                                        <th class="wd-15p border-bottom-0">Update Date</th>
                                                         <th class="wd-15p border-bottom-0">ID</th>
                                                         <th class="wd-15p border-bottom-0">Link Name</th>
                                                         <th class="wd-15p border-bottom-0">Price</th>
@@ -57,6 +58,7 @@
                                                     
                                                     {% for link in links %}
                                                     <tr>
+                                                    <td>{{ link.updated_at }}</td>
                                                     <td>{{ link.id }}</td>
                                                     <td><a href="{{ link.link }}" target="_blank">{{ link.name }}</a></td>
                                                     <td>{{ link.price }}</td>
