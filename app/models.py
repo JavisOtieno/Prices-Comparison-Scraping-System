@@ -153,6 +153,9 @@ class Productlink(db.Model):
     name = db.Column(db.Text, nullable=False)
     link = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer)
+    oldprice = db.Column(db.Integer)
+    updateddate = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    status = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
 

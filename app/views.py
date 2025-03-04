@@ -303,18 +303,26 @@ def extract_product_links_more():
                     productlink = Productlink.query.filter_by(link=newlink).first()
                     if not productlink:
                         # Create a new Productlink entry
-                        new_productlink = Productlink(name=product_name,link=newlink,price=product_price)
+                        new_productlink = Productlink(name=product_name,link=newlink,price=product_price,
+                                                      oldprice='0',updated_date=datetime.utcnow(),status='new')
+                        
                         db.session.add(new_productlink)
                         product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name}<span style=\"color:green\"> - new link</span>"})
+                        
                         # db.session.commit()
                     else:
                         if productlink.price == product_price:
                             product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': product_name})
+                            productlink.oldprice = '0'
+                            productlink.status = 'unchanged'
                         else:
                             product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name}<span style=\"color:red\"> - price change</span>"})
+                            productlink.oldprice = productlink.price
+                            productlink.status = 'newprice'
+                            productlink.updated_date=datetime.utcnow()
                             productlink.price = product_price
                             
                         
