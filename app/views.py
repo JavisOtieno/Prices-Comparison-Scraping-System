@@ -103,6 +103,30 @@ def indexproductlinks():
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
     return render_template('link/index.html', links=productlinks)
     # return render_template('category/index.html', categories=categories)
+    
+@app.route('/newproductlinks')
+def indexproductlinks():
+    productlinks = Productlink.query.filter_by(status="new").all()
+    # Format the data for response
+    # Create a plain text response
+    # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    return render_template('link/index.html', links=productlinks)
+
+@app.route('/changedproductlinks')
+def indexproductlinks():
+    productlinks = Productlink.query.filter_by(status="newprice").all()
+    # Format the data for response
+    # Create a plain text response
+    # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    return render_template('link/index.html', links=productlinks)
+
+@app.route('/unchangedproductlinks')
+def indexproductlinks():
+    productlinks = Productlink.query.filter_by(status="unchanged").all()
+    # Format the data for response
+    # Create a plain text response
+    # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    return render_template('link/index.html', links=productlinks)
 
 @app.route('/testscrape')
 @login_required
