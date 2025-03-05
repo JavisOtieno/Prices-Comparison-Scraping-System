@@ -105,7 +105,7 @@ def indexproductlinks():
     # return render_template('category/index.html', categories=categories)
     
 @app.route('/newproductlinks')
-def indexproductlinks():
+def newproductlinks():
     productlinks = Productlink.query.filter_by(status="new").all()
     # Format the data for response
     # Create a plain text response
@@ -113,7 +113,7 @@ def indexproductlinks():
     return render_template('link/index.html', links=productlinks)
 
 @app.route('/changedproductlinks')
-def indexproductlinks():
+def changedproductlinks():
     productlinks = Productlink.query.filter_by(status="newprice").all()
     # Format the data for response
     # Create a plain text response
@@ -121,7 +121,7 @@ def indexproductlinks():
     return render_template('link/index.html', links=productlinks)
 
 @app.route('/unchangedproductlinks')
-def indexproductlinks():
+def unchangedproductlinks():
     productlinks = Productlink.query.filter_by(status="unchanged").all()
     # Format the data for response
     # Create a plain text response
