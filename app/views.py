@@ -304,7 +304,7 @@ def extract_product_links_more():
                     if not productlink:
                         # Create a new Productlink entry
                         new_productlink = Productlink(name=product_name,link=newlink,price=product_price,
-                                                      oldprice='0',updated_date=datetime.utcnow(),status='new')
+                                                      oldprice='0',updateddate=datetime.utcnow(),status='new')
                         
                         db.session.add(new_productlink)
                         product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
