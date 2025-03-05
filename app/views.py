@@ -322,7 +322,7 @@ def extract_product_links_more():
                                           'name': f"{product_name}<span style=\"color:red\"> - price change</span>"})
                             productlink.oldprice = productlink.price
                             productlink.status = 'newprice'
-                            productlink.updated_date=datetime.utcnow()
+                            productlink.updateddate=datetime.utcnow()
                             productlink.price = product_price
                             
                         
