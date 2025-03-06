@@ -146,6 +146,15 @@ class Category(db.Model):
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
     
+class Website(db.Model):
+    __tablename__ = 'websites'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    link = db.Column(db.Text, nullable=True)
+    lastpagescanned = db.Column(db.Integer, unique=True)
+    created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
+    
 class Productlink(db.Model):
     __tablename__ = 'productlinks'
     id = db.Column(db.Integer, primary_key=True)

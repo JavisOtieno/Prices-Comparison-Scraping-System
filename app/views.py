@@ -12,6 +12,7 @@ from .models import User
 from .models import Payment
 from .models import Customer
 from .models import Productlink
+from .models import Website
 from .models import db
 import bcrypt
 from sqlalchemy import func
@@ -94,6 +95,14 @@ users = {'test_user': 'password123'}
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.route('/websites')
+def indexwebsites():
+    websites = Website.query.all()
+    # Format the data for response
+    # Create a plain text response
+    # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
+    return render_template('website/index.html', websites=websites)
 
 @app.route('/productlinks')
 def indexproductlinks():
