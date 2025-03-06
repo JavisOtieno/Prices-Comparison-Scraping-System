@@ -96,6 +96,21 @@ users = {'test_user': 'password123'}
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route('/createwebsite', methods=['GET', 'POST'])
+@login_required
+def createwebsite():
+    if request.method == 'POST':
+        name = request.form['name']
+        link = request.form['link']
+        lastpagescanned = 0
+        
+        website = Website(name=name, link=link,
+                          lastpagescanned=lastpagescanned)
+        db.session.add(website)
+        db.session.commit()
+        return redirect(url_for('indexwebsites'))
+    return render_template('website/create.html')
+
 @app.route('/websites')
 def indexwebsites():
     websites = Website.query.all()
