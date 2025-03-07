@@ -151,6 +151,7 @@ class Website(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     link = db.Column(db.Text, nullable=True)
+    productlink = db.relationship('Productlink', nullable=True, backref='website', uselist=False)
     lastpagescanned = db.Column(db.Integer, unique=True)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
@@ -158,6 +159,7 @@ class Website(db.Model):
 class Productlink(db.Model):
     __tablename__ = 'productlinks'
     id = db.Column(db.Integer, primary_key=True)
+    website_id = db.Column(db.Integer, db.ForeignKey('websites.id'), unique=False)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=True)
     name = db.Column(db.Text, nullable=False)
     link = db.Column(db.Text, nullable=False)
