@@ -521,8 +521,6 @@ def extract_product_links_auto():
                         productlink.price = product_price
                         
                     
-                    
-                
                 db.session.commit()
 
 
