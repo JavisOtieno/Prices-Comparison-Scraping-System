@@ -447,9 +447,8 @@ def extract_product_links_more():
         return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
     return render_template('scrape/scrapeurl.html')
 
-@app.route('/scrapelisturlsauto', methods=['POST'])
+@app.route('/scrapelisturlsauto')
 def extract_product_links_auto():
-    if request.method == 'POST':
         websitelink = 'https://www.starmac.co.ke'
         shoppage = f"{websitelink}/shop"
         currentwebsite = Website.query.filter_by(link=websitelink).first()
