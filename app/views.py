@@ -449,150 +449,97 @@ def extract_product_links_more():
 
 @app.route('/scrapelisturlsauto')
 def extract_product_links_auto():
-        websitelink = 'https://www.starmac.co.ke'
-        shoppage = f"{websitelink}/shop"
-        currentwebsite = Website.query.filter_by(link=websitelink).first()
-        all_product_links = []
-        page_number = currentwebsite.lastpagescanned
-        # int(request.form['upper_page_limit'])
-        # have different limits for each website
-        # int(request.form['upper_page_limit']) assigned to 5
-        upper_page_limit = page_number + 5
-        page_number_increments = str(page_number)
-        currentwebsite.lastpagescanned = upper_page_limit
-        db.session.commit()
+    websitelink = 'https://www.starmac.co.ke'
+    shoppage = f"{websitelink}/shop"
+    currentwebsite = Website.query.filter_by(link=websitelink).first()
+    all_product_links = []
+    page_number = currentwebsite.lastpagescanned
+    # int(request.form['upper_page_limit'])
+    # have different limits for each website
+    # int(request.form['upper_page_limit']) assigned to 5
+    upper_page_limit = page_number + 5
+    page_number_increments = str(page_number)
+    currentwebsite.lastpagescanned = upper_page_limit
+    db.session.commit()
 
-        while (page_number < upper_page_limit):
-        # while True:        # Construct the URL for the current page
-            url = f"{shoppage}/page/{page_number}"
-            
-            response = requests.get(url)
-            html_content = response.content
-            # return html_content
-            # Parse the HTML with Beautiful Soup
-            soup = BeautifulSoup(html_content, 'html.parser')
-
-            # Find all product divs
-            product_links = []
-            for product_div in soup.find_all('div', class_='product-grid-item'):
-                # Locate the <a> tag within the div
-                # return html.escape(str(product_div))
-                link_tag = product_div.find('a', class_='product-image-link')
-                product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
-                if not product_name:
-                    product_name=''
-                product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
-                try:
-                    price_value = product_price_org.replace('KShs',
-                    '').replace(',', '').replace('.00',
-                    '').replace('KSh','').strip()
-                    product_price = float(price_value)
-                except ValueError:
-                    product_price = 0
-                if link_tag and 'href' in link_tag.attrs:
-                    newlink = link_tag['href']
-                    
-                    productlink = Productlink.query.filter_by(link=newlink).first()
-                    if not productlink:
-                        # Create a new Productlink entry
-                        new_productlink = Productlink(name=product_name,link=newlink,price=product_price,
-                                                      oldprice='0',updateddate=datetime.utcnow(),status='new')
-                        
-                        db.session.add(new_productlink)
-                        product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
-                                          'name': f"{product_name}<span style=\"color:green\"> - new link</span>"})
-                        
-                        # db.session.commit()
-                    else:
-                        if productlink.price == product_price:
-                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
-                                          'name': product_name})
-                            productlink.oldprice = '0'
-                            productlink.status = 'unchanged'
-                        else:
-                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
-                                          'name': f"{product_name}<span style=\"color:red\"> - price change</span>"})
-                            productlink.oldprice = productlink.price
-                            productlink.status = 'newprice'
-                            productlink.updateddate=datetime.utcnow()
-                            productlink.price = product_price
-                            
-                        
-                        
-                    
-                    db.session.commit()
-
-
-
-            # If no product links are found, break the loop
-            if not product_links:
-                break
-            
-            # Add the links from the current page to the total list
-            all_product_links.extend(product_links)
-
-            # Increment page number for the next iteration
-            page_number = page_number + 1
-            page_number_increments = page_number_increments+' - '+str(page_number)
-            
+    while (page_number < upper_page_limit):
+    # while True:        # Construct the URL for the current page
+        url = f"{shoppage}/page/{page_number}"
         
-        
-        return str(page_number_increments)+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in all_product_links])
+        response = requests.get(url)
+        html_content = response.content
+        # return html_content
+        # Parse the HTML with Beautiful Soup
+        soup = BeautifulSoup(html_content, 'html.parser')
 
-        # Return all the product links as a string
-        # Create an array to store the prices
-        product_prices = []
-
-        # Loop through the product links to fetch prices
-        for link in all_product_links[:5]:
-            # headers = {
-            #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-            # }
-            response2 = requests.get(link)
-            # response2 = requests.get(link)
-            html_content_2 = response2.content
-            productlink = Productlink.query.filter_by(link=link).first()
-            # return html_content_2
-            # if not productlink:
-            #     productlink = Productlink(link=link,price=0)
-            #     db.session.add(productlink)
-            #     db.session.commit()
-
-            # Parse the HTML with Beautiful Soup
-            soup2 = BeautifulSoup(html_content_2, 'html.parser')
-
-            # Find the price element
-            price_element = soup2.find('p', class_='price')
-
-            # Extract the numeric value
-            if price_element:
-                price_text = price_element.get_text(strip=True)
-                # Remove the currency symbol and formatting to keep only the numeric value
-                price_value = price_text.replace('KShs',
+        # Find all product divs
+        product_links = []
+        for product_div in soup.find_all('div', class_='product-grid-item'):
+            # Locate the <a> tag within the div
+            # return html.escape(str(product_div))
+            link_tag = product_div.find('a', class_='product-image-link')
+            product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
+            if not product_name:
+                product_name=''
+            product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
+            try:
+                price_value = product_price_org.replace('KShs',
                 '').replace(',', '').replace('.00',
                 '').replace('KSh','').strip()
-                product_prices.append({'link': link, 'price': price_value})
-                try:
-                    price_value = float(price_value)
-                except ValueError:
-                    price_value = 0
-                product_title = soup.select_one('.product_title.entry-title')
-                if not product_title:
-                    # print("Product Name:", product_title.text.strip())
-                    product_title = ''
-                # order.cart_id = request.form['cart_id']
+                product_price = float(price_value)
+            except ValueError:
+                product_price = 0
+            if link_tag and 'href' in link_tag.attrs:
+                newlink = link_tag['href']
+                
+                productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
-                    productlink = Productlink(name=product_title,link=link, price=price_value)
-                    db.session.add(productlink)
+                    # Create a new Productlink entry
+                    new_productlink = Productlink(name=product_name,link=newlink,price=product_price,
+                                                    oldprice='0',updateddate=datetime.utcnow(),status='new')
+                    
+                    db.session.add(new_productlink)
+                    product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                                        'name': f"{product_name}<span style=\"color:green\"> - new link</span>"})
+                    
+                    # db.session.commit()
                 else:
-                    productlink.price = price_value
+                    if productlink.price == product_price:
+                        product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                                        'name': product_name})
+                        productlink.oldprice = '0'
+                        productlink.status = 'unchanged'
+                    else:
+                        product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
+                                        'name': f"{product_name}<span style=\"color:red\"> - price change</span>"})
+                        productlink.oldprice = productlink.price
+                        productlink.status = 'newprice'
+                        productlink.updateddate=datetime.utcnow()
+                        productlink.price = product_price
+                        
+                    
+                    
+                
                 db.session.commit()
-            else:
-                product_prices.append({'link': link, 'price': 'Price not found'})
 
-        # Return the product prices as a string
-        return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
-    return render_template('scrape/scrapeurl.html')
+
+
+        # If no product links are found, break the loop
+        if not product_links:
+            break
+        
+        # Add the links from the current page to the total list
+        all_product_links.extend(product_links)
+
+        # Increment page number for the next iteration
+        page_number = page_number + 1
+        page_number_increments = page_number_increments+' - '+str(page_number)
+        
+    
+    
+    return str(page_number_increments)+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in all_product_links])
+
+
 
 @app.route('/addproductfromlink/<int:id>')
 @login_required
