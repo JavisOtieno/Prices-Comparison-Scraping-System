@@ -454,6 +454,7 @@ def extract_product_links_auto():
     currentwebsite = Website.query.filter_by(link=websitelink).first()
     all_product_links = []
     page_number = currentwebsite.lastpagescanned
+    return page_number
     # int(request.form['upper_page_limit'])
     # have different limits for each website
     # int(request.form['upper_page_limit']) assigned to 5
@@ -534,8 +535,6 @@ def extract_product_links_auto():
         # Increment page number for the next iteration
         page_number = page_number + 1
         page_number_increments = page_number_increments+' - '+str(page_number)
-        
-    
     
     return str(page_number_increments)+"<br>".join([f"{item['link']}: {item['name']} : {item['price']}" for item in all_product_links])
 
