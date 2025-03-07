@@ -452,6 +452,7 @@ def extract_product_links_auto():
     websitelink = 'https://www.starmac.co.ke'
     shoppage = f"{websitelink}/shop"
     currentwebsite = Website.query.filter_by(link=websitelink).first()
+    currentwebsite = Website.query.first()
     return currentwebsite.name
     all_product_links = []
     page_number = currentwebsite.lastpagescanned
