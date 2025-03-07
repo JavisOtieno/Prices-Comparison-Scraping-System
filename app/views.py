@@ -448,7 +448,7 @@ def extract_product_links_more():
     return render_template('scrape/scrapeurl.html')
 
 @app.route('/scrapelisturlsauto', methods=['POST'])
-def extract_product_links_more():
+def extract_product_links_auto():
     if request.method == 'POST':
         websitelink = 'https://www.starmac.co.ke'
         shoppage = f"{websitelink}/shop"
