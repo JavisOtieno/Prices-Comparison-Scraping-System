@@ -583,7 +583,7 @@ def extract_product_links_auto(nameslug):
 
         # If no product links are found, break the loop
         if not product_links:
-            currentwebsite.lastpagescanned = 0
+            currentwebsite.lastpagescanned = 1
             db.session.commit()
             break
         
