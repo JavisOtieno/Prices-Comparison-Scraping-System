@@ -170,14 +170,14 @@ def test_scrape_cellular():
     response = scraper.get("http://cellularkenya.co.ke/shop/")
     print(response.text)
     
-    url = 'http://cellularkenya.co.ke/shop/'
-    # Fetch the HTML content of the page
-    response = requests.get(url)
-    html_content = response.content
-    # Parse the HTML with Beautiful Soup
-    soup = BeautifulSoup(html_content, 'html.parser')
-    # Find the price element
-    price_element = soup.find('p', class_='price')
+    # url = 'http://cellularkenya.co.ke/shop/'
+    # # Fetch the HTML content of the page
+    # response = requests.get(url)
+    # html_content = response.content
+    # # Parse the HTML with Beautiful Soup
+    # soup = BeautifulSoup(html_content, 'html.parser')
+    # # Find the price element
+    # price_element = soup.find('p', class_='price')
     # Set up Chrome WebDriver
     # driver = webdriver.Chrome()
 
@@ -192,7 +192,7 @@ def test_scrape_cellular():
     # driver.quit()
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     # html_content = response.content
-    return html_content
+    return response.text
 
     scraper = cloudscraper.create_scraper()
     response = scraper.get("http://cellularkenya.co.ke/shop/")
