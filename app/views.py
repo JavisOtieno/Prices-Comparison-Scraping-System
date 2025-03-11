@@ -25,6 +25,7 @@ import html
 from sqlalchemy.sql import extract
 from datetime import datetime, timedelta
 # import cloudscraper
+from selenium import webdriver
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -162,8 +163,20 @@ def test_scrape_cellular():
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://google.com",
     }
-    response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
-    html_content = response.content
+    # Set up Chrome WebDriver
+    driver = webdriver.Chrome()
+
+    # Open a webpage
+    driver.get("http://cellularkenya.co.ke/shop/")
+
+    # Parse the page
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    html_content = soup.text
+
+    # Close the browser
+    driver.quit()
+    # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
+    # html_content = response.content
     return html_content
 
     scraper = cloudscraper.create_scraper()
