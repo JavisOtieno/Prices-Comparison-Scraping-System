@@ -373,7 +373,8 @@ def extract_product_links_more():
                     # return 'price value replace'
                     price_value = productpricediv.replace('KShs',
                     '').replace(',', '').replace('.00',
-                    '').replace('KSh','')
+                    '').replace('KSh','').replace('\xa0', '')
+                    
                     return price_value
                     product_price = float(price_value)
                     
