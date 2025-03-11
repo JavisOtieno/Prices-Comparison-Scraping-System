@@ -361,7 +361,10 @@ def extract_product_links_more():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
-                product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
+                productpricediv = product_div.find('div', class_='wrap-price')
+                if not productpricediv:
+                    productpricediv = product_div.find('span', class_='price')
+                product_price_org = productpricediv.get_text(strip=True)
                 try:
                     price_value = product_price_org.replace('KShs',
                     '').replace(',', '').replace('.00',
