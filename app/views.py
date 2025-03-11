@@ -370,15 +370,16 @@ def extract_product_links_more():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
                 try:
+                    return 'price value replace'
                     price_value = productpricediv.replace('KShs',
                     '').replace(',', '').replace('.00',
                     '').replace('KSh','').strip()
                     product_price = float(price_value)
-                    return 'price value replace'
+                    
                 except ValueError:
                     product_price = 0
-                    return '0'
-                return product_price
+                    return 'nothing'
+    
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
                     
