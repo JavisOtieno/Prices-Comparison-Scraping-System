@@ -30,6 +30,7 @@ from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import socket
+import cloudscraper
 
 # Configure path to wkhtmltopdf
 # path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
@@ -158,38 +159,11 @@ def unchangedproductlinks():
 @login_required
 def test_scrape_cellular():
 
-    headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://google.com",
-    }
-    
-    import cloudscraper
-
     scraper = cloudscraper.create_scraper()
     response = scraper.get("http://cellularkenya.co.ke/shop/")
     print(response.text)
     
-    # url = 'http://cellularkenya.co.ke/shop/'
-    # # Fetch the HTML content of the page
-    # response = requests.get(url)
-    # html_content = response.content
-    # # Parse the HTML with Beautiful Soup
-    # soup = BeautifulSoup(html_content, 'html.parser')
-    # # Find the price element
-    # price_element = soup.find('p', class_='price')
-    # Set up Chrome WebDriver
-    # driver = webdriver.Chrome()
 
-    # # Open a webpage
-    # driver.get("http://cellularkenya.co.ke/shop/")
-
-    # # Parse the page
-    # soup = BeautifulSoup(driver.page_source, "html.parser")
-    # html_content = soup.text
-
-    # # Close the browser
-    # driver.quit()
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     # html_content = response.content
     return response.text
@@ -374,7 +348,12 @@ def extract_product_links_more():
         # while True:        # Construct the URL for the current page
             url = f"{base_url}/page/{page_number}"
             
-            response = requests.get(url)
+            if 'cellularkenya' in url:
+                scraper = cloudscraper.create_scraper()
+                response = scraper.get("http://cellularkenya.co.ke/shop/")
+            else:
+                response = requests.get(url)
+            
             html_content = response.content
             # return html_content
             # Parse the HTML with Beautiful Soup
