@@ -361,30 +361,20 @@ def extract_product_links_more():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
-                # return product_name
-                # productpricediv = product_div.find('div', class_='wrap-price')
-                # if not productpricediv:
-                productpricediv = product_div.find('span', class_='price').text.strip()
-                # return productpricediv
-                # product_price_org = product_div.find('span', class_='price').text.strip()
-                product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
-                
+                productpricediv = product_div.find('div', class_='wrap-price')
+                if not productpricediv:
+                    productpricediv = product_div.find('span', class_='price')
                 if productpricediv:
+                    product_price_org = productpricediv.get_text(strip=True)
                     try:
-                        # return 'price value replace'
-                        price_value = productpricediv.replace('KShs',
+                        price_value = product_price_org.replace('KShs',
                         '').replace(',', '').replace('.00',
-                        '').replace('KSh','').replace('\xa0', '')
-                        
-                        # return price_value
+                        '').replace('KSh','').replace('\xa0', '').strip()
                         product_price = float(price_value)
-                        
                     except ValueError:
                         product_price = 0
                 else:
                     product_price = 0
-                    
-    
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
                     
@@ -395,18 +385,18 @@ def extract_product_links_more():
                                                       oldprice='0',updateddate=datetime.utcnow(),status='new')
                         
                         db.session.add(new_productlink)
-                        product_links.append({'link': newlink, 'price': html.escape(str(productpricediv)), 
+                        product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name}<span style=\"color:green\"> - new link</span>"})
                         
                         # db.session.commit()
                     else:
                         if productlink.price == product_price:
-                            product_links.append({'link': newlink, 'price': html.escape(str(productpricediv)), 
+                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': product_name})
                             productlink.oldprice = '0'
                             productlink.status = 'unchanged'
                         else:
-                            product_links.append({'link': newlink, 'price': html.escape(str(productpricediv)), 
+                            product_links.append({'link': newlink, 'price': html.escape(str(product_price_org)), 
                                           'name': f"{product_name}<span style=\"color:red\"> - price change</span>"})
                             productlink.oldprice = productlink.price
                             productlink.status = 'newprice'
