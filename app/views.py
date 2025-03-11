@@ -156,21 +156,21 @@ def unchangedproductlinks():
 @app.route('/testscrapecellular')
 @login_required
 def test_scrape_cellular():
-    import undetected_chromedriver as uc
+    # import undetected_chromedriver as uc
 
-    # Start Chrome in undetected mode
-    driver = uc.Chrome()
+    # # Start Chrome in undetected mode
+    # driver = uc.Chrome()
 
-    # Open a target website
-    driver.get("http://cellularkenya.co.ke/shop")
+    # # Open a target website
+    # driver.get("http://cellularkenya.co.ke/shop")
 
-    # Print page source after Cloudflare verification
-    # print(driver.page_source)
-    html_content = driver.page_source
+    # # Print page source after Cloudflare verification
+    # # print(driver.page_source)
+    # html_content = driver.page_source
 
-    # Close the driver
-    driver.quit()
-    return html_content
+    # # Close the driver
+    # driver.quit()
+    # return html_content
     # URL of the product page
     # url = 'http://cellularkenya.co.ke/shop/'
     # # Fetch the HTML content of the page
@@ -180,7 +180,7 @@ def test_scrape_cellular():
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://google.com",
     }
-    response = requests.get("http://cellularkenya.co.ke/shop", headers=headers)
+    response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     html_content = response.content
     return html_content
 
