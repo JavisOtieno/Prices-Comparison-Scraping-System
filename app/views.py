@@ -164,7 +164,7 @@ def test_scrape_cellular():
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
     products_element = soup.find('div', class_='wd-products-element')
-    return products_element
+    return products_element.text
 
 @app.route('/testscrape')
 @login_required
