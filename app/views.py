@@ -374,8 +374,10 @@ def extract_product_links_more():
                     '').replace(',', '').replace('.00',
                     '').replace('KSh','').strip()
                     product_price = float(price_value)
+                    return 'price value replace'
                 except ValueError:
                     product_price = 0
+                    return '0'
                 return product_price
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
