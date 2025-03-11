@@ -24,6 +24,7 @@ import requests
 import html
 from sqlalchemy.sql import extract
 from datetime import datetime, timedelta
+import cloudscraper
 
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -156,12 +157,14 @@ def unchangedproductlinks():
 @login_required
 def test_scrape_cellular():
     # URL of the product page
-    url = 'http://cellularkenya.co.ke/shop/'
-    # Fetch the HTML content of the page
-    response = requests.get(url)
-    html_content = response.content
-    
-    return html_content
+    # url = 'http://cellularkenya.co.ke/shop/'
+    # # Fetch the HTML content of the page
+    # response = requests.get(url)
+
+
+    scraper = cloudscraper.create_scraper()
+    response = scraper.get("http://cellularkenya.co.ke/shop/")
+    print(response.text)
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
