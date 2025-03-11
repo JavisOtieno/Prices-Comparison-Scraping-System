@@ -163,11 +163,21 @@ def test_scrape_cellular():
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://google.com",
     }
+    
     import cloudscraper
 
     scraper = cloudscraper.create_scraper()
     response = scraper.get("http://cellularkenya.co.ke/shop/")
     print(response.text)
+    
+    url = 'http://cellularkenya.co.ke/shop/'
+    # Fetch the HTML content of the page
+    response = requests.get(url)
+    html_content = response.content
+    # Parse the HTML with Beautiful Soup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    # Find the price element
+    price_element = soup.find('p', class_='price')
     # Set up Chrome WebDriver
     # driver = webdriver.Chrome()
 
