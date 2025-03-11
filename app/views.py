@@ -364,8 +364,8 @@ def extract_product_links_more():
                 # return product_name
                 # productpricediv = product_div.find('div', class_='wrap-price')
                 # if not productpricediv:
-                # productpricediv = product_div.find('span', class_='price').text.strip()
-                # return productpricediv
+                productpricediv = product_div.find('span', class_='price').text.strip()
+                return productpricediv
                 product_price_org = product_div.find('span', class_='price').text.strip()
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
