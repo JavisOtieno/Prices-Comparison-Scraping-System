@@ -105,7 +105,7 @@ def createwebsite():
     if request.method == 'POST':
         name = request.form['name']
         link = request.form['link']
-        lastpagescanned = 0
+        lastpagescanned = 1
         
         website = Website(name=name, link=link,
                           lastpagescanned=lastpagescanned)
