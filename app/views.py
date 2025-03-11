@@ -156,6 +156,21 @@ def unchangedproductlinks():
 @app.route('/testscrapecellular')
 @login_required
 def test_scrape_cellular():
+    import undetected_chromedriver as uc
+
+    # Start Chrome in undetected mode
+    driver = uc.Chrome()
+
+    # Open a target website
+    driver.get("http://cellularkenya.co.ke/shop")
+
+    # Print page source after Cloudflare verification
+    # print(driver.page_source)
+    html_content = driver.page_source
+
+    # Close the driver
+    driver.quit()
+    return html_content
     # URL of the product page
     # url = 'http://cellularkenya.co.ke/shop/'
     # # Fetch the HTML content of the page
