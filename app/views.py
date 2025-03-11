@@ -375,7 +375,7 @@ def extract_product_links_more():
                     '').replace(',', '').replace('.00',
                     '').replace('KSh','').replace('\xa0', '')
                     
-                    return price_value
+                    # return price_value
                     product_price = float(price_value)
                     
                 except ValueError:
