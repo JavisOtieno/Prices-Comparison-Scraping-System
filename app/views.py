@@ -365,7 +365,7 @@ def extract_product_links_more():
                 # productpricediv = product_div.find('div', class_='wrap-price')
                 # if not productpricediv:
                 productpricediv = product_div.find('span', class_='price').text.strip()
-                return productpricediv
+                # return productpricediv
                 # product_price_org = product_div.find('span', class_='price').text.strip()
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
@@ -376,6 +376,7 @@ def extract_product_links_more():
                     product_price = float(price_value)
                 except ValueError:
                     product_price = 0
+                return product_price
                 if link_tag and 'href' in link_tag.attrs:
                     newlink = link_tag['href']
                     
