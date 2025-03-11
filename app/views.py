@@ -370,10 +370,11 @@ def extract_product_links_more():
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
                 try:
-                    return 'price value replace'
+                    # return 'price value replace'
                     price_value = productpricediv.replace('KShs',
                     '').replace(',', '').replace('.00',
-                    '').replace('KSh','').strip()
+                    '').replace('KSh','')
+                    return price_value
                     product_price = float(price_value)
                     
                 except ValueError:
