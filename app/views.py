@@ -160,6 +160,8 @@ def test_scrape_cellular():
     # Fetch the HTML content of the page
     response = requests.get(url)
     html_content = response.content
+    
+    return html_content
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
