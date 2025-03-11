@@ -192,7 +192,7 @@ def test_scrape_cellular():
     # driver.quit()
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     # html_content = response.content
-    return response.text
+    return html_content
 
     scraper = cloudscraper.create_scraper()
     response = scraper.get("http://cellularkenya.co.ke/shop/")
