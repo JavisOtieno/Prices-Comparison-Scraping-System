@@ -160,11 +160,19 @@ def test_scrape_cellular():
     # url = 'http://cellularkenya.co.ke/shop/'
     # # Fetch the HTML content of the page
     # response = requests.get(url)
-
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://google.com",
+    }
+    response = requests.get("http://cellularkenya.co.ke/shop", headers=headers)
+    html_content = response.content
+    return html_content
 
     scraper = cloudscraper.create_scraper()
     response = scraper.get("http://cellularkenya.co.ke/shop/")
     print(response.text)
+    
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
