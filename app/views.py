@@ -487,7 +487,7 @@ def extract_product_links_more():
 @app.route('/scrapelisturlsauto/<nameslug>')
 def extract_product_links_auto(nameslug):
     
-    currentwebsite = currentwebsite = Website.query.filter(Website.link.like(f"%{nameslug}%")).first().
+    currentwebsite = currentwebsite = Website.query.filter(Website.link.like(f"%{nameslug}%")).first()
     if not currentwebsite:
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
