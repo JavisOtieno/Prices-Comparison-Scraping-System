@@ -152,6 +152,20 @@ def unchangedproductlinks():
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
     return render_template('link/index.html', links=productlinks)
 
+@app.route('/testscrapecellular')
+@login_required
+def test_scrape_cellular():
+    # URL of the product page
+    url = 'http://cellularkenya.co.ke/shop/'
+    # Fetch the HTML content of the page
+    response = requests.get(url)
+    html_content = response.content
+    # Parse the HTML with Beautiful Soup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    # Find the price element
+    products_element = soup.find('div', class_='wd-products-element')
+    return products_element
+
 @app.route('/testscrape')
 @login_required
 def test_scrape():
