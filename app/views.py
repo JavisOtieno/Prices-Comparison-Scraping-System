@@ -365,12 +365,12 @@ def extract_product_links_more():
                 # productpricediv = product_div.find('div', class_='wrap-price')
                 # if not productpricediv:
                 productpricediv = product_div.find('span', class_='price').text.strip()
-                return productpricediv
+                # return productpricediv
                 product_price_org = product_div.find('span', class_='price').text.strip()
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
                 try:
-                    price_value = product_price_org.replace('KShs',
+                    price_value = productpricediv.replace('KShs',
                     '').replace(',', '').replace('.00',
                     '').replace('KSh','').strip()
                     product_price = float(price_value)
