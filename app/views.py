@@ -514,7 +514,11 @@ def extract_product_links_auto(nameslug):
     # while True:        # Construct the URL for the current page
         url = f"{shoppage}/page/{page_number}"
         
-        response = requests.get(url)
+        if 'cellularkenya' in url:
+            scraper = cloudscraper.create_scraper()
+            response = scraper.get(url)
+        else:
+            response = requests.get(url)
         html_content = response.content
         # return html_content
         # Parse the HTML with Beautiful Soup
@@ -529,13 +533,20 @@ def extract_product_links_auto(nameslug):
             product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
             if not product_name:
                 product_name=''
-            product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
-            try:
-                price_value = product_price_org.replace('KShs',
-                '').replace(',', '').replace('.00',
-                '').replace('KSh','').strip()
-                product_price = float(price_value)
-            except ValueError:
+            # product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
+            productpricediv = product_div.find('div', class_='wrap-price')
+            if not productpricediv:
+                productpricediv = product_div.find('span', class_='price')
+            if productpricediv:
+                product_price_org = productpricediv.get_text(strip=True)
+                try:
+                    price_value = product_price_org.replace('KShs',
+                    '').replace(',', '').replace('.00',
+                    '').replace('KSh','').replace('\xa0', '').strip()
+                    product_price = float(price_value)
+                except ValueError:
+                    product_price = 0
+            else:
                 product_price = 0
             if link_tag and 'href' in link_tag.attrs:
                 newlink = link_tag['href']
