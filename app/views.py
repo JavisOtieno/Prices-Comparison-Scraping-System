@@ -350,7 +350,7 @@ def extract_product_links_more():
             
             if 'cellularkenya' in url:
                 scraper = cloudscraper.create_scraper()
-                response = scraper.get("http://cellularkenya.co.ke/shop/")
+                response = scraper.get(url)
             else:
                 response = requests.get(url)
             
