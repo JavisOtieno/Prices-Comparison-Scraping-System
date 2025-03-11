@@ -484,18 +484,26 @@ def extract_product_links_more():
         return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
     return render_template('scrape/scrapeurl.html')
 
-@app.route('/scrapelisturlsauto')
-def extract_product_links_auto():
-    websitelink = 'https://www.starmac.co.ke'
+@app.route('/scrapelisturlsauto/<nameslug>')
+def extract_product_links_auto(nameslug):
+    
+    currentwebsite = currentwebsite = Website.query.filter(Website.link.like(f"%{nameslug}%")).first().
+    if not currentwebsite:
+        return {"error": "Website not found"}, 404
+    websitelink = currentwebsite.link
+    # shoppage = f"{websitelink}/shop"
+    
+    # websitelink = 'https://www.starmac.co.ke'
     shoppage = f"{websitelink}/shop"
-    currentwebsite = Website.query.filter_by(link=websitelink).first()
-    currentwebsite = Website.query.first()
+    # Productlink.link.like('%starmac%')
+    # currentwebsite = Website.query.filter_by(link=websitelink).first()
+    # currentwebsite = Website.query.first()
     # return currentwebsite.name
     all_product_links = []
     page_number = currentwebsite.lastpagescanned
     
     # int(request.form['upper_page_limit'])
-    # have different limits for each website
+    # have different limits for e]ach website
     # int(request.form['upper_page_limit']) assigned to 5
     upper_page_limit = page_number + 5
     page_number_increments = str(page_number)
