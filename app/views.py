@@ -530,7 +530,7 @@ def extract_product_links_auto(nameslug):
         # Find all product divs
         product_links = []
         for product_div in soup.find_all('div', class_='product-grid-item'):
-            # Locate the <a> tag within the div
+            # Locate the <a> tag within the div]
             # return html.escape(str(product_div))
             link_tag = product_div.find('a', class_='product-image-link')
             product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
@@ -557,7 +557,7 @@ def extract_product_links_auto(nameslug):
                 productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
                     # Create a new Productlink entry
-                    return f"{websiteid} test"
+                    # return f"{websiteid} test"
                     new_productlink = Productlink(website_id=websiteid,name=product_name,link=newlink,price=product_price,
                                                     oldprice='0',updateddate=datetime.utcnow(),status='new')
                     
