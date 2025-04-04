@@ -492,7 +492,7 @@ def extract_product_links_auto(nameslug):
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
     websiteid = currentwebsite.id
-    return {"error": f"Website id: {websiteid}"}
+    
     # shoppage = f"{websitelink}/shop"
     
     # websitelink = 'https://www.starmac.co.ke'
