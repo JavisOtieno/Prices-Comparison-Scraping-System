@@ -492,7 +492,7 @@ def extract_product_links_auto(nameslug):
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
     websiteid = currentwebsite.id
-    return currentwebsite.id
+    return f"{websiteid} test"
     
     # shoppage = f"{websitelink}/shop"
     
