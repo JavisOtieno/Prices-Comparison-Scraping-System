@@ -491,6 +491,7 @@ def extract_product_links_auto(nameslug):
     if not currentwebsite:
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
+    websiteid = currentwebsite.id
     # shoppage = f"{websitelink}/shop"
     
     # websitelink = 'https://www.starmac.co.ke'
@@ -554,7 +555,7 @@ def extract_product_links_auto(nameslug):
                 productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
                     # Create a new Productlink entry
-                    new_productlink = Productlink(name=product_name,link=newlink,price=product_price,
+                    new_productlink = Productlink(website_id=websiteid,name=product_name,link=newlink,price=product_price,
                                                     oldprice='0',updateddate=datetime.utcnow(),status='new')
                     
                     db.session.add(new_productlink)
