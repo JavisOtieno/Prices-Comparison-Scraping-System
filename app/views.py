@@ -492,7 +492,7 @@ def extract_product_links_auto(nameslug):
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
     websiteid = currentwebsite.id
-    return f"{websiteid} test"
+    # return f"{websiteid} test"
     
     # shoppage = f"{websitelink}/shop"
     
@@ -557,6 +557,7 @@ def extract_product_links_auto(nameslug):
                 productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
                     # Create a new Productlink entry
+                    return f"{websiteid} test"
                     new_productlink = Productlink(website_id=websiteid,name=product_name,link=newlink,price=product_price,
                                                     oldprice='0',updateddate=datetime.utcnow(),status='new')
                     
