@@ -563,10 +563,7 @@ def extract_product_links_auto(nameslug):
     currentwebsite.lastpagescanned = upper_page_limit
     db.session.commit()
 
-    if 'camerasafrica' in url:
-        productclass = 'berocket_lgv_additional_data lgv_advanced' 
-    else:
-        productclass =  'product-grid-item' 
+ 
 
     while (page_number < upper_page_limit):
     # while True:        # Construct the URL for the current page
@@ -581,6 +578,11 @@ def extract_product_links_auto(nameslug):
         # return html_content
         # Parse the HTML with Beautiful Soup
         soup = BeautifulSoup(html_content, 'html.parser')
+
+        if 'camerasafrica' in url:
+            productclass = 'berocket_lgv_additional_data lgv_advanced' 
+        else:
+            productclass =  'product-grid-item'
 
         # Find all product divs
         product_links = []
