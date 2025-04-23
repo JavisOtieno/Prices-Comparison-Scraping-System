@@ -374,7 +374,10 @@ def extract_product_links_more():
                 # Locate the <a> tag within the div
                 # return html.escape(str(product_div))
                 link_tag = product_div.find('a', class_='product-image-link')
-                product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
+                if 'camerasafrica' in url:
+                    product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip() 
+                else:
+                    product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
                 if not product_name:
                     product_name=''
                 productpricediv = product_div.find('div', class_='wrap-price')
