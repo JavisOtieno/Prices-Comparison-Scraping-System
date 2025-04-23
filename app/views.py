@@ -368,6 +368,12 @@ def extract_product_links_more():
             # Parse the HTML with Beautiful Soup
             soup = BeautifulSoup(html_content, 'html.parser')
 
+            product_div = soup.find('div', class_=productclass)
+            product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip()
+            return product_name 
+
+
+
             # Find all product divs
             product_links = []
             for product_div in soup.find_all('div', class_=productclass):
@@ -378,7 +384,6 @@ def extract_product_links_more():
                     product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip() 
                 else:
                     product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
-            return product_name
 
                 if not product_name:
                     product_name=''
