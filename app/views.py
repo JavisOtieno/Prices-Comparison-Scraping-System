@@ -408,13 +408,15 @@ def extract_product_links_more():
                 else:
                     product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
-                if not product_name:
-                    product_name=''
-
                 if 'camerasafrica' in url:
                     productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 else:
                     productpricediv = product_div.find('div', class_='wrap-price')
+
+
+
+                if not product_name:
+                    product_name=''
 
                 
                 if not productpricediv:
@@ -580,12 +582,27 @@ def extract_product_links_auto(nameslug):
         for product_div in soup.find_all('div', class_='product-grid-item'):
             # Locate the <a> tag within the div]
             # return html.escape(str(product_div))
-            link_tag = product_div.find('a', class_='product-image-link')
-            product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
+            if 'camerasafrica' in url:
+                link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
+            else:
+                link_tag = product_div.find('a', class_='product-image-link')
+
+            if 'camerasafrica' in url:
+                product_name = product_div.find('h3').text.strip() 
+            else:
+                product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
+
+            if 'camerasafrica' in url:
+                productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
+            else:
+                productpricediv = product_div.find('div', class_='wrap-price')
+
+            # link_tag = product_div.find('a', class_='product-image-link')
+            # product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
             if not product_name:
                 product_name=''
             # product_price_org = product_div.find('div', class_='wrap-price').get_text(strip=True)
-            productpricediv = product_div.find('div', class_='wrap-price')
+            # productpricediv = product_div.find('div', class_='wrap-price')
             if not productpricediv:
                 productpricediv = product_div.find('span', class_='price')
             if productpricediv:
@@ -593,7 +610,7 @@ def extract_product_links_auto(nameslug):
                 try:
                     price_value = product_price_org.replace('KShs',
                     '').replace(',', '').replace('.00',
-                    '').replace('KSh','').replace('\xa0', '').strip()
+                    '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
                     product_price = float(price_value)
                 except ValueError:
                     product_price = 0
