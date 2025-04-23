@@ -372,7 +372,18 @@ def extract_product_links_more():
             productpriceclass = 'woocommerce-Price-amount'
             
             productpricediv = product_div.find('span', class_=productpriceclass)
-            return str(productpricediv)
+            if productpricediv:
+                    product_price_org = productpricediv.get_text(strip=True)
+                    try:
+                        price_value = product_price_org.replace('KShs',
+                        '').replace(',', '').replace('.00',
+                        '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
+                        product_price = float(price_value)
+                    except ValueError:
+                        product_price = 0
+                else:
+                    product_price = 0
+            return product_price
             # return str(product_div)
             # product_name = product_div.find('h3').text.strip()
             # return product_name 
@@ -394,11 +405,11 @@ def extract_product_links_more():
                     product_name=''
 
                 if 'camerasafrica' in url:
-                    productpriceclass = 'woocommerce-Price-amount amount'
+                    productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 else:
-                    productpriceclass = 'wrap-price'
+                    productpricediv = product_div.find('div', class_='wrap-price')
 
-                productpricediv = product_div.find('div', class_=productpriceclass)
+                
                 if not productpricediv:
                     productpricediv = product_div.find('span', class_='price')
                 if productpricediv:
@@ -406,7 +417,7 @@ def extract_product_links_more():
                     try:
                         price_value = product_price_org.replace('KShs',
                         '').replace(',', '').replace('.00',
-                        '').replace('KSh','').replace('\xa0', '').strip()
+                        '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
                         product_price = float(price_value)
                     except ValueError:
                         product_price = 0
