@@ -369,9 +369,9 @@ def extract_product_links_more():
             soup = BeautifulSoup(html_content, 'html.parser')
 
             product_div = soup.find('div', class_=productclass)
-            productpriceclass = 'woocommerce-Price-amount'
+
             
-            productpricediv = product_div.find('span', class_=productpriceclass)
+            productpricediv = product_div.find('span', class_='woocommerce-Price-amount')
             if productpricediv:
                     product_price_org = productpricediv.get_text(strip=True)
                     try:
