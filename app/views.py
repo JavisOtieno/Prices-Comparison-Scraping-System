@@ -378,6 +378,8 @@ def extract_product_links_more():
                     product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip() 
                 else:
                     product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
+                return product_name
+                
                 if not product_name:
                     product_name=''
                 productpricediv = product_div.find('div', class_='wrap-price')
