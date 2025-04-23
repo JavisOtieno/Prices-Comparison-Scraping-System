@@ -373,15 +373,15 @@ def extract_product_links_more():
             
             productpricediv = product_div.find('span', class_='woocommerce-Price-amount')
             if productpricediv:
-                    product_price_org = productpricediv.get_text(strip=True)
-                    try:
-                        price_value = product_price_org.replace('KShs',
-                        '').replace(',', '').replace('.00',
-                        '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
-                        product_price = float(price_value)
-                    except ValueError:
-                        product_price = 0
-                else:
+                product_price_org = productpricediv.get_text(strip=True)
+                try:
+                    price_value = product_price_org.replace('KShs',
+                    '').replace(',', '').replace('.00',
+                    '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
+                    product_price = float(price_value)
+                except ValueError:
+                    product_price = 0
+            else:
                     product_price = 0
             return product_price
             # return str(product_div)
