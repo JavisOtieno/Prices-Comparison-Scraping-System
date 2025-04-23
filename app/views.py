@@ -369,8 +369,8 @@ def extract_product_links_more():
             soup = BeautifulSoup(html_content, 'html.parser')
 
             product_div = soup.find('div', class_=productclass)
-            return str(product_div)
-            product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip()
+            # return str(product_div)
+            product_name = product_div.find('h3').text.strip()
             return product_name 
 
 
@@ -382,7 +382,7 @@ def extract_product_links_more():
                 # return html.escape(str(product_div))
                 link_tag = product_div.find('a', class_='product-image-link')
                 if 'camerasafrica' in url:
-                    product_name = product_div.find('h2', class_='woocommerce-loop-product__title').text.strip() 
+                    product_name = product_div.find('h3').text.strip() 
                 else:
                     product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
