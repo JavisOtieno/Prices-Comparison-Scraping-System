@@ -383,7 +383,7 @@ def extract_product_links_more():
                     product_price = 0
             else:
                     product_price = 0
-            return product_price
+            return str(product_price)
             # return str(product_div)
             # product_name = product_div.find('h3').text.strip()
             # return product_name 
