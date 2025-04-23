@@ -369,12 +369,9 @@ def extract_product_links_more():
             soup = BeautifulSoup(html_content, 'html.parser')
 
             product_div = soup.find('div', class_=productclass)
-            if 'camerasafrica' in url:
-                productpriceclass = 'woocommerce-Price-amount amount'
-            else:
-                productpriceclass = 'wrap-price'
-
-            productpricediv = product_div.find('div', class_=productpriceclass)
+            productpriceclass = 'woocommerce-Price-amount'
+            
+            productpricediv = product_div.find('span', class_=productpriceclass)
             return str(productpricediv)
             # return str(product_div)
             # product_name = product_div.find('h3').text.strip()
