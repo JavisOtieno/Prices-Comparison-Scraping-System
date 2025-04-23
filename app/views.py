@@ -370,8 +370,8 @@ def extract_product_links_more():
 
             product_div = soup.find('div', class_=productclass)
             # return str(product_div)
-            product_name = product_div.find('h3').text.strip()
-            return product_name 
+            # product_name = product_div.find('h3').text.strip()
+            # return product_name 
 
 
 
