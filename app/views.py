@@ -384,7 +384,7 @@ def extract_product_links_more():
             else:
                     product_price = 0
             link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
-            return str(link_tag)
+            # return str(link_tag)
 
             # return str(product_price)
             # return str(product_div)
