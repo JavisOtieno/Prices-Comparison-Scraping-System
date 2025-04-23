@@ -383,7 +383,10 @@ def extract_product_links_more():
                     product_price = 0
             else:
                     product_price = 0
-            return str(product_price)
+            link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
+            return str(link_tag)
+
+            # return str(product_price)
             # return str(product_div)
             # product_name = product_div.find('h3').text.strip()
             # return product_name 
@@ -395,7 +398,11 @@ def extract_product_links_more():
             for product_div in soup.find_all('div', class_=productclass):
                 # Locate the <a> tag within the div
                 # return html.escape(str(product_div))
-                link_tag = product_div.find('a', class_='product-image-link')
+                if 'camerasafrica' in url:
+                    link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
+                else:
+                    link_tag = product_div.find('a', class_='product-image-link')
+
                 if 'camerasafrica' in url:
                     product_name = product_div.find('h3').text.strip() 
                 else:
