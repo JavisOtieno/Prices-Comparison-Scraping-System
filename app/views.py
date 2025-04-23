@@ -160,7 +160,8 @@ def unchangedproductlinks():
 def test_scrape_cellular():
 
     scraper = cloudscraper.create_scraper()
-    response = scraper.get("http://cellularkenya.co.ke/shop/")
+    # response = scraper.get("http://cellularkenya.co.ke/shop/")
+    response = scraper.get("http://camerasafrica.com/shop/")
     print(response.text)
     
 
