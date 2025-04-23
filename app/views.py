@@ -388,7 +388,13 @@ def extract_product_links_more():
 
                 if not product_name:
                     product_name=''
-                productpricediv = product_div.find('div', class_='wrap-price')
+
+                if 'camerasafrica' in url:
+                    productpriceclass = 'woocommerce-Price-amount amount'
+                else:
+                    productpriceclass = 'wrap-price'
+
+                productpricediv = product_div.find('div', class_=productpriceclass)
                 if not productpricediv:
                     productpricediv = product_div.find('span', class_='price')
                 if productpricediv:
