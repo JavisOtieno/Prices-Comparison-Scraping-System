@@ -342,6 +342,8 @@ def extract_product_links_more():
         page_number = int(request.form['page_number'])
         base_url = request.form['url'].rstrip('/')  # Ensure no trailing slash
         all_product_links = []
+    #test urls
+    #test
         upper_page_limit = page_number +int(request.form['upper_page_limit'])
         page_number_increments = str(page_number)
 
@@ -354,6 +356,12 @@ def extract_product_links_more():
                 response = scraper.get(url)
             else:
                 response = requests.get(url)
+
+            if 'camerasafrica' in url:
+                productclass = 'berocket_lgv_additional_data lgv_advanced' 
+            else:
+                productclass =  'product-grid-item' 
+ 
             
             html_content = response.content
             # return html_content
@@ -362,7 +370,7 @@ def extract_product_links_more():
 
             # Find all product divs
             product_links = []
-            for product_div in soup.find_all('div', class_='product-grid-item'):
+            for product_div in soup.find_all('div', class_=productclass):
                 # Locate the <a> tag within the div
                 # return html.escape(str(product_div))
                 link_tag = product_div.find('a', class_='product-image-link')
