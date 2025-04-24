@@ -153,6 +153,7 @@ class Website(db.Model):
     link = db.Column(db.Text, nullable=True)
     productlink = db.relationship('Productlink', backref='website', uselist=False)
     lastpagescanned = db.Column(db.Integer, unique=True)
+    scanstatus = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
     

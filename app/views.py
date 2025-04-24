@@ -538,10 +538,23 @@ def extract_product_links_more():
 def extract_product_links_auto(nameslug):
     
     currentwebsite = currentwebsite = Website.query.filter(Website.link.like(f"%{nameslug}%")).first()
+    
+    if nameslug=='general':
+        lastscannedwebsite = Website.query.filter(Website.scanstatus.like(f"%lastscanned%")).first()
+        if not lastscannedwebsite:
+            newwebsiteid=1
+            currentwebsite = Website.query.filter_by(id=newwebsiteid).first()
+        else
+            newwebsiteid = lastscannedwebsite.id + 1
+            currentwebsite = Website.query.filter(Website.id > lastscannedwebsite.id).order_by(Website.id).first()
+
+
     if not currentwebsite:
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
     websiteid = currentwebsite.id
+
+    
     # return f"{websiteid} test"
     
     # shoppage = f"{websitelink}/shop"
@@ -561,6 +574,8 @@ def extract_product_links_auto(nameslug):
     upper_page_limit = page_number + 5
     page_number_increments = str(page_number)
     currentwebsite.lastpagescanned = upper_page_limit
+    currentwebsite.scanstatus = 'lastscanned'
+    lastscannedwebsite.scanstatus = 'scanned'
     db.session.commit()
 
  
