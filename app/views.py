@@ -545,8 +545,9 @@ def extract_product_links_auto(nameslug):
             newwebsiteid=1
             currentwebsite = Website.query.filter_by(id=newwebsiteid).first()
         else:
-            newwebsiteid = lastscannedwebsite.id + 1
             currentwebsite = Website.query.filter(Website.id > lastscannedwebsite.id).order_by(Website.id).first()
+            if not currentwebsite:
+                currentwebsite = Website.query.filter_by(id=newwebsiteid).first()
 
 
     if not currentwebsite:
