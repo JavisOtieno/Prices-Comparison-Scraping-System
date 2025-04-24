@@ -543,11 +543,11 @@ def extract_product_links_auto(nameslug):
         lastscannedwebsite = Website.query.filter(Website.scanstatus.like(f"%lastscanned%")).first()
         if not lastscannedwebsite:
             newwebsiteid=1
-            currentwebsite = Website.query.filter_by(id=newwebsiteid).first()
+            currentwebsite = Website.query.first()
         else:
             currentwebsite = Website.query.filter(Website.id > lastscannedwebsite.id).order_by(Website.id).first()
             if not currentwebsite:
-                currentwebsite = Website.query.filter_by(id=newwebsiteid).first()
+                currentwebsite = Website.query.first()
 
 
     if not currentwebsite:
