@@ -575,7 +575,8 @@ def extract_product_links_auto(nameslug):
     page_number_increments = str(page_number)
     currentwebsite.lastpagescanned = upper_page_limit
     currentwebsite.scanstatus = 'lastscanned'
-    lastscannedwebsite.scanstatus = 'scanned'
+    if lastscannedwebsite:
+        lastscannedwebsite.scanstatus = 'scanned'
     db.session.commit()
 
  
