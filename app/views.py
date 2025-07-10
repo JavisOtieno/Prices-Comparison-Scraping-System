@@ -632,6 +632,10 @@ def extract_product_links_auto(nameslug):
                 productpricediv = product_div.find('span', class_='price')
             if productpricediv:
                 product_price_org = productpricediv.get_text(strip=True)
+                if "–" in product_price_org:  # Note: This is an EN DASH (U+2013), not a regular hyphen (-)
+                    product_price_org = product_price_org.split("–")[0].strip()
+                else:
+                    product_price_org = product_price_org.strip()
                 try:
                     price_value = product_price_org.replace('KShs',
                     '').replace(',', '').replace('.00',
