@@ -636,6 +636,12 @@ def extract_product_links_auto(nameslug):
                     product_price_org = product_price_org.split("–")[0].strip()
                 else:
                     product_price_org = product_price_org.strip()
+
+                if "Current price is:" in product_price_org:  # Note: This is an EN DASH (U+2013), not a regular hyphen (-)
+                    product_price_org = product_price_org.split("Current price is:")[1].strip()
+                else:
+                    product_price_org = product_price_org.strip()
+
                 try:
                     price_value = product_price_org.replace('KShs',
                     '').replace(',', '').replace('.00',
