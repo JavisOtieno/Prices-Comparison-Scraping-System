@@ -630,6 +630,8 @@ def extract_product_links_auto(nameslug):
 
             if 'camerasafrica' in url:
                 product_name = product_div.find('h3').text.strip() 
+            elif 'phoneplacekenya' in url:
+                product_name = product_div.find('h3', class_='heading-title product-name').text.strip()
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
