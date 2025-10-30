@@ -669,7 +669,7 @@ def extract_product_links_auto(nameslug):
                 if prices:
                     productpricediv = prices[-1].get_text(strip=True)
                 else:
-                    productpricediv = None  
+                    return str(product_div) 
             else:
                 productpricediv = product_div.find('div', class_='wrap-price')
                 # return '3rd'
