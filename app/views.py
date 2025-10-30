@@ -648,6 +648,7 @@ def extract_product_links_auto(nameslug):
             driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
             # Load the page
+            #test
             url = "https://www.priceinkenya.com/phones?page=1""
             driver.get(url)
 
