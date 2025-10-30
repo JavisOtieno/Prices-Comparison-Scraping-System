@@ -540,7 +540,7 @@ def test_scrape_website():
     
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     html_content = response.content
-    return response.text
+    # return response.text
 
     # scraper = cloudscraper.create_scraper()
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
@@ -589,7 +589,12 @@ def extract_product_links_auto(nameslug):
     # shoppage = f"{websitelink}/shop"
     
     # websitelink = 'https://www.starmac.co.ke'
-    shoppage = f"{websitelink}/shop"
+
+    if 'gadgetsleo' in url:
+        shoppage = f"{websitelink}/product-category/phones"
+    else:
+        shoppage = f"{websitelink}/shop"
+    
     # Productlink.link.like('%starmac%')
     # currentwebsite = Website.query.filter_by(link=websitelink).first()
     # currentwebsite = Website.query.first()
@@ -629,8 +634,8 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
-        # elif 'avechi' in url:
-        #     productclass =  'product'
+        elif 'avechi' in url:
+            productclass =  'product-small box'
         else:
             productclass =  'product-grid-item'
 
@@ -649,7 +654,9 @@ def extract_product_links_auto(nameslug):
             elif 'phoneplacekenya' in url or 'avechi' in url:
                 link_tag = product_div.find('a')
                 # return link_tag["href"] 
-
+            elif 'gadgetsleo' in url:
+                link_tag = product_div.find('a')
+                return link_tag["href"] 
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
