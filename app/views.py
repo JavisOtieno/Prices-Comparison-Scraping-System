@@ -739,7 +739,7 @@ def extract_product_links_auto(nameslug):
                 # return product_name
             elif 'priceinkenya' in url:
                 product_name = product_div.find('p',class_='text-sm font-medium text-gray-600 mt-1.5').text.strip()
-                return product_name
+                # return product_name
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
