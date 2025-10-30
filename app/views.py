@@ -629,8 +629,8 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
-        elif 'avechi' in url:
-            productclass =  'product'
+        # elif 'avechi' in url:
+        #     productclass =  'product'
         else:
             productclass =  'product-grid-item'
 
@@ -674,7 +674,7 @@ def extract_product_links_auto(nameslug):
                 if prices:
                     productpricediv = prices[-1].get_text(strip=True)
                 else:
-                    return str(product_div) 
+                    productpricediv = None 
             else:
                 productpricediv = product_div.find('div', class_='wrap-price')
                 # return '3rd'
