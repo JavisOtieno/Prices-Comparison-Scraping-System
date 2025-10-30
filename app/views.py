@@ -630,13 +630,18 @@ def extract_product_links_auto(nameslug):
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
         elif 'avechi' in url:
-            productclass =  'product col_item column_grid'
+            productclass =  'product'
         else:
             productclass =  'product-grid-item'
 
+        if 'avechi' in url:
+            productdivs = soup.select('div.product.col_item.column_grid.type-product')
+        else:
+            productdivs = soup.find_all('div', class_=productclass)
+
         # Find all product divs
         product_links = []
-        for product_div in soup.find_all('div', class_=productclass):
+        for product_div in productdivs:
             # Locate the <a> tag within the div]
             # return html.escape(str(product_div))
             if 'camerasafrica' in url:
