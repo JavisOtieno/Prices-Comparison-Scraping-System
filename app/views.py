@@ -633,7 +633,7 @@ def extract_product_links_auto(nameslug):
                 link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
             elif 'phoneplacekenya' in url:
                 link_tag = product_div.find('a')
-                return link_tag
+                return link_tag["href"]
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
