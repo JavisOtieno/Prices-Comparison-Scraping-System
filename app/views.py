@@ -674,10 +674,13 @@ def extract_product_links_auto(nameslug):
                     product_price = float(price_value)
                 except ValueError:
                     product_price = 0
+                    if 'phoneplacekenya' in url:
+                        return product_price
             else:
                 product_price = 0
-            if 'phoneplacekenya' in url:
-                return product_price
+                if 'phoneplacekenya' in url:
+                        return product_price
+            
             if link_tag and 'href' in link_tag.attrs:
                 newlink = link_tag['href']
                 
