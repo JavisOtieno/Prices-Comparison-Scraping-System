@@ -650,7 +650,7 @@ def extract_product_links_auto(nameslug):
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
         elif 'priceinkenya' in url:
             productdivs = soup.find_all('li', class_=productclass)
-            return size(productdivs)
+            return len(productdivs)
         else:
             productdivs = soup.find_all('div', class_=productclass)
 
