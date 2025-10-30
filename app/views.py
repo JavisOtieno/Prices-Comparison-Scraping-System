@@ -628,12 +628,44 @@ def extract_product_links_auto(nameslug):
         if 'cellularkenya' in url or 'camerasafrica' in url or 'phoneplacekenya' in url:
             scraper = cloudscraper.create_scraper()
             response = scraper.get(url)
+
         else:
             response = requests.get(url)
         html_content = response.content
         # return html_content
         # Parse the HTML with Beautiful Soup
         soup = BeautifulSoup(html_content, 'html.parser')
+
+        if 'priceinkenya' in url :
+
+            script_tag = soup.find("script", text=re.compile(r"window\.__NUXT__"))
+
+            if script_tag:
+                # Extract the JavaScript content
+                script_content = script_tag.string
+                
+                # Use regex to extract the JSON-like data (between ( and );)
+                match = re.search(r"\((\{.*?\})\);$", script_content, re.DOTALL)
+                if match:
+                    json_data = match.group(1)
+                    # Parse the JSON data
+                    try:
+                        data = json.loads(json_data)
+                        # Navigate to the product items
+                        products = data.get("data", {}).get("0", {}).get("items", [])
+                        
+                        # Extract product name and price
+                        for product in products:
+                            name = product.get("name", "N/A")
+                            price = product.get("price", "N/A")
+                            return f"Product: {name} - Price: KSh {price}"
+                    except json.JSONDecodeError as e:
+                        return f"Error parsing JSON: {e}"
+                else:
+                    return "Could not find JSON data in script tag"
+            else:
+                return "Could not find window.__NUXT__ script tag"
+        
 
         if 'camerasafrica' in url:
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
