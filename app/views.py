@@ -159,7 +159,7 @@ def unchangedproductlinks():
 @login_required
 def test_scrape_cellular():
 
-    scraper = cloudscraper.create_scraper()
+    # scraper = cloudscraper.create_scraper()
     scraper = cloudscraper.create_scraper(
     browser={
             'platform': 'windows',
@@ -175,7 +175,7 @@ def test_scrape_cellular():
         "Referer": "https://www.google.com/",
     })
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
-    response = scraper.get("https://www.camerasafrica.com/shop/")
+    response = scraper.get("https://www.phoneplacekenya.com/shop/")
     print(response.text)
     
 
