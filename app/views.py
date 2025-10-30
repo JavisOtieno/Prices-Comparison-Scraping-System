@@ -629,6 +629,8 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
+        elif 'avechi' in url:
+            productclass =  'product'
         else:
             productclass =  'product-grid-item'
 
@@ -639,9 +641,10 @@ def extract_product_links_auto(nameslug):
             # return html.escape(str(product_div))
             if 'camerasafrica' in url:
                 link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
-            elif 'phoneplacekenya' in url:
+            elif 'phoneplacekenya' or 'avechi' in url:
                 link_tag = product_div.find('a')
-                # return link_tag["href"]
+                return link_tag["href"] 
+
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
