@@ -553,7 +553,7 @@ def test_scrape_website():
     # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
     product_name = products_element.find('a').text.strip()
 
-    link_tag = products_element.find('a')
+    link_tag = products_elementproduct_div.find('a', class_='woocat greycolor')
 
 
     # return products_element.get_text(strip=True)
