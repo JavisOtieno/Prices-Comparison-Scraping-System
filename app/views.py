@@ -159,21 +159,21 @@ def unchangedproductlinks():
 @login_required
 def test_scrape_cellular():
 
-    # scraper = cloudscraper.create_scraper()
-    scraper = cloudscraper.create_scraper(
-    browser={
-            'platform': 'windows',
-            'browser': 'chrome',
-            'mobile': False
-        }
-    )
-    scraper.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Referer": "https://www.google.com/",
-    })
+    scraper = cloudscraper.create_scraper()
+    # scraper = cloudscraper.create_scraper(
+    # browser={
+    #         'platform': 'windows',
+    #         'browser': 'chrome',
+    #         'mobile': False
+    #     }
+    # )
+    # scraper.headers.update({
+    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    #                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    #     "Accept-Language": "en-US,en;q=0.9",
+    #     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    #     "Referer": "https://www.google.com/",
+    # })
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
     response = scraper.get("https://www.phoneplacekenya.com/shop/")
     print(response.text)
