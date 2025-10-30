@@ -180,7 +180,7 @@ def test_scrape_cellular():
     
 
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
-    # html_content = response.content
+    html_content = response.content
     # return response.text
 
     # scraper = cloudscraper.create_scraper()
