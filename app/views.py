@@ -181,16 +181,16 @@ def test_scrape_cellular():
 
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     # html_content = response.content
-    return response.text
+    # return response.text
 
-    scraper = cloudscraper.create_scraper()
-    response = scraper.get("http://cellularkenya.co.ke/shop/")
-    print(response.text)
+    # scraper = cloudscraper.create_scraper()
+    # response = scraper.get("http://cellularkenya.co.ke/shop/")
+    # print(response.text)
     
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
-    products_element = soup.find('div', class_='wd-products-element')
+    products_element = soup.find('div', class_='product-wrapper')
     return products_element.get_text(strip=True)
 
 @app.route('/testscrape')
@@ -613,6 +613,8 @@ def extract_product_links_auto(nameslug):
 
         if 'camerasafrica' in url:
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
+        elif 'phoneplacekenya' in url:
+            productclass =  'product-wrapper'
         else:
             productclass =  'product-grid-item'
 
