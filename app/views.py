@@ -746,6 +746,9 @@ def extract_product_links_auto(nameslug):
             if 'camerasafrica' in url or 'phoneplacekenya' in url:
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 # return url
+            if 'priceinkenya' in url:
+                productpricediv = product_div.find('p', class_='text-sm font-normal')
+                # return '1st'
             elif 'avechi' in url or 'gadgetsleo' in url:
                 # productpricediv = product_div.find_all('span', class_='woocommerce-Price-amount amount')[-1]
                 # return '2nd'
