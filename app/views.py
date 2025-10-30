@@ -637,11 +637,15 @@ def extract_product_links_auto(nameslug):
             productclass =  'product-wrapper'
         elif 'gadgetsleo' in url:
             productclass =  'product-small box'
+        elif 'priceinkenya':
+            productclass =  'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
         else:
             productclass =  'product-grid-item'
 
         if 'avechi' in url:
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
+        elif 'priceinkenya' in url:
+            productdivs = soup.find_all('li', class_=productclass)
         else:
             productdivs = soup.find_all('div', class_=productclass)
 
@@ -657,7 +661,9 @@ def extract_product_links_auto(nameslug):
                 # return link_tag["href"] 
             elif 'gadgetsleo' in url:
                 link_tag = product_div.find('a')
-                # return link_tag["href"] 
+            elif 'priceinkenya' in url:
+                link_tag = product_div.find('a')
+                return link_tag["href"] 
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
@@ -732,6 +738,8 @@ def extract_product_links_auto(nameslug):
             
             if link_tag and 'href' in link_tag.attrs:
                 newlink = link_tag['href']
+                if 'priceinkenya' in url:
+                    newlink = websitelink.rstrip('/') + newlink
                 
                 productlink = Productlink.query.filter_by(link=newlink).first()
                 if not productlink:
