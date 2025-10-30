@@ -644,7 +644,6 @@ def extract_product_links_auto(nameslug):
 
             if 'camerasafrica' or 'phoneplacekenya' in url:
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
-                return productpricediv.text.strip()
             else:
                 productpricediv = product_div.find('div', class_='wrap-price')
 
@@ -677,6 +676,8 @@ def extract_product_links_auto(nameslug):
                     product_price = 0
             else:
                 product_price = 0
+            if 'phoneplacekenya' in url:
+                return product_price
             if link_tag and 'href' in link_tag.attrs:
                 newlink = link_tag['href']
                 
