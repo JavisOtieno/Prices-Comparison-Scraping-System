@@ -592,6 +592,7 @@ def extract_product_links_auto(nameslug):
 
     if 'gadgetsleo' in websitelink:
         shoppage = f"{websitelink}/product-category/phones"
+        return shoppage
     else:
         shoppage = f"{websitelink}/shop"
     
