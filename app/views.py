@@ -704,7 +704,7 @@ def extract_product_links_auto(nameslug):
             # return str(len(productdivs))
         elif 'priceinkenya' in url:
             productdivs = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
-            return str(len(productdivs))
+            # return str(len(productdivs))
         else:
             productdivs = soup.find_all('div', class_=productclass)
 
@@ -722,7 +722,7 @@ def extract_product_links_auto(nameslug):
                 link_tag = product_div.find('a')
             elif 'priceinkenya' in url:
                 link_tag = product_div.find('a')
-                return link_tag["href"] 
+                # return link_tag["href"] 
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
@@ -737,6 +737,9 @@ def extract_product_links_auto(nameslug):
             elif 'gadgetsleo' in url:
                 product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
                 # return product_name
+            elif 'priceinkenya' in url:
+                product_name = product_div.find('p',class_='text-sm font-medium text-gray-600 mt-1.5').text.strip()
+                return product_name
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
