@@ -630,8 +630,11 @@ def extract_product_links_auto(nameslug):
     while (page_number < upper_page_limit):
     # while True:        # Construct the URL for the current page
         url = f"{shoppage}/page/{page_number}"
+        if 'priceinkenya' in url:
+            url = f"{shoppage}?page={page_number}"
+            return url
         
-        if 'cellularkenya' in url or 'camerasafrica' in url or 'phoneplacekenya' in url:
+        if 'cellularkenya' in url or 'camerasafrica' in url or 'phoneplacekenya' in url  or 'priceinkenya' in url:
             scraper = cloudscraper.create_scraper()
             response = scraper.get(url)
 
