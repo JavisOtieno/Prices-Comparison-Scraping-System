@@ -615,7 +615,7 @@ def extract_product_links_auto(nameslug):
     # while True:        # Construct the URL for the current page
         url = f"{shoppage}/page/{page_number}"
         
-        if 'cellularkenya' in url or 'camerasafrica' or 'phoneplacekenya' in url:
+        if 'cellularkenya' in url or 'camerasafrica' in url or 'phoneplacekenya' in url:
             scraper = cloudscraper.create_scraper()
             response = scraper.get(url)
         else:
@@ -641,7 +641,7 @@ def extract_product_links_auto(nameslug):
             # return html.escape(str(product_div))
             if 'camerasafrica' in url:
                 link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
-            elif 'phoneplacekenya' or 'avechi' in url:
+            elif 'phoneplacekenya' in url or 'avechi' in url:
                 link_tag = product_div.find('a')
                 # return link_tag["href"] 
 
@@ -659,7 +659,7 @@ def extract_product_links_auto(nameslug):
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
-            if 'camerasafrica' or 'phoneplacekenya' in url:
+            if 'camerasafrica' in url or 'phoneplacekenya' in url:
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 return url
             elif 'avechi' in url:
