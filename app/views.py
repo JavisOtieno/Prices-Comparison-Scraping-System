@@ -155,43 +155,6 @@ def unchangedproductlinks():
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
     return render_template('link/index.html', links=productlinks)
 
-@app.route('/testscrapecellular')
-@login_required
-def test_scrape_cellular():
-
-    scraper = cloudscraper.create_scraper()
-    # scraper = cloudscraper.create_scraper(
-    # browser={
-    #         'platform': 'windows',
-    #         'browser': 'chrome',
-    #         'mobile': False
-    #     }
-    # )
-    # scraper.headers.update({
-    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    #                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    #     "Accept-Language": "en-US,en;q=0.9",
-    #     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    #     "Referer": "https://www.google.com/",
-    # })
-    # response = scraper.get("http://cellularkenya.co.ke/shop/")
-    response = scraper.get("https://www.phoneplacekenya.com/shop/")
-    print(response.text)
-    
-
-    # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
-    html_content = response.content
-    # return response.text
-
-    # scraper = cloudscraper.create_scraper()
-    # response = scraper.get("http://cellularkenya.co.ke/shop/")
-    # print(response.text)
-    
-    # Parse the HTML with Beautiful Soup
-    soup = BeautifulSoup(html_content, 'html.parser')
-    # Find the price element
-    products_element = soup.find('div', class_='product-wrapper')
-    return products_element.get_text(strip=True)
 
 @app.route('/testscrape')
 @login_required
@@ -547,6 +510,49 @@ def extract_product_links_more():
         # Return the product prices as a string
         return "<br>".join([f"{item['link']}: {item['price']}" for item in product_prices])
     return render_template('scrape/scrapeurl.html')
+
+
+@app.route('/testscrapecellular')
+@login_required
+def test_scrape_cellular():
+
+    scraper = cloudscraper.create_scraper()
+    # scraper = cloudscraper.create_scraper(
+    # browser={
+    #         'platform': 'windows',
+    #         'browser': 'chrome',
+    #         'mobile': False
+    #     }
+    # )
+    # scraper.headers.update({
+    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    #                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    #     "Accept-Language": "en-US,en;q=0.9",
+    #     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    #     "Referer": "https://www.google.com/",
+    # })
+    # response = scraper.get("http://cellularkenya.co.ke/shop/")
+    response = scraper.get("https://www.phoneplacekenya.com/shop/")
+    print(response.text)
+    
+
+    # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
+    html_content = response.content
+    # return response.text
+
+    # scraper = cloudscraper.create_scraper()
+    # response = scraper.get("http://cellularkenya.co.ke/shop/")
+    # print(response.text)
+    
+    # Parse the HTML with Beautiful Soup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    # Find the price element
+    products_element = soup.find('div', class_='product-wrapper')
+    product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
+
+    # return products_element.get_text(strip=True)
+    return product_name.get_text(strip=True)
+
 
 @app.route('/scrapelisturlsauto/<nameslug>')
 def extract_product_links_auto(nameslug):
