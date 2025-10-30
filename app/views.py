@@ -652,7 +652,7 @@ def extract_product_links_auto(nameslug):
                 product_name = product_div.find('h3').text.strip() 
             elif 'avechi' in url:
                 product_name = product_div.find('h3').text.strip() 
-                return product_name
+                # return product_name
             elif 'phoneplacekenya' in url:
                 product_name = product_div.find('h3', class_='heading-title product-name').text.strip()
                 # return product_name
@@ -661,6 +661,9 @@ def extract_product_links_auto(nameslug):
 
             if 'camerasafrica' or 'phoneplacekenya' in url:
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
+            elif 'avechi' in url:
+                productpricediv = product_div.select_one("span.price ins .woocommerce-Price-amount.amount")
+                return productpricediv.get_text(strip=True)
             else:
                 productpricediv = product_div.find('div', class_='wrap-price')
 
