@@ -630,7 +630,7 @@ def extract_product_links_auto(nameslug):
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
         elif 'avechi' in url:
-            productclass =  'product'
+            productclass =  'product col_item column_grid'
         else:
             productclass =  'product-grid-item'
 
