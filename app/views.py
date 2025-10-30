@@ -649,7 +649,7 @@ def extract_product_links_auto(nameslug):
 
             # Load the page
             #test
-            url = "https://www.priceinkenya.com/phones?page=1""
+            url = "https://www.priceinkenya.com/phones?page=1"
             driver.get(url)
 
             # Wait for JavaScript to load
