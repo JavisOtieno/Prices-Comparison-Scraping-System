@@ -551,7 +551,7 @@ def test_scrape_cellular():
     product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
 
     # return products_element.get_text(strip=True)
-    return product_name.get_text(strip=True)
+    return product_name
 
 
 @app.route('/scrapelisturlsauto/<nameslug>')
