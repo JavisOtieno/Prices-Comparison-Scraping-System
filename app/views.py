@@ -549,11 +549,11 @@ def test_scrape_website():
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
-    products_element = soup.find('div', class_='product col_item column_grid type-product rh-cartbox avechi-sec-smooth woo_column_grid hide_sale_price rh-shadow5 flowvisible woo_digi_grid')
+    products_element = soup.find('div', class_='pr10 pl10')
     # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
-    product_name = products_element.find('a', class_='woocat greycolor').text.strip()
+    product_name = products_element.find('a', 1).text.strip()
 
-    link_tag = products_element.find('a', class_='woocat greycolor')
+    link_tag = products_element.find('a', 1)
 
 
     # return products_element.get_text(strip=True)
