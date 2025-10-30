@@ -556,6 +556,10 @@ def test_scrape_website():
     # products_element = soup.find_all('div', class_='product')[0]
     products_element =  soup.find_all('li',
     'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
+    products_elements =  soup.find_all('li',
+    'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+    return str(len(products_elements))
+   
     # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
     # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
     product_name = products_element.find_all('a')[0].text.strip()
@@ -636,46 +640,46 @@ def extract_product_links_auto(nameslug):
         # Parse the HTML with Beautiful Soup
         soup = BeautifulSoup(html_content, 'html.parser')
 
-        if 'priceinkenya' in url :
-            from selenium import webdriver
-            from selenium.webdriver.chrome.service import Service
-            from webdriver_manager.chrome import ChromeDriverManager
-            import time
+        # if 'priceinkenya' in url :
+        #     from selenium import webdriver
+        #     from selenium.webdriver.chrome.service import Service
+        #     from webdriver_manager.chrome import ChromeDriverManager
+        #     import time
 
-            # Set up Selenium WebDriver
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")  # Run in headless mode
-            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        #     # Set up Selenium WebDriver
+        #     options = webdriver.ChromeOptions()
+        #     options.add_argument("--headless")  # Run in headless mode
+        #     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-            # Load the page
-            #test
-            url = "https://www.priceinkenya.com/phones?page=1"
-            driver.get(url)
+        #     # Load the page
+        #     #test
+        #     url = "https://www.priceinkenya.com/phones?page=1"
+        #     driver.get(url)
 
-            # Wait for JavaScript to load
-            time.sleep(5)
+        #     # Wait for JavaScript to load
+        #     time.sleep(5)
 
-            # Get the page source
-            html_content = driver.page_source
+        #     # Get the page source
+        #     html_content = driver.page_source
 
-            # Close the driver
-            driver.quit()
+        #     # Close the driver
+        #     driver.quit()
 
-            # Parse with BeautifulSoup
-            soup = BeautifulSoup(html_content, 'html.parser')
+        #     # Parse with BeautifulSoup
+        #     soup = BeautifulSoup(html_content, 'html.parser')
 
-            # Find all <li> elements with the specified class
-            product_items = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+        #     # Find all <li> elements with the specified class
+        #     product_items = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
 
-            if product_items:
-                for item in product_items:
-                    name_tag = item.find('p', class_='text-sm font-medium text-gray-600 mt-1.5')
-                    name = name_tag.text.strip() if name_tag else "N/A"
-                    price_tag = name_tag.find_next_sibling('p', class_='text-sm font-normal') if name_tag else None
-                    price = price_tag.text.strip() if price_tag else "N/A"
-                    return f"Product: {name} - Price: {price}"
-            else:
-                return "No product items found with the specified class."
+        #     if product_items:
+        #         for item in product_items:
+        #             name_tag = item.find('p', class_='text-sm font-medium text-gray-600 mt-1.5')
+        #             name = name_tag.text.strip() if name_tag else "N/A"
+        #             price_tag = name_tag.find_next_sibling('p', class_='text-sm font-normal') if name_tag else None
+        #             price = price_tag.text.strip() if price_tag else "N/A"
+        #             return f"Product: {name} - Price: {price}"
+        #     else:
+        #         return "No product items found with the specified class."
         
 
         if 'camerasafrica' in url:
