@@ -590,7 +590,7 @@ def extract_product_links_auto(nameslug):
     
     # websitelink = 'https://www.starmac.co.ke'
 
-    if 'gadgetsleo' in url:
+    if 'gadgetsleo' in websitelink:
         shoppage = f"{websitelink}/product-category/phones"
     else:
         shoppage = f"{websitelink}/shop"
