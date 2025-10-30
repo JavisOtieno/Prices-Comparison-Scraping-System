@@ -512,9 +512,9 @@ def extract_product_links_more():
     return render_template('scrape/scrapeurl.html')
 
 
-@app.route('/testscrapecellular')
+@app.route('/testscrapewebsite')
 @login_required
-def test_scrape_cellular():
+def test_scrape_website():
 
     scraper = cloudscraper.create_scraper()
     # scraper = cloudscraper.create_scraper(
@@ -532,8 +532,10 @@ def test_scrape_cellular():
     #     "Referer": "https://www.google.com/",
     # })
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
-    response = scraper.get("https://www.phoneplacekenya.com/shop/")
-    print(response.text)
+    # response = scraper.get("https://www.phoneplacekenya.com/shop/")
+    response = scraper.get("https://avechi.co.ke/shop/")
+
+    # print(response.text)
     
 
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
@@ -547,11 +549,15 @@ def test_scrape_cellular():
     # Parse the HTML with Beautiful Soup
     soup = BeautifulSoup(html_content, 'html.parser')
     # Find the price element
-    products_element = soup.find('div', class_='product-wrapper')
-    product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
+    products_element = soup.find('div', class_='product col_item column_grid type-product rh-cartbox avechi-sec-smooth woo_column_grid hide_sale_price rh-shadow5 flowvisible woo_digi_grid')
+    # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
+    product_name = products_element.find('a').text.strip()
+
+    link_tag = products_element.find('a')
+
 
     # return products_element.get_text(strip=True)
-    return product_name
+    return f"Product Name: {product_name} - Link: {link_tag['href']}"
 
 
 @app.route('/scrapelisturlsauto/<nameslug>')
