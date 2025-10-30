@@ -649,8 +649,8 @@ def extract_product_links_auto(nameslug):
         if 'avechi' in url:
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
         elif 'priceinkenya' in url:
-            return 'yes2'
             productdivs = soup.find_all('li', class_=productclass)
+            return size(productdivs)
         else:
             productdivs = soup.find_all('div', class_=productclass)
 
