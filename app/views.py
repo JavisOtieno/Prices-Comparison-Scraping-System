@@ -671,14 +671,14 @@ def extract_product_links_auto(nameslug):
                 # return product_name
             elif 'gadgetsleo' in url:
                 product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
-                return product_name
+                # return product_name
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
             if 'camerasafrica' in url or 'phoneplacekenya' in url:
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 # return url
-            elif 'avechi' in url:
+            elif 'avechi' in url or 'gadgetsleo' in url:
                 # productpricediv = product_div.find_all('span', class_='woocommerce-Price-amount amount')[-1]
                 # return '2nd'
                 prices = product_div.find_all('span', class_='woocommerce-Price-amount amount')
