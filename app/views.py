@@ -554,8 +554,9 @@ def test_scrape_website():
     # products_element = soup.select('div.product.col_item.column_grid.type-product')[0]
     # products_element = soup.find_all('div', class_='product')[0]
     # products_element = soup.find_all('div', class_='product')[0]
-    products_element =  soup.find_all('li','relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
-
+    products_element =  soup.find_all('li',
+    'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
+    # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
     # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
     product_name = products_element.find_all('a')[0].text.strip()
 
@@ -648,6 +649,7 @@ def extract_product_links_auto(nameslug):
 
         if 'avechi' in url:
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
+            return str(len(productdivs))
         elif 'priceinkenya' in url:
             productdivs = soup.find_all('li', class_=productclass)
             return str(len(productdivs))
