@@ -631,6 +631,9 @@ def extract_product_links_auto(nameslug):
             # return html.escape(str(product_div))
             if 'camerasafrica' in url:
                 link_tag = product_div.find('a', class_='lgv_link lgv_link_advanced')
+            elif 'phoneplacekenya' in url:
+                link_tag = product_div.find('a')
+                return link_tag
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
