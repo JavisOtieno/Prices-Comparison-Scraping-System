@@ -641,7 +641,7 @@ def extract_product_links_auto(nameslug):
         elif 'gadgetsleo' in url:
             productclass =  'product-small box'
         elif 'priceinkenya' in url:
-            return 'yes'
+            # return 'yes'
             productclass =  'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
         else:
             productclass =  'product-grid-item'
@@ -649,6 +649,7 @@ def extract_product_links_auto(nameslug):
         if 'avechi' in url:
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
         elif 'priceinkenya' in url:
+            return 'yes2'
             productdivs = soup.find_all('li', class_=productclass)
         else:
             productdivs = soup.find_all('div', class_=productclass)
