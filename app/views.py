@@ -591,8 +591,8 @@ def extract_product_links_auto(nameslug):
     # websitelink = 'https://www.starmac.co.ke'
 
     if 'gadgetsleo' in websitelink:
-        shoppage = f"{websitelink}/product-category/phones"
-        return shoppage
+        shoppage = f"{websitelink}product-category/phones"
+        # return shoppage
     else:
         shoppage = f"{websitelink}/shop"
     
@@ -635,7 +635,7 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
-        elif 'avechi' in url:
+        elif 'gadgetsleo' in url:
             productclass =  'product-small box'
         else:
             productclass =  'product-grid-item'
