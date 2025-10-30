@@ -534,7 +534,8 @@ def test_scrape_website():
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
     # response = scraper.get("https://www.phoneplacekenya.com/shop/")
     # response = scraper.get("https://avechi.co.ke/shop/")
-    response = scraper.get("https://gadgetsleo.com/product-category/phones/")
+    # response = scraper.get("https://gadgetsleo.com/product-category/phones/")
+    response = scraper.get("https://priceinkenya.com/phones")
 
     # print(response.text)
     
@@ -551,11 +552,14 @@ def test_scrape_website():
     # Find the price element
     # products_element = soup.find('div', class_='product col_item column_grid type-product rh-cartbox avechi-sec-smooth woo_column_grid hide_sale_price rh-shadow5 flowvisible woo_digi_grid prodonsale')
     # products_element = soup.select('div.product.col_item.column_grid.type-product')[0]
-    products_element = soup.find_all('div', class_='product')[0]
-    # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
-    product_name = products_element.find_all('a')[2].text.strip()
+    # products_element = soup.find_all('div', class_='product')[0]
+    # products_element = soup.find_all('div', class_='product')[0]
+    products_element =  soup.find_all('div','relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
 
-    link_tag = products_element.find_all('a')[2] 
+    # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
+    product_name = products_element.find_all('a')[0].text.strip()
+
+    link_tag = products_element.find_all('a')[0] 
 
 
     # return products_element.get_text(strip=True)
