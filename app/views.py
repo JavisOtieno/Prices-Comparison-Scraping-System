@@ -657,7 +657,7 @@ def extract_product_links_auto(nameslug):
                 # return link_tag["href"] 
             elif 'gadgetsleo' in url:
                 link_tag = product_div.find('a')
-                return link_tag["href"] 
+                # return link_tag["href"] 
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
@@ -669,6 +669,9 @@ def extract_product_links_auto(nameslug):
             elif 'phoneplacekenya' in url:
                 product_name = product_div.find('h3', class_='heading-title product-name').text.strip()
                 # return product_name
+            elif 'gadgetsleo' in url:
+                product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
+                return product_name
             else:
                 product_name = product_div.find('h3', class_='wd-entities-title').text.strip()
 
