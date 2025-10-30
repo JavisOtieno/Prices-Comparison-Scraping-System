@@ -663,8 +663,13 @@ def extract_product_links_auto(nameslug):
                 productpricediv = product_div.find('span', class_='woocommerce-Price-amount amount')
                 # return url
             elif 'avechi' in url:
-                productpricediv = product_div.find_all('span', class_='woocommerce-Price-amount amount')[-1]
+                # productpricediv = product_div.find_all('span', class_='woocommerce-Price-amount amount')[-1]
                 # return '2nd'
+                prices = product_div.find_all('span', class_='woocommerce-Price-amount amount')
+                if prices:
+                    productpricediv = prices[-1].get_text(strip=True)
+                else:
+                    productpricediv = None  
             else:
                 productpricediv = product_div.find('div', class_='wrap-price')
                 # return '3rd'
