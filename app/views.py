@@ -161,7 +161,7 @@ def test_scrape_cellular():
 
     scraper = cloudscraper.create_scraper()
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
-    response = scraper.get("https://camerasafrica.com/shop/")
+    response = scraper.get("https://www.camerasafrica.com/shop/")
     print(response.text)
     
 
