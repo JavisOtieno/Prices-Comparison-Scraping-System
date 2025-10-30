@@ -632,7 +632,7 @@ def extract_product_links_auto(nameslug):
         url = f"{shoppage}/page/{page_number}"
         if 'priceinkenya' in url:
             url = f"{shoppage}?page={page_number}"
-            return url
+            # return url
         
         if 'cellularkenya' in url or 'camerasafrica' in url or 'phoneplacekenya' in url  or 'priceinkenya' in url:
             scraper = cloudscraper.create_scraper()
@@ -701,7 +701,7 @@ def extract_product_links_auto(nameslug):
 
         if 'avechi' in url:
             productdivs = soup.select('div.product.col_item.column_grid.type-product')
-            return str(len(productdivs))
+            # return str(len(productdivs))
         elif 'priceinkenya' in url:
             productdivs = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
             return str(len(productdivs))
