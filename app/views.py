@@ -637,34 +637,44 @@ def extract_product_links_auto(nameslug):
         soup = BeautifulSoup(html_content, 'html.parser')
 
         if 'priceinkenya' in url :
+            from selenium import webdriver
+            from selenium.webdriver.chrome.service import Service
+            from webdriver_manager.chrome import ChromeDriverManager
+            import time
 
-            script_tag = soup.find("script", text=re.compile(r"window\.__NUXT__"))
+            # Set up Selenium WebDriver
+            options = webdriver.ChromeOptions()
+            options.add_argument("--headless")  # Run in headless mode
+            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-            if script_tag:
-                # Extract the JavaScript content
-                script_content = script_tag.string
-                
-                # Use regex to extract the JSON-like data (between ( and );)
-                match = re.search(r"\((\{.*?\})\);$", script_content, re.DOTALL)
-                if match:
-                    json_data = match.group(1)
-                    # Parse the JSON data
-                    try:
-                        data = json.loads(json_data)
-                        # Navigate to the product items
-                        products = data.get("data", {}).get("0", {}).get("items", [])
-                        
-                        # Extract product name and price
-                        for product in products:
-                            name = product.get("name", "N/A")
-                            price = product.get("price", "N/A")
-                            return f"Product: {name} - Price: KSh {price}"
-                    except json.JSONDecodeError as e:
-                        return f"Error parsing JSON: {e}"
-                else:
-                    return "Could not find JSON data in script tag"
+            # Load the page
+            url = "https://www.priceinkenya.com/phones"
+            driver.get(url)
+
+            # Wait for JavaScript to load
+            time.sleep(5)
+
+            # Get the page source
+            html_content = driver.page_source
+
+            # Close the driver
+            driver.quit()
+
+            # Parse with BeautifulSoup
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            # Find all <li> elements with the specified class
+            product_items = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+
+            if product_items:
+                for item in product_items:
+                    name_tag = item.find('p', class_='text-sm font-medium text-gray-600 mt-1.5')
+                    name = name_tag.text.strip() if name_tag else "N/A"
+                    price_tag = name_tag.find_next_sibling('p', class_='text-sm font-normal') if name_tag else None
+                    price = price_tag.text.strip() if price_tag else "N/A"
+                    return f"Product: {name} - Price: {price}"
             else:
-                return "Could not find window.__NUXT__ script tag"
+                return "No product items found with the specified class."
         
 
         if 'camerasafrica' in url:
