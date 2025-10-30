@@ -533,14 +533,14 @@ def test_scrape_website():
     # })
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
     # response = scraper.get("https://www.phoneplacekenya.com/shop/")
-    response = scraper.get("https://avechi.co.ke/shop/")
+    # response = scraper.get("https://avechi.co.ke/shop/")
+    response = scraper.get("https://gadgetsleo.com/product-category/phones/")
 
     # print(response.text)
     
-
     # response = requests.get("https://www.eamobitech.com/shop/", headers=headers)
     html_content = response.content
-    # return response.text
+    return response.text
 
     # scraper = cloudscraper.create_scraper()
     # response = scraper.get("http://cellularkenya.co.ke/shop/")
