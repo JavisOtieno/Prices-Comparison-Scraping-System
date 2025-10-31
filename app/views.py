@@ -1274,103 +1274,95 @@ def index():
 
     current_year = datetime.now().year
     current_month = datetime.now().month
-
-    # Calculate start and end of the current week
     today = datetime.now()
     start_of_week = today - timedelta(days=today.weekday())  # Monday
     end_of_week = start_of_week + timedelta(days=6)          # Sunday
 
-    if current_user.id == 1:
-        # Admin (see all data)
-        productlinkcount = Productlink.query.count()
+    # Default empty list and counts
+    links = []
+    productlinkcount = productlink_count_day = 0
+    productlink_count_week = productlink_count_month = productlink_count_year = 0
 
+    if current_user.id == 1:
+        # Admin: access all
+        productlinkcount = Productlink.query.count()
         productlink_count_day = Productlink.query.filter(
             func.date(Productlink.created_at) == func.current_date()
         ).count()
-
         productlink_count_week = Productlink.query.filter(
             Productlink.created_at >= start_of_week,
             Productlink.created_at <= end_of_week
         ).count()
-
         productlink_count_month = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year,
             func.extract('month', Productlink.created_at) == current_month
         ).count()
-
         productlink_count_year = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year
         ).count()
 
-    elif current_user.id == 4435:
-        # User 4435
-        allowed_website_ids = [1, 2, 3, 4, 5]
+        # 🔹 Latest 10 links (admin sees all)
+        links = Productlink.query.order_by(Productlink.created_at.desc()).limit(10).all()
 
+    elif current_user.id == 4435:
+        allowed_website_ids = [1, 2, 3, 4, 5]
         productlinkcount = Productlink.query.filter(
             Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_day = Productlink.query.filter(
             func.date(Productlink.created_at) == func.current_date(),
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_week = Productlink.query.filter(
             Productlink.created_at >= start_of_week,
             Productlink.created_at <= end_of_week,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_month = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year,
             func.extract('month', Productlink.created_at) == current_month,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_year = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
+
+        # 🔹 Latest 10 links (filtered by allowed websites)
+        links = Productlink.query.filter(
+            Productlink.website_id.in_(allowed_website_ids)
+        ).order_by(Productlink.created_at.desc()).limit(10).all()
 
     elif current_user.id == 4445:
-        # User 4445
         allowed_website_ids = [6, 7, 8, 9]
-
         productlinkcount = Productlink.query.filter(
             Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_day = Productlink.query.filter(
             func.date(Productlink.created_at) == func.current_date(),
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_week = Productlink.query.filter(
             Productlink.created_at >= start_of_week,
             Productlink.created_at <= end_of_week,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_month = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year,
             func.extract('month', Productlink.created_at) == current_month,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
-
         productlink_count_year = Productlink.query.filter(
             func.extract('year', Productlink.created_at) == current_year,
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
 
-    else:
-        # Default (no access)
-        productlinkcount = 0
-        productlink_count_day = 0
-        productlink_count_week = 0
-        productlink_count_month = 0
-        productlink_count_year = 0
+        # 🔹 Latest 10 links (filtered by allowed websites)
+        links = Productlink.query.filter(
+            Productlink.website_id.in_(allowed_website_ids)
+        ).order_by(Productlink.created_at.desc()).limit(10).all()
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
