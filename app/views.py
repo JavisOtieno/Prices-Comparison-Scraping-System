@@ -125,7 +125,22 @@ def indexwebsites():
 @app.route('/productlinks')
 @login_required
 def indexproductlinks():
-    productlinks = Productlink.query.all()
+    if current_user.id==1:
+        productlinks = Productlink.query.filter_by(status="new").all()
+    elif current_user.id==4435:
+        allowed_website_ids = [1, 2, 3,4,5]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    elif current_user.id==4435:
+        allowed_website_ids = [6, 7, 8,9]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
@@ -136,10 +151,17 @@ def indexproductlinks():
 @login_required
 def newproductlinks():
 
-    if current_user.id==4435:
+    if current_user.id==1:
         productlinks = Productlink.query.filter_by(status="new").all()
-    else:
+    elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    elif current_user.id==4435:
+        allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
             Productlink.status == "new",
