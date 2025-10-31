@@ -136,7 +136,7 @@ def indexproductlinks():
 @login_required
 def newproductlinks():
 
-    if current_user.id=4435:
+    if current_user.id==4435:
         productlinks = Productlink.query.filter_by(status="new").all()
     else:
         allowed_website_ids = [1, 2, 3,4,5]
