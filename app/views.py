@@ -126,19 +126,17 @@ def indexwebsites():
 @login_required
 def indexproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.filter_by(status="new").all()
+        productlinks = Productlink.query.filter_by.all()
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     # Format the data for response
@@ -176,19 +174,19 @@ def newproductlinks():
 @login_required
 def changedproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.filter_by(status="new").all()
+        productlinks = Productlink.query.filter_by(status="newprice").all()
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
+            Productlink.status == "newprice",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
+            Productlink.status == "newprice",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     # productlinks = Productlink.query.filter_by(status="newprice").all()
@@ -201,19 +199,19 @@ def changedproductlinks():
 @login_required
 def unchangedproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.filter_by(status="new").all()
+        productlinks = Productlink.query.filter_by(status="unchanged").all()
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
+            Productlink.status == "unchanged",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
-            Productlink.status == "new",
+            Productlink.status == "unchanged",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
     # productlinks = Productlink.query.filter_by(status="unchanged").all()
