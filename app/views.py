@@ -140,7 +140,7 @@ def newproductlinks():
         productlinks = Productlink.query.filter_by(status="new").all()
     else:
         allowed_website_ids = [1, 2, 3,4,5]
-        allowed_website_ids = [w.id for w in current_user.websites]
+        # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
             Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
