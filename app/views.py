@@ -1307,7 +1307,6 @@ def index():
     elif current_user.id == 4435:
         allowed_website_ids = [1, 2, 3, 4, 5]
         productlinkcount = Productlink.query.filter(
-            Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
         productlink_count_day = Productlink.query.filter(
@@ -1337,7 +1336,6 @@ def index():
     elif current_user.id == 4445:
         allowed_website_ids = [6, 7, 8, 9]
         productlinkcount = Productlink.query.filter(
-            Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).count()
         productlink_count_day = Productlink.query.filter(
