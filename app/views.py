@@ -116,7 +116,27 @@ def createwebsite():
 
 @app.route('/websites')
 def indexwebsites():
-    websites = Website.query.all()
+    if current_user.id==1:
+        websites = Website.query.all()
+    elif current_user.id==4435:
+        allowed_website_ids = [1, 2, 3,4,5]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        # productlinks = Productlink.query.filter(
+        #     Productlink.status == "unchanged",
+        #     Productlink.website_id.in_(allowed_website_ids)
+        # ).all()
+        websites = Website.query.filter(Website.id.in_(allowed_website_ids))
+    elif current_user.id==4445:
+        allowed_website_ids = [6, 7, 8,9]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        # productlinks = Productlink.query.filter(
+        #     Productlink.status == "unchanged",
+        #     Productlink.website_id.in_(allowed_website_ids)
+        # ).all()
+        websites = Website.query.filter(Website.id.in_(allowed_website_ids))
+    else:
+        websites = []
+    
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
