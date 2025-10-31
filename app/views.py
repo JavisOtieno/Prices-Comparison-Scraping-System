@@ -134,7 +134,7 @@ def indexproductlinks():
             Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
-    elif current_user.id==4435:
+    elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
@@ -160,7 +160,7 @@ def newproductlinks():
             Productlink.status == "new",
             Productlink.website_id.in_(allowed_website_ids)
         ).all()
-    elif current_user.id==4435:
+    elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
@@ -175,7 +175,23 @@ def newproductlinks():
 @app.route('/changedproductlinks')
 @login_required
 def changedproductlinks():
-    productlinks = Productlink.query.filter_by(status="newprice").all()
+    if current_user.id==1:
+        productlinks = Productlink.query.filter_by(status="new").all()
+    elif current_user.id==4435:
+        allowed_website_ids = [1, 2, 3,4,5]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    elif current_user.id==4445:
+        allowed_website_ids = [6, 7, 8,9]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    # productlinks = Productlink.query.filter_by(status="newprice").all()
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
@@ -184,7 +200,23 @@ def changedproductlinks():
 @app.route('/unchangedproductlinks')
 @login_required
 def unchangedproductlinks():
-    productlinks = Productlink.query.filter_by(status="unchanged").all()
+    if current_user.id==1:
+        productlinks = Productlink.query.filter_by(status="new").all()
+    elif current_user.id==4435:
+        allowed_website_ids = [1, 2, 3,4,5]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    elif current_user.id==4445:
+        allowed_website_ids = [6, 7, 8,9]
+        # allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
+    # productlinks = Productlink.query.filter_by(status="unchanged").all()
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
@@ -1165,7 +1197,31 @@ def viewdbstatus():
 @app.route('/')
 @login_required
 def index():
-    productlinkcount = Productlink.query.count()
+    
+    if current_user.id == 1:
+        # Admin user: count all product links
+        productlinkcount = Productlink.query.count()
+
+    elif current_user.id == 4435:
+        # User 4435: count product links for specific websites
+        allowed_website_ids = [1, 2, 3, 4, 5]
+        productlinkcount = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+    elif current_user.id == 4445:
+        # Another user (adjust ID): count product links for a different set of websites
+        allowed_website_ids = [6, 7, 8, 9]
+        productlinkcount = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+    else:
+        # Default case — no access or no matching condition
+        productlinkcount = 0
+
     order_count = Order.query.count()
     user_count = User.query.count()
     customer_count = Customer.query.count()
@@ -1215,6 +1271,106 @@ def index():
     productlink_count_year = Productlink.query.filter(
         func.extract('year', Productlink.created_at) == current_year
     ).count()
+
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+
+    # Calculate start and end of the current week
+    today = datetime.now()
+    start_of_week = today - timedelta(days=today.weekday())  # Monday
+    end_of_week = start_of_week + timedelta(days=6)          # Sunday
+
+    if current_user.id == 1:
+        # Admin (see all data)
+        productlinkcount = Productlink.query.count()
+
+        productlink_count_day = Productlink.query.filter(
+            func.date(Productlink.created_at) == func.current_date()
+        ).count()
+
+        productlink_count_week = Productlink.query.filter(
+            Productlink.created_at >= start_of_week,
+            Productlink.created_at <= end_of_week
+        ).count()
+
+        productlink_count_month = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year,
+            func.extract('month', Productlink.created_at) == current_month
+        ).count()
+
+        productlink_count_year = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year
+        ).count()
+
+    elif current_user.id == 4435:
+        # User 4435
+        allowed_website_ids = [1, 2, 3, 4, 5]
+
+        productlinkcount = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_day = Productlink.query.filter(
+            func.date(Productlink.created_at) == func.current_date(),
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_week = Productlink.query.filter(
+            Productlink.created_at >= start_of_week,
+            Productlink.created_at <= end_of_week,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_month = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year,
+            func.extract('month', Productlink.created_at) == current_month,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_year = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+    elif current_user.id == 4445:
+        # User 4445
+        allowed_website_ids = [6, 7, 8, 9]
+
+        productlinkcount = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_day = Productlink.query.filter(
+            func.date(Productlink.created_at) == func.current_date(),
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_week = Productlink.query.filter(
+            Productlink.created_at >= start_of_week,
+            Productlink.created_at <= end_of_week,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_month = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year,
+            func.extract('month', Productlink.created_at) == current_month,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+        productlink_count_year = Productlink.query.filter(
+            func.extract('year', Productlink.created_at) == current_year,
+            Productlink.website_id.in_(allowed_website_ids)
+        ).count()
+
+    else:
+        # Default (no access)
+        productlinkcount = 0
+        productlink_count_day = 0
+        productlink_count_week = 0
+        productlink_count_month = 0
+        productlink_count_year = 0
 
         # Example 1: Count total orders for the current month
     products_this_month = Product.query.filter(
