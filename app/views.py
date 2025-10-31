@@ -123,6 +123,7 @@ def indexwebsites():
     return render_template('website/index.html', websites=websites)
 
 @app.route('/productlinks')
+@login_required
 def indexproductlinks():
     productlinks = Productlink.query.all()
     # Format the data for response
@@ -132,14 +133,25 @@ def indexproductlinks():
     # return render_template('category/index.html', categories=categories)
     
 @app.route('/newproductlinks')
+@login_required
 def newproductlinks():
-    productlinks = Productlink.query.filter_by(status="new").all()
+
+    if current_user.id=4435:
+        productlinks = Productlink.query.filter_by(status="new").all()
+    else:
+        allowed_website_ids = [1, 2, 3,4,5]
+        allowed_website_ids = [w.id for w in current_user.websites]
+        productlinks = Productlink.query.filter(
+            Productlink.status == "new",
+            Productlink.website_id.in_(allowed_website_ids)
+        ).all()
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
     return render_template('link/index.html', links=productlinks)
 
 @app.route('/changedproductlinks')
+@login_required
 def changedproductlinks():
     productlinks = Productlink.query.filter_by(status="newprice").all()
     # Format the data for response
@@ -148,6 +160,7 @@ def changedproductlinks():
     return render_template('link/index.html', links=productlinks)
 
 @app.route('/unchangedproductlinks')
+@login_required
 def unchangedproductlinks():
     productlinks = Productlink.query.filter_by(status="unchanged").all()
     # Format the data for response
