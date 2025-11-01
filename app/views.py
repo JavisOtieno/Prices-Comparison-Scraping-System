@@ -146,7 +146,7 @@ def indexwebsites():
 @login_required
 def indexproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.filter_by.all()
+        productlinks = Productlink.query.all()
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
