@@ -620,7 +620,8 @@ def test_scrape_website():
     # response = scraper.get("https://www.phoneplacekenya.com/shop/")
     # response = scraper.get("https://avechi.co.ke/shop/")
     # response = scraper.get("https://gadgetsleo.com/product-category/phones/")
-    response = scraper.get("https://priceinkenya.com/phones")
+    # response = scraper.get("https://priceinkenya.com/phones")
+    response = scraper.get("https://www.phonestablets.co.ke/shop")
 
     # print(response.text)
     
@@ -639,10 +640,12 @@ def test_scrape_website():
     # products_element = soup.select('div.product.col_item.column_grid.type-product')[0]
     # products_element = soup.find_all('div', class_='product')[0]
     # products_element = soup.find_all('div', class_='product')[0]
-    products_element =  soup.find_all('li',
-    'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
-    products_elements =  soup.find_all('li',
-    'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+    # products_element =  soup.find_all('li',
+    # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
+    # products_elements =  soup.find_all('li',
+    # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+    
+    products_element = soup.find_all('li', class_='type-product')
     return str(len(products_elements))
    
     # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
