@@ -642,11 +642,11 @@ def test_scrape_website():
     # products_element = soup.find_all('div', class_='product')[0]
     # products_element =  soup.find_all('li',
     # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')[0]
-    # products_elements =  soup.find_all('li',
+    # products_element =  soup.find_all('li',
     # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
     
     products_element = soup.find_all('li', class_='type-product')
-    return str(len(products_elements))
+    return str(len(products_element))
    
     # 'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
     # product_name = products_element.find('h3', class_='heading-title product-name').text.strip()
