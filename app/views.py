@@ -1178,6 +1178,9 @@ def login():
 
         if user:
             if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            # ✅ Update login_date
+                user.login_date = datetime.utcnow()
+                db.session.commit()
             # and user[email] == password:
                 # user = User(email)
                 login_user(user)
