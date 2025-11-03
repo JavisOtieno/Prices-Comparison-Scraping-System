@@ -779,7 +779,7 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
-        elif 'phonestabletskenya' in url:
+        elif 'phonestablets' in url:
             productclass =  'type-product'
         elif 'gadgetsleo' in url:
             productclass =  'product-small box'
@@ -807,7 +807,7 @@ def extract_product_links_auto(nameslug):
             elif 'phoneplacekenya' in url or 'avechi' in url:
                 link_tag = product_div.find('a')
                 # return link_tag["href"] 
-            elif 'gadgetsleo' in url or 'phonestabletskenya' in url:
+            elif 'gadgetsleo' in url or 'phonestablets' in url:
                 link_tag = product_div.find('a')
             elif 'priceinkenya' in url:
                 link_tag = product_div.find('a')
@@ -823,7 +823,7 @@ def extract_product_links_auto(nameslug):
             elif 'phoneplacekenya' in url:
                 product_name = product_div.find('h3', class_='heading-title product-name').text.strip()
                 # return product_name
-            elif 'gadgetsleo' in url or 'phonestabletskenya' in url:
+            elif 'gadgetsleo' in url or 'phonestablets' in url:
                 product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
                 # return product_name
             elif 'priceinkenya' in url:
@@ -838,7 +838,7 @@ def extract_product_links_auto(nameslug):
             if 'priceinkenya' in url:
                 productpricediv = product_div.find('p', class_='text-sm font-normal')
                 # return '1st'
-            elif 'avechi' in url or 'gadgetsleo' in url or 'phonestabletskenya' in url:
+            elif 'avechi' in url or 'gadgetsleo' in url or 'phonestablets' in url:
                 # productpricediv = product_div.find_all('span', class_='woocommerce-Price-amount amount')[-1]
                 # return '2nd'
                 prices = product_div.find_all('span', class_='woocommerce-Price-amount amount')
