@@ -781,6 +781,7 @@ def extract_product_links_auto(nameslug):
             productclass =  'product-wrapper'
         elif 'phonestablets' in url:
             productclass =  'type-product'
+            return 'yes'
         elif 'gadgetsleo' in url:
             productclass =  'product-small box'
         elif 'priceinkenya' in url:
