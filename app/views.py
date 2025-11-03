@@ -779,14 +779,11 @@ def extract_product_links_auto(nameslug):
             productclass = 'berocket_lgv_additional_data lgv_advanced' 
         elif 'phoneplacekenya' in url:
             productclass =  'product-wrapper'
-        elif 'phonestablets' in url:
-            productclass =  'type-product'
-            return 'yes'
+
+            # return 'yes'
         elif 'gadgetsleo' in url:
             productclass =  'product-small box'
-        elif 'priceinkenya' in url:
-            # return 'yes'
-            productclass =  'relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5'
+        
         else:
             productclass =  'product-grid-item'
         if 'avechi' in url:
@@ -794,6 +791,9 @@ def extract_product_links_auto(nameslug):
             # return str(len(productdivs))
         elif 'priceinkenya' in url:
             productdivs = soup.find_all('li', class_='relative rounded-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-200 ease-in-out bg-white py-3.5')
+            # return str(len(productdivs))
+        elif 'phonestablets' in url:
+            productdivs = soup.find_all('li', class_="type-product")')
             # return str(len(productdivs))
         else:
             productdivs = soup.find_all('div', class_=productclass)
