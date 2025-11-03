@@ -827,7 +827,9 @@ def extract_product_links_auto(nameslug):
             elif 'gadgetsleo' in url:
                 product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
             elif 'phonestablets' in url:
-                product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link')['title'].strip()
+                a_tag = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link')
+                product_name = a_tag.get('title', '').strip() if a_tag else ''
+                # product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link')['title'].strip()
                 # return product_name
             elif 'priceinkenya' in url:
                 product_name = product_div.find('p',class_='text-sm font-medium text-gray-600 mt-1.5').text.strip()
