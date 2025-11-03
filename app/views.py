@@ -824,8 +824,10 @@ def extract_product_links_auto(nameslug):
             elif 'phoneplacekenya' in url:
                 product_name = product_div.find('h3', class_='heading-title product-name').text.strip()
                 # return product_name
-            elif 'gadgetsleo' in url or 'phonestablets' in url:
+            elif 'gadgetsleo' in url:
                 product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link').text.strip()
+            elif 'phonestablets' in url:
+                product_name = product_div.find('a', class_='woocommerce-LoopProduct-link woocommerce-loop-product__link')['title'].strip()
                 # return product_name
             elif 'priceinkenya' in url:
                 product_name = product_div.find('p',class_='text-sm font-medium text-gray-600 mt-1.5').text.strip()
