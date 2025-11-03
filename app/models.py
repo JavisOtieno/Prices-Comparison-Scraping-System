@@ -101,6 +101,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
     order = db.relationship('Order', backref='user', uselist=False)
+    login_date = db.Column(db.TIMESTAMP, nullable=True)
     payment = db.relationship('Payment', backref='user', uselist=False)
     created_at = db.Column(db.TIMESTAMP, nullable=True, default=datetime.utcnow)
     updated_at = db.Column(db.TIMESTAMP, nullable=True, onupdate=datetime.utcnow)
