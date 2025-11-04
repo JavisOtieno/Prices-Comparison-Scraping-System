@@ -150,13 +150,13 @@ def indexproductlinks():
     if current_user.id==1:
         # productlinks = Productlink.query.order_by(Productlink.id.desc()).limit(50)
         productlinks = Productlink.query.with_entities(
-            Productlink.id, Productlink.link, Productlink.price, Productlink.updated_at
+            Productlink.id, Productlink.link, Productlink.price, Productlink.updateddate
         ).order_by(Productlink.id.desc()).all()
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.with_entities(
-            Productlink.id, Productlink.link, Productlink.price, Productlink.updated_at
+            Productlink.id, Productlink.link, Productlink.price, Productlink.updateddate
         ).filter(
             Productlink.website_id.in_(allowed_website_ids)
         ).order_by(Productlink.id.desc()).all()
@@ -164,7 +164,7 @@ def indexproductlinks():
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.with_entities(
-            Productlink.id, Productlink.link, Productlink.price, Productlink.updated_at
+            Productlink.id, Productlink.link, Productlink.price, Productlink.updateddate
         ).filter(
             Productlink.website_id.in_(allowed_website_ids)
         ).order_by(Productlink.id.desc()).all()
