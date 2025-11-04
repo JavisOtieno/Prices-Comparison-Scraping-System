@@ -148,7 +148,10 @@ def indexwebsites():
 @login_required
 def indexproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.order_by(Productlink.id.desc()).limit(50)
+        # productlinks = Productlink.query.order_by(Productlink.id.desc()).limit(50)
+        productlinks = Productlink.query.with_entities(
+            Productlink.id, Productlink.link, Productlink.price, Productlink.created_at
+        ).order_by(Productlink.id.desc()).limit(50)
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
