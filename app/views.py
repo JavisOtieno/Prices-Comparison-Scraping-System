@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template,request,redirect,url_for,session,flash,make_response,jsonify
+from flask import render_template,request,redirect,url_for,session,flash,make_response,jsonify,current_app, send_from_directory
 # from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
@@ -22,9 +22,10 @@ import pdfkit
 from bs4 import BeautifulSoup
 import requests
 import html
-from sqlalchemy.sql import extract
+from sqlalchemy.sql import , select
 from datetime import datetime, timedelta
 import time
+import threading
 # import cloudscraper
 # from selenium import webdriver
 
@@ -281,6 +282,96 @@ def productlinks_data():
         'recordsFiltered': records_filtered,
         'data': data
     })
+
+# helper: generate filename per user
+def _productlinks_filename(user_id):
+    # store under instance/static or /tmp, choose directory your app can write to
+    out_dir = os.path.join(current_app.instance_path, 'exports')
+    os.makedirs(out_dir, exist_ok=True)
+    return os.path.join(out_dir, f'productlinks_user_{user_id}.html')
+
+# background worker that writes the big HTML file
+def _background_generate_productlinks(user_id):
+    # needs app context to use db/models
+    with current_app.app_context():
+        # rebuild user-scoped query here (replace with your real logic)
+        if user_id == 1:
+            q = Productlink.query
+        elif user_id == 4435:
+            allowed = [1,2,3,4,5]
+            q = Productlink.query.filter(Productlink.website_id.in_(allowed))
+        elif user_id == 4445:
+            allowed = [6,7,8,9]
+            q = Productlink.query.filter(Productlink.website_id.in_(allowed))
+        else:
+            q = Productlink.query.filter(False)  # empty
+
+        filename = _productlinks_filename(user_id)
+        # open file and write incrementally to avoid using much memory
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write("<html><head><meta charset='utf-8'></head><body>\n")
+            # iterate in batches to avoid loading all rows at once
+            for pl in q.yield_per(200):
+                if pl.product_id is None:
+                    line = ("link: <a href='/addproductfromlink/{id}'>ADD PRODUCT</a> "
+                            "<a target='_blank' href='{url}'>link:</a> '{url}' - price: '{price}'<br/>\n").format(
+                                id=pl.id, url=pl.link, price=pl.price
+                            )
+                else:
+                    line = "link: '{url}' - price: '{price}' <br/>\n".format(
+                        url=pl.link, price=pl.price
+                    )
+                f.write(line)
+            f.write("</body></html>\n")
+
+# main route: start background generation and return immediately
+@app.route('/productlinksalt2')
+@login_required
+def indexproductlinksalt2():
+    out_path = _productlinks_filename(current_user.id)
+    # if a file already exists, show a link to download/view it
+    if os.path.exists(out_path):
+        download_url = url_for('productlinks_result', user_id=current_user.id)
+        return (f'Product links export ready. <a href="{download_url}">Download/view</a>'
+                f' | <a href="{url_for("productlinks_regenerate")}">Regenerate</a>'), 200, {'Content-Type': 'text/html'}
+
+    # if file doesn't exist, start background thread and return immediately
+    t = threading.Thread(target=_background_generate_productlinks, args=(current_user.id,), daemon=True)
+    t.start()
+    return ("Processing started — generating product links in the background. "
+            "Check back on this page; or go to <a href='{0}'>results</a> after a bit."
+            ).format(url_for('productlinks_result', user_id=current_user.id)), 202, {'Content-Type': 'text/html'}
+
+# endpoint to download/view the generated file
+@app.route('/productlinks/result/<int:user_id>')
+@login_required
+def productlinks_result(user_id):
+    # ensure user can only fetch their own file (simple check)
+    if current_user.id != user_id and current_user.id != 1:
+        return "Forbidden", 403
+    out_path = _productlinks_filename(user_id)
+    if not os.path.exists(out_path):
+        return "Result not ready yet", 404
+    # send file
+    out_dir = os.path.dirname(out_path)
+    filename = os.path.basename(out_path)
+    return send_from_directory(out_dir, filename, mimetype='text/html')
+
+# optional route to force regeneration (delete old file and regenerate)
+@app.route('/productlinks/regenerate')
+@login_required
+def productlinks_regenerate():
+    out_path = _productlinks_filename(current_user.id)
+    try:
+        if os.path.exists(out_path):
+            os.remove(out_path)
+    except Exception:
+        current_app.logger.exception("Failed to remove old export")
+    # start background again
+    t = threading.Thread(target=_background_generate_productlinks, args=(current_user.id,), daemon=True)
+    t.start()
+    return "Regeneration started", 202
+
 
 @app.route('/newproductlinks')
 @login_required
