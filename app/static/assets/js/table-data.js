@@ -2,9 +2,12 @@ $(function(e) {
     "use strict";
 
     //______Basic Data Table
-    // Debug: confirm script runs and element exists
-    try { console.log('Initializing basic-datatable', $('#basic-datatable').length); } catch (e) {}
-    $('#basic-datatable').DataTable({
+    function initBasicDatatable(){
+        try { console.log('[DT] init attempt. el=', $('#basic-datatable').length, ' jq=', typeof window.jQuery, ' dt=', !!($.fn && $.fn.dataTable)); } catch(err) {}
+        if (!window.jQuery || !$.fn || !$.fn.dataTable) return false;
+        if (!document.getElementById('basic-datatable')) return false;
+        if ($.fn.dataTable.isDataTable('#basic-datatable')) return true;
+        $('#basic-datatable').DataTable({
         language: {
             searchPlaceholder: 'Search...',
             sSearch: '',
@@ -34,8 +37,17 @@ $(function(e) {
           { data: 'created_at' }
         ],
         order: [[3, 'desc']]
-    });
-
+        });
+        try { console.log('[DT] initialized.'); } catch(err) {}
+        return true;
+    }
+    (function waitAndInit(){
+        var ok = false;
+        try { ok = initBasicDatatable(); } catch(err){ try { console.error('[DT] init error', err); } catch(e) {} }
+        if (!ok) {
+            setTimeout(waitAndInit, 300);
+        }
+    })();
 
     // $('#responsive-datatable').DataTable({
     //     "order": [0, 'desc'],
