@@ -45,7 +45,7 @@ $(function(e) {
     //         sSearch: '',
     //     }
     // });
-
+    console.log("Hello from table-data.js");
        //______Basic Data Table
        var table2=$('#responsive-datatable').DataTable({
         "order": [0, 'desc'],
@@ -59,6 +59,7 @@ $(function(e) {
         buttons: [
             {
                 extend: 'copy',
+
                 title: 'FAVEExport',
                 exportOptions: {
                     columns: function(idx, data, node) {
