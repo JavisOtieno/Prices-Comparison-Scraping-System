@@ -12,7 +12,16 @@ $(function(e) {
         ajax: '/productlinks/data',
         columns: [
           { data: 'id' },
-          { data: 'link' },
+          { 
+            data: 'link',
+            render: function(data, type, row){
+                if (type === 'display') {
+                    var text = row.name || data;
+                    return '<a href="' + data + '" target="_blank">' + text + '</a>';
+                }
+                return data;
+            }
+          },
           { data: 'price' },
           { data: 'created_at' }
         ],

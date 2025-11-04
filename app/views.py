@@ -257,6 +257,7 @@ def productlinks_data():
     # Pagination (limit + offset)
     page_items = query.with_entities(
         Productlink.id,
+        Productlink.name,
         Productlink.link,
         Productlink.price,
         Productlink.created_at
@@ -267,6 +268,7 @@ def productlinks_data():
     for row in page_items:
         data.append({
             'id': row.id,
+            'name': row.name,
             'link': row.link,
             'price': row.price,
             'created_at': row.created_at.isoformat() if row.created_at else None
