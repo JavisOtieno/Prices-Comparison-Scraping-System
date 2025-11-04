@@ -155,7 +155,7 @@ def indexproductlinks():
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
-        productlinks = Productlink.query..with_entities(
+        productlinks = Productlink.query.with_entities(
             Productlink.id, Productlink.link, Productlink.price, Productlink.created_at
         ).filter(
             Productlink.website_id.in_(allowed_website_ids)
