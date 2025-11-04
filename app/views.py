@@ -1510,10 +1510,11 @@ def index():
     end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)  # Sunday end
 
     # Query products created this week
-    productlink_count_week = Product.query.filter(
+    productlink_count_week = Productlink.query.filter(
         Productlink.created_at >= start_of_week,
         Productlink.created_at <= end_of_week
     ).count()
+    
     productlink_count_year = Productlink.query.filter(
         func.extract('year', Productlink.created_at) == current_year
     ).count()
