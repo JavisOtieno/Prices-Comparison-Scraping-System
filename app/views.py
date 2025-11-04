@@ -148,19 +148,19 @@ def indexwebsites():
 @login_required
 def indexproductlinks():
     if current_user.id==1:
-        productlinks = Productlink.query.order_by(Productlink.id.desc()).limit(5000)
+        productlinks = Productlink.query.order_by(Productlink.id.desc()).limit(50)
     elif current_user.id==4435:
         allowed_website_ids = [1, 2, 3,4,5]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
             Productlink.website_id.in_(allowed_website_ids)
-        ).order_by(Productlink.id.desc()).limit(5000)
+        ).order_by(Productlink.id.desc()).limit(50)
     elif current_user.id==4445:
         allowed_website_ids = [6, 7, 8,9]
         # allowed_website_ids = [w.id for w in current_user.websites]
         productlinks = Productlink.query.filter(
             Productlink.website_id.in_(allowed_website_ids)
-        ).order_by(Productlink.id.desc()).limit(5000)
+        ).order_by(Productlink.id.desc()).limit(50)
     # Format the data for response
     # Create a plain text response
     # response = "\n".join([f"link: '{pl.link}' - price: '{pl.price}'" for pl in productlinks])
