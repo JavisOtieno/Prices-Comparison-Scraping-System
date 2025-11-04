@@ -24,6 +24,7 @@ import requests
 import html
 from sqlalchemy.sql import extract
 from datetime import datetime, timedelta
+import time
 # import cloudscraper
 # from selenium import webdriver
 
