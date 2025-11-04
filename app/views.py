@@ -2043,12 +2043,16 @@ load_dotenv()  # Load from .
 import africastalking
 
 # Initialize Africa's Talking SDK
-africastalking.initialize(AT_USERNAME, AT_API_KEY)
-sms = africastalking.SMS
+# africastalking.initialize(AT_USERNAME, AT_API_KEY)
+# sms = africastalking.SMS
 
 # Get Africa's Talking credentials from .env
 AT_USERNAME = os.getenv("AT_USERNAME", "sandbox")
 AT_API_KEY = os.getenv("AT_API_KEY")
+
+# Initialize Africa's Talking SDK
+africastalking.initialize(AT_USERNAME, AT_API_KEY)
+sms = africastalking.SMS
 
 @app.route("/sendsms", methods=["GET", "POST"])
 def send_sms():
