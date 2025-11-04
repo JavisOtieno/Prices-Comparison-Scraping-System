@@ -48,8 +48,8 @@
                                                         <th class="wd-15p border-bottom-0">Link Name</th>
                                                         <th class="wd-15p border-bottom-0">Price</th>
                                                         <th class="wd-15p border-bottom-0">Updated Date</th>
-                                                        <th class="wd-15p border-bottom-0">Actual Link</th>
-                                                        <th class="wd-15p border-bottom-0">Website</th>
+                                                        <!--<th class="wd-15p border-bottom-0">Actual Link</th> -->
+                                                        <!-- <th class="wd-15p border-bottom-0">Website</th> -->
                                                         <!-- <th class="wd-25p border-bottom-0">Date</th>
                                                         <th class="wd-25p border-bottom-0">Edit</th>
                                                         <th class="wd-25p border-bottom-0">Delete</th> -->
@@ -63,9 +63,9 @@
                                                     <td>{{ link.id }}</td>
                                                     <td><a href="{{ link.link }}" target="_blank">{{ link.name }}</a></td>
                                                     <td>{{ link.price }}</td>
-                                                    <td>{{ link.updateddate }}</td>
-                                                    <td>{{ link.link }}</td>
-                                                    <td>{{ link.website.name }}</td>
+                                                     <td>{{ link.created_at }}</td>
+                                                    <!-- <td>{{ link.link }}</td>
+                                                    <td>{{ link.website.name }}</td>  -->
                                                     
                                                     <!-- <td>{{ link.created_at }}</td>
                                                     <td><a class="btn btn-info" href="/editlink/{{ link.id }}">Edit</a></td>
