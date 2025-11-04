@@ -34,6 +34,10 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 import socket
 import cloudscraper
 
+# # Initialize Africa's Talking SDK
+# africastalking.initialize(AT_USERNAME, AT_API_KEY)
+# sms = africastalking.SMS
+
 # Configure path to wkhtmltopdf
 # path_to_wkhtmltopdf = '/usr/bin/wkhtmltopdf'  # Adjust for your system
 path_to_wkhtmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
@@ -2032,6 +2036,41 @@ def showCustomers():
 def categoriesRender():
     categories = Category.query.all()
     return render_template('admin/categories.html', categories=categories)
+
+from dotenv import load_dotenv
+load_dotenv()  # Load from .
+
+import africastalking
+
+# Initialize Africa's Talking SDK
+africastalking.initialize(AT_USERNAME, AT_API_KEY)
+sms = africastalking.SMS
+
+# Get Africa's Talking credentials from .env
+AT_USERNAME = os.getenv("AT_USERNAME", "sandbox")
+AT_API_KEY = os.getenv("AT_API_KEY")
+
+@app.route("/sendsms", methods=["GET", "POST"])
+def send_sms():
+    message = None
+    error = None
+
+    if request.method == "POST":
+        phone_number = request.form.get("phone")
+        text_message = request.form.get("message")
+
+        if not phone_number or not text_message:
+            error = "Please fill in both fields."
+        else:
+            try:
+                # Send the SMS
+                response = sms.send(text_message, [phone_number])
+                message = f"✅ Message sent successfully to {phone_number}!"
+                print("Africa's Talking response:", response)
+            except Exception as e:
+                error = f"❌ Error: {str(e)}"
+
+    return render_template("sendsms.html", message=message, error=error)
 
 # @app.route('/dashboard')
 # @login_required
