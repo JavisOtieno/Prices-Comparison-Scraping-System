@@ -6,7 +6,17 @@ $(function(e) {
         language: {
             searchPlaceholder: 'Search...',
             sSearch: '',
-        }
+        },
+        serverSide: true,
+        processing: true,
+        ajax: '/productlinks/data',
+        columns: [
+          { data: 'id' },
+          { data: 'link' },
+          { data: 'price' },
+          { data: 'created_at' }
+        ],
+        order: [[3, 'desc']]
     });
 
 
