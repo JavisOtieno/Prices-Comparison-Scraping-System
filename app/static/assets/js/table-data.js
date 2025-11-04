@@ -2,6 +2,8 @@ $(function(e) {
     "use strict";
 
     //______Basic Data Table
+    // Debug: confirm script runs and element exists
+    try { console.log('Initializing basic-datatable', $('#basic-datatable').length); } catch (e) {}
     $('#basic-datatable').DataTable({
         language: {
             searchPlaceholder: 'Search...',
@@ -9,7 +11,13 @@ $(function(e) {
         },
         serverSide: true,
         processing: true,
-        ajax: '/productlinks/data',
+        ajax: {
+            url: '/productlinks/data',
+            dataSrc: 'data',
+            error: function(xhr){
+                try { console.error('DataTables AJAX error', xhr.status, xhr.responseText); } catch (e) {}
+            }
+        },
         columns: [
           { data: 'id' },
           { 
