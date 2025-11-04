@@ -165,6 +165,120 @@ def indexproductlinks():
     return render_template('link/index.html', links=productlinks)
     # return render_template('category/index.html', categories=categories)
     
+@app.route('/productlinksalt')
+@login_required
+def indexproductlinks():
+    return render_template('link/indexalt.html')
+
+# map user -> allowed website ids (replace with your real logic)
+USER_ALLOWED_WEBSITES = {
+    1: None,                    # admin: all websites
+    4435: [1,2,3,4,5],
+    4445: [6,7,8,9],
+}
+
+@app.route('/productlinks/data')
+@login_required
+def productlinks_data():
+    # DataTables params
+    draw = int(request.args.get('draw', 1))
+    start = int(request.args.get('start', 0))
+    length = int(request.args.get('length', 10))
+    search_value = request.args.get('search[value]', '').strip()
+
+    # determine allowed websites for current user
+    allowed = USER_ALLOWED_WEBSITES.get(current_user.id, [])
+    query = Productlink.query
+
+    if allowed is not None:
+        # if allowed is None -> all rows (admin); else filter
+        if len(allowed) == 0:
+            # no allowed websites -> empty result
+            total_filtered = 0
+            return jsonify({
+                'draw': draw,
+                'recordsTotal': 0,
+                'recordsFiltered': 0,
+                'data': []
+            })
+        query = query.filter(Productlink.website_id.in_(allowed))
+
+    # total count after applying user filter (but before search)
+    records_total = db.session.query(func.count(Productlink.id))
+    if allowed is not None:
+        records_total = records_total.filter(Productlink.website_id.in_(allowed))
+    records_total = records_total.scalar()
+
+    # Apply search across specific columns (adjust fields as needed)
+    if search_value:
+        like_term = f"%{search_value}%"
+        query = query.filter(
+            or_(
+                Productlink.link.ilike(like_term),
+                Productlink.price.cast(db.String).ilike(like_term),
+                Productlink.title.ilike(like_term)  # if you have a title column
+            )
+        )
+
+    # recordsFiltered after search
+    records_filtered = db.session.query(func.count(Productlink.id))
+    if allowed is not None:
+        records_filtered = records_filtered.filter(Productlink.website_id.in_(allowed))
+    if search_value:
+        records_filtered = records_filtered.filter(
+            or_(
+                Productlink.link.ilike(like_term),
+                Productlink.price.cast(db.String).ilike(like_term),
+                Productlink.title.ilike(like_term)
+            )
+        )
+    records_filtered = records_filtered.scalar()
+
+    # Ordering
+    order = []
+    order_col_index = request.args.get('order[0][column]')
+    order_dir = request.args.get('order[0][dir]', 'asc')
+    if order_col_index is not None:
+        col_name = request.args.get(f'columns[{order_col_index}][data]')
+        # whitelist allowed orderable columns
+        column_map = {
+            'id': Productlink.id,
+            'link': Productlink.link,
+            'price': Productlink.price,
+            'created_at': Productlink.created_at,
+        }
+        col = column_map.get(col_name)
+        if col is not None:
+            if order_dir == 'desc':
+                query = query.order_by(desc(col))
+            else:
+                query = query.order_by(asc(col))
+
+    # Pagination (limit + offset)
+    page_items = query.with_entities(
+        Productlink.id,
+        Productlink.link,
+        Productlink.price,
+        Productlink.created_at
+    ).offset(start).limit(length).all()
+
+    # Build data rows (convert to dicts)
+    data = []
+    for row in page_items:
+        data.append({
+            'id': row.id,
+            'link': row.link,
+            'price': row.price,
+            'created_at': row.created_at.isoformat() if row.created_at else None
+        })
+
+    return jsonify({
+        'draw': draw,
+        'recordsTotal': records_total,
+        'recordsFiltered': records_filtered,
+        'data': data
+    })
+
 @app.route('/newproductlinks')
 @login_required
 def newproductlinks():
@@ -678,6 +792,14 @@ def extract_product_links_auto(nameslug):
         return {"error": "Website not found"}, 404
     websitelink = currentwebsite.link
     websiteid = currentwebsite.id
+
+    current_url = request.url
+    if current_url == 'https://gadgetsleo.com/':
+        # currentwebsite = CurrentWebsite.query.first()  # example query
+        currentwebsite.lastpagescanned = 1
+        db.session.commit()
+        return "Stopped execution for gadgetsleo.com", 200  # ✅ Stop route here
+
 
     
     # return f"{websiteid} test"

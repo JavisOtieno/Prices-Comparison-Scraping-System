@@ -1,0 +1,27 @@
+<table id="productlinks" class="display">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Link</th>
+      <th>Price</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+</table>
+
+<script>
+$(document).ready(function() {
+  $('#productlinks').DataTable({
+    serverSide: true,
+    processing: true,
+    ajax: '/productlinks/data',   // 👈 this hits the JSON endpoint
+    columns: [
+      { data: 'id' },
+      { data: 'link' },
+      { data: 'price' },
+      { data: 'created_at' }
+    ],
+    order: [[3, 'desc']]
+  });
+});
+</script>
