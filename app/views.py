@@ -167,7 +167,7 @@ def indexproductlinks():
     
 @app.route('/productlinksalt')
 @login_required
-def indexproductlinks():
+def indexproductlinksalt():
     return render_template('link/indexalt.html')
 
 # map user -> allowed website ids (replace with your real logic)
