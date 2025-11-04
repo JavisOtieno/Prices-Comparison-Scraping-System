@@ -22,7 +22,7 @@ import pdfkit
 from bs4 import BeautifulSoup
 import requests
 import html
-from sqlalchemy.sql import , select
+from sqlalchemy.sql import extract, select
 from datetime import datetime, timedelta
 import time
 import threading
