@@ -1021,7 +1021,7 @@ def extract_product_links_auto(nameslug):
             # return str(len(productdivs))
         elif 'phonestablets' in url:
             productdivs = soup.find_all('li', class_="type-product")
-            # return str(len(productdivs))
+            return str(len(productdivs))
         else:
             productdivs = soup.find_all('div', class_=productclass)
 
