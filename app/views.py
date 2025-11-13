@@ -1037,6 +1037,7 @@ def extract_product_links_auto(nameslug):
                 # return link_tag["href"] 
             elif 'gadgetsleo' in url or 'phonestablets' in url:
                 link_tag = product_div.find('a')
+                return link_tag["href"]
             elif 'priceinkenya' in url:
                 link_tag = product_div.find('a')
                 # return link_tag["href"] 
