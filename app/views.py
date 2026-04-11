@@ -1113,7 +1113,7 @@ def extract_product_links_auto(nameslug):
                 try:
                     price_value = product_price_org.replace('KShs',
                     '').replace(',', '').replace('.00',
-                    '').replace('KSh','').replace('KES','').replace('\xa0', '').strip()
+                    '').replace('KSh','').replace('+ VAT','').replace('KES','').replace('\xa0', '').strip()
                     product_price = float(price_value)
                 except ValueError:
                     product_price = 0
