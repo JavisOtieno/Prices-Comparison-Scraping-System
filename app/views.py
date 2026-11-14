@@ -1041,6 +1041,7 @@ def extract_product_links_auto(nameslug):
             elif 'priceinkenya' in url:
                 link_tag = product_div.find('a')
                 # return link_tag["href"] 
+                #test
             else:
                 link_tag = product_div.find('a', class_='product-image-link')
 
